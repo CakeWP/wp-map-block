@@ -1,0 +1,8 @@
+.ti-repeater-fields-wrapper {
+	.ti-repeatrer-toggle-body {
+		display: none;
+		&.ti-toggle-open {
+			display: block;
+		}
+	}
+}

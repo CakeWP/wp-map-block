@@ -1,9 +1,31 @@
 import { Component } from "@wordpress/element";
 import { withInstanceId } from "@wordpress/compose";
+import { Panel, PanelBody, PanelRow } from "@wordpress/components";
+import { Icon, chevronDown, close } from "@wordpress/icons";
+
+import "./editor.scss";
+const {
+	CheckboxControl,
+	RadioControl,
+	TextControl,
+	TextareaControl,
+	ToggleControl,
+	SelectControl,
+} = wp.components;
+const { RichText, InspectorControls } = wp.editor;
+import { __experimentalNumberControl as NumberControl } from "@wordpress/components";
 import L from "leaflet";
+
 class edit extends Component {
 	constructor(props) {
 		super(props);
+
+		this.state = {
+			map_marker_toggle: {
+				id: null,
+				isOpen: false,
+			},
+		};
 	}
 	componentDidMount() {
 		this.props.setAttributes({ map_id: "wpmapblock_" + this.props.instanceId });
@@ -54,9 +76,126 @@ class edit extends Component {
 		L.control.layers(baseLayers, overlays).addTo(map);
 	}
 
+	removeRepeater = (key) => {
+		const map_marker_list = this.props.attributes.map_marker_list.filter(
+			(item, index) => index != key
+		);
+
+		this.props.setAttributes({ map_marker_list: map_marker_list });
+	};
+
+	toggleRepeater = (key) => {
+		this.setState((state) => {
+			return {
+				map_marker_toggle: {
+					id: key,
+					isOpen:
+						state.map_marker_toggle.id === key &&
+						state.map_marker_toggle.isOpen === true
+							? false
+							: true,
+				},
+			};
+		});
+	};
+	setMarkerAttributeValue = (index, name, value) => {
+		const map_marker_list = this.props.attributes.map_marker_list.map(
+			(item, key) => {
+				const returnValue = { ...item };
+
+				if (index === key) {
+					returnValue[name] = value;
+				}
+
+				return returnValue;
+			}
+		);
+		this.props.setAttributes({
+			map_marker_list,
+		});
+	};
+	addMarkerHandler = () => {
+		this.props.setAttributes({
+			map_marker_list: [
+				...this.props.attributes.map_marker_list,
+				{
+					lat: "",
+					lon: "",
+					title: "",
+					content: "",
+					icon_class_name: "",
+					icon_image_uri: "",
+					is_show_image: false,
+				},
+			],
+		});
+	};
+
 	render() {
+		// console.log(this.props.attributes);
+		console.log(this.props.attributes.map_marker_list);
 		return (
 			<React.Fragment>
+				<InspectorControls>
+					<div className="ti-repeater-fields-wrapper">
+						{this.props.attributes.map_marker_list.map((item, index) => (
+							<div className="ti-repeatrer-fields" key={index}>
+								<div className="ti-repeatrer-toggle-heading">
+									<span>{item.title}</span>
+									<button
+										onClick={() => {
+											this.toggleRepeater(index);
+										}}
+									>
+										<Icon icon={chevronDown} />
+									</button>
+									<button onClick={() => this.removeRepeater(index)}>
+										<Icon icon={close} />
+									</button>
+								</div>
+								<div
+									className={
+										this.state.map_marker_toggle.id === index &&
+										this.state.map_marker_toggle.isOpen === true
+											? "ti-repeatrer-toggle-body ti-toggle-open"
+											: "ti-repeatrer-toggle-body"
+									}
+								>
+									<TextControl
+										label="Latitude"
+										onChange={(text) =>
+											this.setMarkerAttributeValue(index, "lat", text)
+										}
+										value={this.props.attributes.map_marker_list[index].lat}
+									/>
+									<TextControl
+										label="Longitude"
+										onChange={(text) =>
+											this.setMarkerAttributeValue(index, "lon", text)
+										}
+										value={this.props.attributes.map_marker_list[index].lon}
+									/>
+									<TextControl
+										label="Title"
+										onChange={(text) =>
+											this.setMarkerAttributeValue(index, "title", text)
+										}
+										value={this.props.attributes.map_marker_list[index].title}
+									/>
+									<TextareaControl
+										label="Content"
+										onChange={(text) =>
+											this.setMarkerAttributeValue(index, "content", text)
+										}
+										value={this.props.attributes.map_marker_list[index].content}
+									/>
+								</div>
+							</div>
+						))}
+
+						<button onClick={() => this.addMarkerHandler()}>+ Add Item</button>
+					</div>
+				</InspectorControls>
 				<div
 					id={"wpmapblock_" + this.props.instanceId}
 					className="wp-map-block"
