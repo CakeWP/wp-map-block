@@ -1,8 +1,7 @@
 import { Component } from "@wordpress/element";
 import { withInstanceId } from "@wordpress/compose";
-import { Panel, PanelBody, PanelRow } from "@wordpress/components";
+import { Panel, PanelBody, RangeControl } from "@wordpress/components";
 import { Icon, chevronDown, close } from "@wordpress/icons";
-
 import "./editor.scss";
 const {
 	CheckboxControl,
@@ -16,6 +15,8 @@ const { RichText, InspectorControls } = wp.editor;
 import { __experimentalNumberControl as NumberControl } from "@wordpress/components";
 import L from "leaflet";
 
+import { Map, TileLayer, Marker, Popup } from "react-leaflet";
+
 class edit extends Component {
 	constructor(props) {
 		super(props);
@@ -26,54 +27,6 @@ class edit extends Component {
 				isOpen: false,
 			},
 		};
-	}
-	componentDidMount() {
-		this.props.setAttributes({ map_id: "wpmapblock_" + this.props.instanceId });
-
-		const cities = L.layerGroup();
-		L.marker([39.61, -105.02])
-			.bindPopup("This is Littleton, CO.")
-			.addTo(cities),
-			L.marker([39.74, -104.99]).bindPopup("This is Denver, CO.").addTo(cities),
-			L.marker([39.73, -104.8]).bindPopup("This is Aurora, CO.").addTo(cities),
-			L.marker([39.77, -105.23]).bindPopup("This is Golden, CO.").addTo(cities);
-
-		let mbAttr =
-				'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
-				'<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
-				'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-			mbUrl =
-				"https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw";
-
-		let grayscale = L.tileLayer(mbUrl, {
-				id: "mapbox/light-v9",
-				tileSize: 512,
-				zoomOffset: -1,
-				attribution: mbAttr,
-			}),
-			streets = L.tileLayer(mbUrl, {
-				id: "mapbox/streets-v11",
-				tileSize: 512,
-				zoomOffset: -1,
-				attribution: mbAttr,
-			});
-
-		const map = L.map("wpmapblock_" + this.props.instanceId, {
-			center: [39.73, -104.99],
-			zoom: 10,
-			layers: [grayscale, cities],
-		});
-
-		const baseLayers = {
-			Grayscale: grayscale,
-			Streets: streets,
-		};
-
-		const overlays = {
-			Cities: cities,
-		};
-
-		L.control.layers(baseLayers, overlays).addTo(map);
 	}
 
 	removeRepeater = (key) => {
@@ -120,7 +73,7 @@ class edit extends Component {
 				...this.props.attributes.map_marker_list,
 				{
 					lat: "",
-					lon: "",
+					lng: "",
 					title: "",
 					content: "",
 					icon_class_name: "",
@@ -132,74 +85,152 @@ class edit extends Component {
 	};
 
 	render() {
-		// console.log(this.props.attributes);
-		console.log(this.props.attributes.map_marker_list);
+		// this.map_init();
+		const OSM = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
+		const GM =
+			"https://maps.googleapis.com/maps/vt?pb=!1m5!1m4!1i{z}!2i{x}!3i{y}!4i256!2m3!1e0!2sm!3i349018013!3m9!2sen-US!3sUS!5e18!12m1!1e47!12m3!1e37!2m1!1ssmartmaps!4e0";
 		return (
 			<React.Fragment>
 				<InspectorControls>
-					<div className="ti-repeater-fields-wrapper">
-						{this.props.attributes.map_marker_list.map((item, index) => (
-							<div className="ti-repeatrer-fields" key={index}>
-								<div className="ti-repeatrer-toggle-heading">
-									<span>{item.title}</span>
-									<button
-										onClick={() => {
-											this.toggleRepeater(index);
-										}}
-									>
-										<Icon icon={chevronDown} />
-									</button>
-									<button onClick={() => this.removeRepeater(index)}>
-										<Icon icon={close} />
-									</button>
-								</div>
-								<div
-									className={
-										this.state.map_marker_toggle.id === index &&
-										this.state.map_marker_toggle.isOpen === true
-											? "ti-repeatrer-toggle-body ti-toggle-open"
-											: "ti-repeatrer-toggle-body"
-									}
-								>
-									<TextControl
-										label="Latitude"
-										onChange={(text) =>
-											this.setMarkerAttributeValue(index, "lat", text)
-										}
-										value={this.props.attributes.map_marker_list[index].lat}
-									/>
-									<TextControl
-										label="Longitude"
-										onChange={(text) =>
-											this.setMarkerAttributeValue(index, "lon", text)
-										}
-										value={this.props.attributes.map_marker_list[index].lon}
-									/>
-									<TextControl
-										label="Title"
-										onChange={(text) =>
-											this.setMarkerAttributeValue(index, "title", text)
-										}
-										value={this.props.attributes.map_marker_list[index].title}
-									/>
-									<TextareaControl
-										label="Content"
-										onChange={(text) =>
-											this.setMarkerAttributeValue(index, "content", text)
-										}
-										value={this.props.attributes.map_marker_list[index].content}
-									/>
-								</div>
-							</div>
-						))}
+					<Panel>
+						<PanelBody
+							title="Map Settings"
+							icon={chevronDown}
+							initialOpen={true}
+						>
+							<RadioControl
+								label="Choose Map"
+								selected={this.props.attributes.map_type}
+								options={[
+									{ label: "Google Map", value: "GM" },
+									{ label: "Open Street map", value: "OSM" },
+								]}
+								onChange={(value) =>
+									this.props.setAttributes({ map_type: value })
+								}
+							/>
+							<RangeControl
+								label="Zoom Level"
+								value={this.props.attributes.map_zoom}
+								min={0}
+								max={20}
+								onChange={(value) =>
+									this.props.setAttributes({ map_zoom: value })
+								}
+							/>
+						</PanelBody>
+					</Panel>
+					<Panel>
+						<PanelBody
+							title="Map Marker"
+							icon={chevronDown}
+							initialOpen={false}
+						>
+							<div className="ti-repeater-fields-wrapper">
+								{this.props.attributes.map_marker_list !== undefined &&
+									this.props.attributes.map_marker_list.map((item, index) => (
+										<div className="ti-repeatrer-fields" key={index}>
+											<div className="ti-repeatrer-toggle-heading">
+												<span>{item.title}</span>
+												<button
+													onClick={() => {
+														this.toggleRepeater(index);
+													}}
+												>
+													<Icon icon={chevronDown} />
+												</button>
+												<button onClick={() => this.removeRepeater(index)}>
+													<Icon icon={close} />
+												</button>
+											</div>
+											<div
+												className={
+													this.state.map_marker_toggle.id === index &&
+													this.state.map_marker_toggle.isOpen === true
+														? "ti-repeatrer-toggle-body ti-toggle-open"
+														: "ti-repeatrer-toggle-body"
+												}
+											>
+												<TextControl
+													label="Latitude"
+													onChange={(text) =>
+														this.setMarkerAttributeValue(index, "lat", text)
+													}
+													value={
+														this.props.attributes.map_marker_list[index].lat
+													}
+												/>
+												<TextControl
+													label="lnggitude"
+													onChange={(text) =>
+														this.setMarkerAttributeValue(index, "lng", text)
+													}
+													value={
+														this.props.attributes.map_marker_list[index].lng
+													}
+												/>
+												<TextControl
+													label="Title"
+													onChange={(text) =>
+														this.setMarkerAttributeValue(index, "title", text)
+													}
+													value={
+														this.props.attributes.map_marker_list[index].title
+													}
+												/>
+												<TextareaControl
+													label="Content"
+													onChange={(text) =>
+														this.setMarkerAttributeValue(index, "content", text)
+													}
+													value={
+														this.props.attributes.map_marker_list[index].content
+													}
+												/>
+											</div>
+										</div>
+									))}
 
-						<button onClick={() => this.addMarkerHandler()}>+ Add Item</button>
-					</div>
+								<button onClick={() => this.addMarkerHandler()}>
+									+ Add Item
+								</button>
+							</div>
+						</PanelBody>
+					</Panel>
 				</InspectorControls>
-				<div
+				<Map
 					id={"wpmapblock_" + this.props.instanceId}
 					className="wp-map-block"
-				></div>
+					center={
+						this.props.attributes.map_marker_list !== undefined &&
+						this.props.attributes.map_marker_list.length > 0
+							? this.props.attributes.map_marker_list[0]
+							: {
+									lat: 23.7806365,
+									lng: 90.4193257,
+							  }
+					}
+					zoom={this.props.attributes.map_zoom}
+				>
+					<TileLayer url={this.props.attributes.map_type == "OSM" ? OSM : GM} />
+					{this.props.attributes.map_marker_list !== undefined &&
+						this.props.attributes.map_marker_list.length > 0 &&
+						this.props.attributes.map_marker_list.map((item, index) => (
+							<Marker
+								key={index}
+								position={{
+									lat: item.lat,
+									lng: item.lng,
+									zoom: 13,
+								}}
+							>
+								<Popup>
+									<h6>{item.title}</h6>
+									<p>{item.content}</p>
+								</Popup>
+							</Marker>
+						))}
+				</Map>
 			</React.Fragment>
 		);
 	}

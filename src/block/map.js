@@ -13,6 +13,25 @@ registerBlockType("wpmapblock/wp-map-block", {
 		},
 		map_marker_list: {
 			type: "array",
+			default: [
+				{
+					lat: 23.7806365,
+					lng: 90.4193257,
+					title: "Bangladesh",
+					content: "A Beautiful Country",
+					icon_class_name: "",
+					icon_image_uri: "",
+					is_show_image: false,
+				},
+			],
+		},
+		map_zoom: {
+			type: "number",
+			default: 14,
+		},
+		map_type: {
+			type: "string",
+			default: "OSM",
 		},
 	},
 	edit,

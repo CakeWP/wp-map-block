@@ -67,29 +67,6 @@ function wpmapblock_block_assets()
 			// Enqueue blocks.editor.build.css in the editor only.
 			'editor_style'  => 'wp-map-block-editor-css',
 			'render_callback' => 'wpmapblock_map_render_callback',
-			'attributes'      => [
-				'map_id'         => [
-					'type' => 'string',
-				],
-				'map_type'         => [
-					'type' => 'string',
-				],
-				'map_width'         => [
-					'type' => 'string',
-				],
-				'map_height'         => [
-					'type' => 'string',
-				],
-				'map_token'         => [
-					'type' => 'string',
-				],
-				'map_zoom'         => [
-					'type' => 'string',
-				],
-				'map_marker_lists'  => [
-					'type'    => 'array',
-				],
-			],
 		)
 	);
 }
