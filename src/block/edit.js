@@ -27,6 +27,7 @@ class edit extends Component {
 				isOpen: false,
 			},
 		};
+		this.props.setAttributes({ map_id: "wpmapblock_" + this.props.instanceId });
 	}
 
 	removeRepeater = (key) => {
@@ -89,6 +90,15 @@ class edit extends Component {
 		const OSM = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
 		const GM =
 			"https://maps.googleapis.com/maps/vt?pb=!1m5!1m4!1i{z}!2i{x}!3i{y}!4i256!2m3!1e0!2sm!3i349018013!3m9!2sen-US!3sUS!5e18!12m1!1e47!12m3!1e37!2m1!1ssmartmaps!4e0";
+
+		// const { paddingSize } = attributes;
+
+		// const updateSpacing = (dimension, size, device = "") => {
+		// 	setAttributes({
+		// 		[`${dimension}${device}`]: size,
+		// 	});
+		// };
+
 		return (
 			<React.Fragment>
 				<InspectorControls>
@@ -98,6 +108,20 @@ class edit extends Component {
 							icon={chevronDown}
 							initialOpen={true}
 						>
+							<TextControl
+								label="Width"
+								value={this.props.attributes.map_width}
+								onChange={(width) =>
+									this.props.setAttributes({ map_width: width })
+								}
+							/>
+							<TextControl
+								label="Height"
+								value={this.props.attributes.map_height}
+								onChange={(height) =>
+									this.props.setAttributes({ map_height: height })
+								}
+							/>
 							<RadioControl
 								label="Choose Map"
 								selected={this.props.attributes.map_type}
@@ -200,7 +224,6 @@ class edit extends Component {
 				</InspectorControls>
 				<Map
 					id={"wpmapblock_" + this.props.instanceId}
-					className="wp-map-block"
 					center={
 						this.props.attributes.map_marker_list !== undefined &&
 						this.props.attributes.map_marker_list.length > 0

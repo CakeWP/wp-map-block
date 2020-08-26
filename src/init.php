@@ -5,6 +5,9 @@ if (!defined('ABSPATH')) {
 	exit;
 }
 
+
+
+
 /**
  * Register wp map block and necessary assets
  * @return void
@@ -80,51 +83,75 @@ add_action('init', 'wpmapblock_block_assets');
  */
 function wpmapblock_map_render_callback($attributes, $content = '')
 {
+	// var_dump($attributes['map_type']);
 	wp_add_inline_script(
 		'wpmapblock-leaflet',
-		sprintf('jQuery(document).ready(function(){ 
-			const cities = L.layerGroup();
-		L.marker([39.61, -105.02])
-			.bindPopup("This is Littleton, CO.")
-			.addTo(cities),
-			L.marker([39.74, -104.99]).bindPopup("This is Denver, CO.").addTo(cities),
-			L.marker([39.73, -104.8]).bindPopup("This is Aurora, CO.").addTo(cities),
-			L.marker([39.77, -105.23]).bindPopup("This is Golden, CO.").addTo(cities);
-
-		let mbUrl =
-				"https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw";
-
-		let grayscale = L.tileLayer(mbUrl, {
+		sprintf(
+			'jQuery(document).ready(function(){ 
+				var OSM = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
+				var GM =
+			"https://maps.googleapis.com/maps/vt?pb=!1m5!1m4!1i{z}!2i{x}!3i{y}!4i256!2m3!1e0!2sm!3i349018013!3m9!2sen-US!3sUS!5e18!12m1!1e47!12m3!1e37!2m1!1ssmartmaps!4e0";
+		
+				var cities = L.layerGroup();
+			var markerList = JSON.parse(JSON.stringify(%2$s));
+			
+			markerList.forEach(function(item, index){
+				L.marker([item.lat, item.lng])
+				.bindPopup(item.title)
+				.addTo(cities);
+			});
+			var mapType = %4$s;
+			var grayscale = L.tileLayer(mapType, {
 				id: "mapbox/light-v9",
 				tileSize: 512,
 				zoomOffset: -1,
 			}),
-			streets = L.tileLayer(mbUrl, {
+			streets = L.tileLayer(mapType, {
 				id: "mapbox/streets-v11",
 				tileSize: 512,
 				zoomOffset: -1,
 			});
 
-		const map = L.map(%s, {
-			center: [39.73, -104.99],
-			zoom: 10,
+			var map = L.map(%1$s, {
+			center: [markerList[0].lat, markerList[0].lng],
+			zoom: %3$s,
 			layers: [grayscale, cities],
 		});
 
-		const baseLayers = {
+		var baseLayers = {
 			Grayscale: grayscale,
 			Streets: streets,
 		};
 
-		const overlays = {
+		var overlays = {
 			Cities: cities,
 		};
 
 		L.control.layers(baseLayers, overlays).addTo(map);
-		 });', (isset($attributes['map_id']) ? $attributes['map_id'] : ''))
+		});',
+			(isset($attributes['map_id']) ? $attributes['map_id'] : ''),
+			json_encode((isset($attributes['map_marker_list']) ? $attributes['map_marker_list'] : [[
+				'lat' => 23.7806365,
+				'lng' => 90.4193257
+			]])),
+			(isset($attributes['map_zoom']) ? $attributes['map_zoom'] : 14),
+			(isset($attributes['map_type']) ? $attributes['map_type'] : 'OSM'),
+		)
 	);
-	return '<div id="' . (isset($attributes['map_id']) ? $attributes['map_id'] : '') . '" class="wp-map-block"></div>';
+
+	$map_width = (isset($attributes['map_width']) ? $attributes['map_width'] : '100%');
+	$map_height = (isset($attributes['map_height']) ? $attributes['map_height'] : '500px');
+	$style = "
+		width: {$map_width};
+		height: {$map_height};
+	";
+
+	return '<div id="' . (isset($attributes['map_id']) ? $attributes['map_id'] : '') . '" style="' . $style . '"></div>';
 }
+
+
+
+
 
 /**
  * Plugin Scripts

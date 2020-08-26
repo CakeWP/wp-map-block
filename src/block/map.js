@@ -33,6 +33,14 @@ registerBlockType("wpmapblock/wp-map-block", {
 			type: "string",
 			default: "OSM",
 		},
+		map_width: {
+			type: "string",
+			default: "100%",
+		},
+		map_height: {
+			type: "string",
+			default: "500px",
+		},
 	},
 	edit,
 	save() {
