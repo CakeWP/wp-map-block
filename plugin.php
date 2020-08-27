@@ -3,7 +3,7 @@
 /**
  * Plugin Name: WP Map Block
  * Plugin URI: http://itushar.me/wp-map-block
- * Description: Google Map, Openstreet Map and Mapbox for gutenberg
+ * Description: Gutenberg Map Block for Google Map and OpenStreet Map
  * Author: tusharimran
  * Author URI: http://itushar.me
  * Version: 1.0.0
