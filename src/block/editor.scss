@@ -1,8 +1,51 @@
 .ti-repeater-fields-wrapper {
-	.ti-repeatrer-toggle-body {
-		display: none;
-		&.ti-toggle-open {
-			display: block;
+	text-align: center;
+	.ti-repeater-fields {
+		margin-bottom: 5px;
+		.ti-repeater-toggle-heading {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			background: #f0f0f0;
+			border: 1px solid #f0f0f0;
+			padding: 10px;
+			.ti-repeater-heading-title {
+				margin: 0;
+			}
+			.btn-ti-repeater {
+				font-size: 14px;
+				line-height: 16px;
+				padding: 0;
+				margin-left: 5px;
+				border: 0;
+				border-radius: 4px;
+				cursor: pointer;
+				outline: none;
+			}
+		}
+		.ti-repeater-toggle-body {
+			display: none;
+			padding: 10px;
+			text-align: left;
+			border: 1px solid #f0f0f0;
+			.components-base-control {
+				margin-bottom: 10px;
+			}
+			&.ti-toggle-open {
+				display: block;
+			}
+		}
+	}
+	.ti-repeater-btn-add {
+		background: #007cba;
+		padding: 10px 15px;
+		border: 0;
+		border-radius: 4px;
+		color: #fff;
+		cursor: pointer;
+		outline: none;
+		&:focus {
+			outline: none;
 		}
 	}
 }

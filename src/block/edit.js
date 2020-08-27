@@ -108,19 +108,23 @@ class edit extends Component {
 							icon={chevronDown}
 							initialOpen={true}
 						>
-							<TextControl
-								label="Width"
+							<RangeControl
+								label="Width (%)"
 								value={this.props.attributes.map_width}
 								onChange={(width) =>
 									this.props.setAttributes({ map_width: width })
 								}
+								min={0}
+								max={100}
 							/>
-							<TextControl
-								label="Height"
+							<RangeControl
+								label="Height (px)"
 								value={this.props.attributes.map_height}
 								onChange={(height) =>
 									this.props.setAttributes({ map_height: height })
 								}
+								min={0}
+								max={1000}
 							/>
 							<RadioControl
 								label="Choose Map"
@@ -153,26 +157,34 @@ class edit extends Component {
 							<div className="ti-repeater-fields-wrapper">
 								{this.props.attributes.map_marker_list !== undefined &&
 									this.props.attributes.map_marker_list.map((item, index) => (
-										<div className="ti-repeatrer-fields" key={index}>
-											<div className="ti-repeatrer-toggle-heading">
-												<span>{item.title}</span>
-												<button
-													onClick={() => {
-														this.toggleRepeater(index);
-													}}
-												>
-													<Icon icon={chevronDown} />
-												</button>
-												<button onClick={() => this.removeRepeater(index)}>
-													<Icon icon={close} />
-												</button>
+										<div className="ti-repeater-fields" key={index}>
+											<div className="ti-repeater-toggle-heading">
+												<h4 className="ti-repeater-heading-title">
+													Map Marker
+												</h4>
+												<div className="ti-repeater-control">
+													<button
+														className="btn-ti-repeater toggle"
+														onClick={() => {
+															this.toggleRepeater(index);
+														}}
+													>
+														<Icon icon={chevronDown} />
+													</button>
+													<button
+														className="btn-ti-repeater delete"
+														onClick={() => this.removeRepeater(index)}
+													>
+														<Icon icon={close} />
+													</button>
+												</div>
 											</div>
 											<div
 												className={
 													this.state.map_marker_toggle.id === index &&
 													this.state.map_marker_toggle.isOpen === true
-														? "ti-repeatrer-toggle-body ti-toggle-open"
-														: "ti-repeatrer-toggle-body"
+														? "ti-repeater-toggle-body ti-toggle-open"
+														: "ti-repeater-toggle-body"
 												}
 											>
 												<TextControl
@@ -215,7 +227,10 @@ class edit extends Component {
 										</div>
 									))}
 
-								<button onClick={() => this.addMarkerHandler()}>
+								<button
+									className="ti-repeater-btn-add"
+									onClick={() => this.addMarkerHandler()}
+								>
 									+ Add Item
 								</button>
 							</div>
@@ -224,6 +239,10 @@ class edit extends Component {
 				</InspectorControls>
 				<Map
 					id={"wpmapblock_" + this.props.instanceId}
+					style={{
+						width: this.props.attributes.map_width + "%",
+						height: this.props.attributes.map_height + "px",
+					}}
 					center={
 						this.props.attributes.map_marker_list !== undefined &&
 						this.props.attributes.map_marker_list.length > 0

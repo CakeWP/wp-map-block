@@ -139,8 +139,8 @@ function wpmapblock_map_render_callback($attributes, $content = '')
 		)
 	);
 
-	$map_width = (isset($attributes['map_width']) ? $attributes['map_width'] : '100%');
-	$map_height = (isset($attributes['map_height']) ? $attributes['map_height'] : '500px');
+	$map_width = (isset($attributes['map_width']) ? $attributes['map_width'] . '%' : '100%');
+	$map_height = (isset($attributes['map_height']) ? $attributes['map_height'] . 'px' : '500px');
 	$style = "
 		width: {$map_width};
 		height: {$map_height};
