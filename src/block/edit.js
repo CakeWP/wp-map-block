@@ -1,21 +1,18 @@
 import { Component } from "@wordpress/element";
 import { withInstanceId } from "@wordpress/compose";
-import { Panel, PanelBody, RangeControl } from "@wordpress/components";
-import { Icon, chevronDown, close } from "@wordpress/icons";
-import "./editor.scss";
-const {
-	CheckboxControl,
+import { __ } from "@wordpress/i18n";
+import {
 	RadioControl,
 	TextControl,
 	TextareaControl,
-	ToggleControl,
-	SelectControl,
-} = wp.components;
-const { RichText, InspectorControls } = wp.editor;
-import { __experimentalNumberControl as NumberControl } from "@wordpress/components";
-import L from "leaflet";
-
+	Panel,
+	PanelBody,
+	RangeControl,
+} from "@wordpress/components";
+import { Icon, chevronDown, close } from "@wordpress/icons";
+const { InspectorControls } = wp.editor;
 import { Map, TileLayer, Marker, Popup } from "react-leaflet";
+import "./editor.scss";
 
 class edit extends Component {
 	constructor(props) {
@@ -90,26 +87,17 @@ class edit extends Component {
 		const OSM = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
 		const GM =
 			"https://maps.googleapis.com/maps/vt?pb=!1m5!1m4!1i{z}!2i{x}!3i{y}!4i256!2m3!1e0!2sm!3i349018013!3m9!2sen-US!3sUS!5e18!12m1!1e47!12m3!1e37!2m1!1ssmartmaps!4e0";
-
-		// const { paddingSize } = attributes;
-
-		// const updateSpacing = (dimension, size, device = "") => {
-		// 	setAttributes({
-		// 		[`${dimension}${device}`]: size,
-		// 	});
-		// };
-
 		return (
 			<React.Fragment>
 				<InspectorControls>
 					<Panel>
 						<PanelBody
-							title="Map Settings"
+							title={__("Map Settings", "wp-map-block")}
 							icon={chevronDown}
 							initialOpen={true}
 						>
 							<RangeControl
-								label="Width (%)"
+								label={__("Width (%)", "wp-map-block")}
 								value={this.props.attributes.map_width}
 								onChange={(width) =>
 									this.props.setAttributes({ map_width: width })
@@ -118,7 +106,7 @@ class edit extends Component {
 								max={100}
 							/>
 							<RangeControl
-								label="Height (px)"
+								label={__("Height (px)", "wp-map-block")}
 								value={this.props.attributes.map_height}
 								onChange={(height) =>
 									this.props.setAttributes({ map_height: height })
@@ -127,7 +115,7 @@ class edit extends Component {
 								max={1000}
 							/>
 							<RadioControl
-								label="Choose Map"
+								label={__("Choose Map", "wp-map-block")}
 								selected={this.props.attributes.map_type}
 								options={[
 									{ label: "Google Map", value: "GM" },
@@ -138,7 +126,7 @@ class edit extends Component {
 								}
 							/>
 							<RangeControl
-								label="Zoom Level"
+								label={__("Zoom Level", "wp-map-block")}
 								value={this.props.attributes.map_zoom}
 								min={0}
 								max={20}
@@ -150,7 +138,7 @@ class edit extends Component {
 					</Panel>
 					<Panel>
 						<PanelBody
-							title="Map Marker"
+							title={__("Map Marker", "wp-map-block")}
 							icon={chevronDown}
 							initialOpen={false}
 						>
@@ -160,7 +148,7 @@ class edit extends Component {
 										<div className="ti-repeater-fields" key={index}>
 											<div className="ti-repeater-toggle-heading">
 												<h4 className="ti-repeater-heading-title">
-													Map Marker
+													{__("Marker ", "wp-map-block")} {1 + index}
 												</h4>
 												<div className="ti-repeater-control">
 													<button
@@ -188,7 +176,7 @@ class edit extends Component {
 												}
 											>
 												<TextControl
-													label="Latitude"
+													label={__("Latitude", "wp-map-block")}
 													onChange={(text) =>
 														this.setMarkerAttributeValue(index, "lat", text)
 													}
@@ -197,7 +185,7 @@ class edit extends Component {
 													}
 												/>
 												<TextControl
-													label="lnggitude"
+													label={__("longitude", "wp-map-block")}
 													onChange={(text) =>
 														this.setMarkerAttributeValue(index, "lng", text)
 													}
@@ -206,7 +194,7 @@ class edit extends Component {
 													}
 												/>
 												<TextControl
-													label="Title"
+													label={__("Title", "wp-map-block")}
 													onChange={(text) =>
 														this.setMarkerAttributeValue(index, "title", text)
 													}
@@ -215,7 +203,7 @@ class edit extends Component {
 													}
 												/>
 												<TextareaControl
-													label="Content"
+													label={__("Content", "wp-map-block")}
 													onChange={(text) =>
 														this.setMarkerAttributeValue(index, "content", text)
 													}
@@ -231,7 +219,7 @@ class edit extends Component {
 									className="ti-repeater-btn-add"
 									onClick={() => this.addMarkerHandler()}
 								>
-									+ Add Item
+									{__("+ Add Item", "wp-map-block")}
 								</button>
 							</div>
 						</PanelBody>
