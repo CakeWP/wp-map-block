@@ -146,7 +146,7 @@ if (!function_exists('wpmapblock_map_render_callback')) {
 					'lng' => 90.4193257
 				]])),
 				(isset($attributes['map_zoom']) ? $attributes['map_zoom'] : 14),
-				(isset($attributes['map_type']) ? $attributes['map_type'] : 'OSM'),
+				(isset($attributes['map_type']) ? $attributes['map_type'] : 'OSM')
 			)
 		);
 
