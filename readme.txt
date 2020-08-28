@@ -10,4 +10,16 @@ Gutenberg Map Block for Google Maps & OpenStreet Maps
 
 == Description ==
 
-A Simple Gutenberg Map Block For Google Maps & OpenStreet Maps
+A Simple Gutenberg Map Block For Google Maps & OpenStreet Maps. Don't need an API key to launch Google Maps & OpenStreet Maps.
+
+= Plugin Features =
+* Multiple Marker
+* Zoom Control
+* Google Maps
+* OpenStreet Maps
+* Map Width & Height
+* Don't need an any api key
+
+= 1.0 =
+* 2020-08-23
+* initial release
