@@ -1,8 +1,10 @@
+=== Gutenberg Map Block For Google Maps & OpenStreet Maps ===
 Contributors: tusharimran
-Tags: blockGoogle, openstreetmap, free map, openstreetmapblock, blockmap, block
+Tags: google map, openstreet map, blockGoogle, openstreetmap, map, leaflet, free map, openstreetmapblock, blockmap, block
 Requires at least: 5.4
 Tested up to: 5.5
 Requires PHP: 5.4
+Stable tag: 1.0
 License: GPLv3
 License URI: https://opensource.org/licenses/GPL-3.0
 
