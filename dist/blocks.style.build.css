@@ -619,6 +619,12 @@ svg.leaflet-image-layer.leaflet-interactive path {
   margin-left: -12px;
   border-right-color: #fff; }
 
-.wp-map-block {
-  width: 100%;
-  height: 500px; }
+.leaflet-popup .leaflet-popup-content {
+  text-align: center; }
+  .leaflet-popup .leaflet-popup-content h6 {
+    font-size: 24px;
+    font-weight: 600;
+    margin: 0; }
+  .leaflet-popup .leaflet-popup-content p {
+    font-size: 16px;
+    margin: 0; }

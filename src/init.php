@@ -108,7 +108,7 @@ if (!function_exists('wpmapblock_map_render_callback')) {
 			var markerList = JSON.parse(JSON.stringify(%2$s));
 			markerList.forEach(function(item, index){
 				L.marker([item.lat, item.lng])
-				.bindPopup(item.title)
+				.bindPopup("<h6>"+item.title+"</h6><p>"+item.content+"</p>")
 				.addTo(cities);
 			});
 			var mapType = %4$s;
