@@ -177,8 +177,12 @@ class edit extends Component {
 											>
 												<TextControl
 													label={__("Latitude", "wp-map-block")}
-													onChange={(text) =>
-														this.setMarkerAttributeValue(index, "lat", text)
+													onChange={(num) =>
+														this.setMarkerAttributeValue(
+															index,
+															"lat",
+															!isNaN(num) ? num : 0
+														)
 													}
 													value={
 														this.props.attributes.map_marker_list[index].lat
@@ -186,8 +190,12 @@ class edit extends Component {
 												/>
 												<TextControl
 													label={__("longitude", "wp-map-block")}
-													onChange={(text) =>
-														this.setMarkerAttributeValue(index, "lng", text)
+													onChange={(num) =>
+														this.setMarkerAttributeValue(
+															index,
+															"lng",
+															!isNaN(num) ? num : 0
+														)
 													}
 													value={
 														this.props.attributes.map_marker_list[index].lng
