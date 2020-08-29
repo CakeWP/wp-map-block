@@ -22,6 +22,10 @@ A Simple Gutenberg Map Block For Google Maps & OpenStreet Maps. Don't need an AP
 * Map Width & Height
 * Don't need an any api key
 
-= 1.0 =
-* 2020-08-23
-* initial release
+== Changelog ==
+= 1.0.1 - 2020-08-24 =
+- Fixed: Popup content undefined issue
+- Update: Map Default Settings Update
+
+= 1.0 - 2020-08-23 =
+- initial release
