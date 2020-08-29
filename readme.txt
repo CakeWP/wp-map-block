@@ -4,7 +4,7 @@ Tags: google map, openstreet map, blockGoogle, openstreetmap, map, leaflet, free
 Requires at least: 5.4
 Tested up to: 5.5
 Requires PHP: 5.4
-Stable tag: 1.0
+Stable tag: 1.0.1
 License: GPLv3
 License URI: https://opensource.org/licenses/GPL-3.0
 
