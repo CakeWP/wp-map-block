@@ -259,13 +259,17 @@ class edit extends Component {
 								position={{
 									lat: item.lat,
 									lng: item.lng,
-									zoom: 13,
+									zoom: 10,
 								}}
 							>
-								<Popup>
-									<h6>{item.title}</h6>
-									<p>{item.content}</p>
-								</Popup>
+								{item.title !== "" || item.content !== "" ? (
+									<Popup>
+										<h6>{item.title}</h6>
+										<p>{item.content}</p>
+									</Popup>
+								) : (
+									""
+								)}
 							</Marker>
 						))}
 				</Map>

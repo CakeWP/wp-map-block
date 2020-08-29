@@ -106,10 +106,22 @@ if (!function_exists('wpmapblock_map_render_callback')) {
 			"https://maps.googleapis.com/maps/vt?pb=!1m5!1m4!1i{z}!2i{x}!3i{y}!4i256!2m3!1e0!2sm!3i349018013!3m9!2sen-US!3sUS!5e18!12m1!1e47!12m3!1e37!2m1!1ssmartmaps!4e0";
 				var cities = L.layerGroup();
 			var markerList = JSON.parse(JSON.stringify(%2$s));
+			
 			markerList.forEach(function(item, index){
-				L.marker([item.lat, item.lng])
-				.bindPopup("<h6>"+item.title+"</h6><p>"+item.content+"</p>")
-				.addTo(cities);
+				var popupHTML = "";
+				if(item.title !== ""){
+					popupHTML += "<h6>"+item.title+"</h6>";
+				}
+				if(item.content !== ""){
+					popupHTML += "<p>"+item.content+"</p>";
+				}
+				if(item.title !== "" || item.content !== ""){
+					L.marker([item.lat, item.lng])
+					.bindPopup(popupHTML)
+					.addTo(cities);
+				} else {
+					L.marker([item.lat, item.lng]).addTo(cities);
+				}
 			});
 			var mapType = %4$s;
 			var grayscale = L.tileLayer(mapType, {
@@ -142,11 +154,13 @@ if (!function_exists('wpmapblock_map_render_callback')) {
 		});',
 				(isset($attributes['map_id']) ? $attributes['map_id'] : ''),
 				json_encode((isset($attributes['map_marker_list']) ? $attributes['map_marker_list'] : [[
-					'lat' => 23.7806365,
-					'lng' => 90.4193257
+					'lat' 		=> 23.7806365,
+					'lng' 		=> 90.4193257,
+					'title'		=> 'Bangladesh',
+					'content'	=> 'A Beautiful Country'
 				]])),
-				(isset($attributes['map_zoom']) ? $attributes['map_zoom'] : 14),
-				(isset($attributes['map_type']) ? $attributes['map_type'] : 'OSM')
+				(isset($attributes['map_zoom']) ? $attributes['map_zoom'] : 10),
+				(isset($attributes['map_type']) ? $attributes['map_type'] : 'GM')
 			)
 		);
 

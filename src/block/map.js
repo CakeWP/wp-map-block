@@ -29,11 +29,11 @@ registerBlockType("wpmapblock/wp-map-block", {
 		},
 		map_zoom: {
 			type: "number",
-			default: 14,
+			default: 10,
 		},
 		map_type: {
 			type: "string",
-			default: "OSM",
+			default: "GM",
 		},
 		map_width: {
 			type: "number",
