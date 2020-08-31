@@ -5,14 +5,18 @@ import {
 	RadioControl,
 	TextControl,
 	TextareaControl,
+	Button,
 	Panel,
 	PanelBody,
 	RangeControl,
 } from "@wordpress/components";
+import { MediaUpload, MediaUploadCheck } from "@wordpress/block-editor";
 import { Icon, chevronDown, close } from "@wordpress/icons";
 const { InspectorControls } = wp.editor;
 import { Map, TileLayer, Marker, Popup } from "react-leaflet";
+import L from "leaflet";
 import "./editor.scss";
+import { imageOverlay } from "leaflet";
 
 class edit extends Component {
 	constructor(props) {
@@ -74,9 +78,8 @@ class edit extends Component {
 					lng: "",
 					title: "",
 					content: "",
-					icon_class_name: "",
-					icon_image_uri: "",
-					is_show_image: false,
+					iconType: "default",
+					customIconUrl: "",
 				},
 			],
 		});
@@ -219,6 +222,80 @@ class edit extends Component {
 														this.props.attributes.map_marker_list[index].content
 													}
 												/>
+												<RadioControl
+													label={__("Choose Icon Type", "wp-map-block")}
+													selected={
+														this.props.attributes.map_marker_list[index]
+															.iconType
+													}
+													options={[
+														{
+															label: __("Default Icon", "wp-map-block"),
+															value: "default",
+														},
+														{ label: "Custom Icon", value: "custom" },
+													]}
+													onChange={(option) => {
+														this.setMarkerAttributeValue(
+															index,
+															"iconType",
+															option
+														);
+													}}
+												/>
+												{this.props.attributes.map_marker_list[index]
+													.iconType == "custom" && (
+													<MediaUploadCheck>
+														<MediaUpload
+															onSelect={(media) =>
+																this.setMarkerAttributeValue(
+																	index,
+																	"customIconUrl",
+																	media.url
+																)
+															}
+															allowedTypes={["image"]}
+															render={({ open }) => (
+																<div>
+																	{this.props.attributes.map_marker_list[index]
+																		.customIconUrl !== "" && (
+																		<img
+																			src={
+																				this.props.attributes.map_marker_list[
+																					index
+																				].customIconUrl
+																			}
+																			alt={__("Icon", "wp-map-block")}
+																		/>
+																	)}
+																	<Button onClick={open}>
+																		{this.props.attributes.map_marker_list[
+																			index
+																		].customIconUrl == ""
+																			? __("Upload Icon", "wp-map-block")
+																			: __("Replace Icon", "wp-map-block")}
+																	</Button>
+																	{this.props.attributes.map_marker_list[index]
+																		.customIconUrl !== "" && (
+																		<button
+																			type="button"
+																			className="components-button"
+																			onClick={() =>
+																				this.setMarkerAttributeValue(
+																					index,
+																					"customIconUrl",
+																					""
+																				)
+																			}
+																		>
+																			{__("Remove Icon", "wp-map-block")}
+																		</button>
+																	)}
+																</div>
+															)}
+														/>
+													</MediaUploadCheck>
+												)}
 											</div>
 										</div>
 									))}
@@ -261,6 +338,17 @@ class edit extends Component {
 									lng: item.lng,
 									zoom: 10,
 								}}
+								icon={
+									new L.Icon({
+										iconUrl:
+											item.customIconUrl !== ""
+												? item.customIconUrl
+												: wpmapblockGlobal.pluginDirUrl +
+												  "assets/images/marker-icon.png",
+										popupAnchor: [0, -15],
+										iconSize: [25, 40],
+									})
+								}
 							>
 								{item.title !== "" || item.content !== "" ? (
 									<Popup>
