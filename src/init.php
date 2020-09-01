@@ -145,11 +145,6 @@ if (!function_exists('wpmapblock_map_render_callback')) {
 				id: "mapbox/light-v9",
 				tileSize: 512,
 				zoomOffset: -1,
-			}),
-			streets = L.tileLayer(mapType, {
-				id: "mapbox/streets-v11",
-				tileSize: 512,
-				zoomOffset: -1,
 			});
 
 			var map = L.map(%1$s, {
@@ -157,17 +152,8 @@ if (!function_exists('wpmapblock_map_render_callback')) {
 			zoom: %3$s,
 			layers: [grayscale, cities],
 		});
-
-		var baseLayers = {
-			Grayscale: grayscale,
-			Streets: streets,
-		};
-
-		var overlays = {
-			Cities: cities,
-		};
-
-		L.control.layers(baseLayers, overlays).addTo(map);
+		var layerGroup = L.layerGroup().addTo(map);
+		L.control.layers(null, layerGroup).addTo(map);
 		});',
 				(isset($attributes['map_id']) ? $attributes['map_id'] : ''),
 				json_encode((isset($attributes['map_marker_list']) ? $attributes['map_marker_list'] : [[
