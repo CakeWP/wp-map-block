@@ -80,16 +80,19 @@ class edit extends Component {
 					content: "",
 					iconType: "default",
 					customIconUrl: "",
+					customIconWidth: 25,
+					customIconHeight: 40,
 				},
 			],
 		});
 	};
 
 	render() {
-		// this.map_init();
+		const { setAttributes, attributes } = this.props;
 		const OSM = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
 		const GM =
 			"https://maps.googleapis.com/maps/vt?pb=!1m5!1m4!1i{z}!2i{x}!3i{y}!4i256!2m3!1e0!2sm!3i349018013!3m9!2sen-US!3sUS!5e18!12m1!1e47!12m3!1e37!2m1!1ssmartmaps!4e0";
+
 		return (
 			<React.Fragment>
 				<InspectorControls>
@@ -101,41 +104,33 @@ class edit extends Component {
 						>
 							<RangeControl
 								label={__("Width (%)", "wp-map-block")}
-								value={this.props.attributes.map_width}
-								onChange={(width) =>
-									this.props.setAttributes({ map_width: width })
-								}
+								value={parseInt(attributes.map_width)}
+								onChange={(width) => setAttributes({ map_width: width })}
 								min={0}
 								max={100}
 							/>
 							<RangeControl
 								label={__("Height (px)", "wp-map-block")}
-								value={this.props.attributes.map_height}
-								onChange={(height) =>
-									this.props.setAttributes({ map_height: height })
-								}
+								value={parseInt(attributes.map_height)}
+								onChange={(height) => setAttributes({ map_height: height })}
 								min={0}
 								max={1000}
 							/>
 							<RadioControl
 								label={__("Choose Map", "wp-map-block")}
-								selected={this.props.attributes.map_type}
+								selected={attributes.map_type}
 								options={[
 									{ label: "Google Map", value: "GM" },
 									{ label: "Open Street map", value: "OSM" },
 								]}
-								onChange={(value) =>
-									this.props.setAttributes({ map_type: value })
-								}
+								onChange={(value) => setAttributes({ map_type: value })}
 							/>
 							<RangeControl
 								label={__("Zoom Level", "wp-map-block")}
-								value={this.props.attributes.map_zoom}
+								value={attributes.map_zoom}
 								min={0}
 								max={20}
-								onChange={(value) =>
-									this.props.setAttributes({ map_zoom: value })
-								}
+								onChange={(value) => setAttributes({ map_zoom: value })}
 							/>
 						</PanelBody>
 					</Panel>
@@ -146,8 +141,8 @@ class edit extends Component {
 							initialOpen={false}
 						>
 							<div className="ti-repeater-fields-wrapper">
-								{this.props.attributes.map_marker_list !== undefined &&
-									this.props.attributes.map_marker_list.map((item, index) => (
+								{attributes.map_marker_list !== undefined &&
+									attributes.map_marker_list.map((item, index) => (
 										<div className="ti-repeater-fields" key={index}>
 											<div className="ti-repeater-toggle-heading">
 												<h4 className="ti-repeater-heading-title">
@@ -187,9 +182,7 @@ class edit extends Component {
 															!isNaN(num) ? num : 0
 														)
 													}
-													value={
-														this.props.attributes.map_marker_list[index].lat
-													}
+													value={attributes.map_marker_list[index].lat}
 												/>
 												<TextControl
 													label={__("longitude", "wp-map-block")}
@@ -200,34 +193,25 @@ class edit extends Component {
 															!isNaN(num) ? num : 0
 														)
 													}
-													value={
-														this.props.attributes.map_marker_list[index].lng
-													}
+													value={attributes.map_marker_list[index].lng}
 												/>
 												<TextControl
 													label={__("Title", "wp-map-block")}
 													onChange={(text) =>
 														this.setMarkerAttributeValue(index, "title", text)
 													}
-													value={
-														this.props.attributes.map_marker_list[index].title
-													}
+													value={attributes.map_marker_list[index].title}
 												/>
 												<TextareaControl
 													label={__("Content", "wp-map-block")}
 													onChange={(text) =>
 														this.setMarkerAttributeValue(index, "content", text)
 													}
-													value={
-														this.props.attributes.map_marker_list[index].content
-													}
+													value={attributes.map_marker_list[index].content}
 												/>
 												<RadioControl
 													label={__("Choose Icon Type", "wp-map-block")}
-													selected={
-														this.props.attributes.map_marker_list[index]
-															.iconType
-													}
+													selected={attributes.map_marker_list[index].iconType}
 													options={[
 														{
 															label: __("Default Icon", "wp-map-block"),
@@ -243,8 +227,8 @@ class edit extends Component {
 														);
 													}}
 												/>
-												{this.props.attributes.map_marker_list[index]
-													.iconType == "custom" && (
+												{attributes.map_marker_list[index].iconType ==
+													"custom" && (
 													<MediaUploadCheck>
 														<MediaUpload
 															onSelect={(media) =>
@@ -257,25 +241,60 @@ class edit extends Component {
 															allowedTypes={["image"]}
 															render={({ open }) => (
 																<div>
-																	{this.props.attributes.map_marker_list[index]
+																	{attributes.map_marker_list[index]
 																		.customIconUrl !== "" && (
-																		<img
-																			src={
-																				this.props.attributes.map_marker_list[
-																					index
-																				].customIconUrl
-																			}
-																			alt={__("Icon", "wp-map-block")}
-																		/>
+																		<div>
+																			<RangeControl
+																				label={__("Icon Width", "wp-map-block")}
+																				value={parseInt(
+																					attributes.map_marker_list[index]
+																						.customIconWidth
+																				)}
+																				onChange={(width) =>
+																					this.setMarkerAttributeValue(
+																						index,
+																						"customIconWidth",
+																						width
+																					)
+																				}
+																				min={0}
+																				max={500}
+																			/>
+																			<RangeControl
+																				label={__(
+																					"Icon Height",
+																					"wp-map-block"
+																				)}
+																				value={parseInt(
+																					attributes.map_marker_list[index]
+																						.customIconHeight
+																				)}
+																				onChange={(height) =>
+																					this.setMarkerAttributeValue(
+																						index,
+																						"customIconHeight",
+																						height
+																					)
+																				}
+																				min={0}
+																				max={500}
+																			/>
+																			<img
+																				src={
+																					attributes.map_marker_list[index]
+																						.customIconUrl
+																				}
+																				alt={__("Icon", "wp-map-block")}
+																			/>
+																		</div>
 																	)}
 																	<Button onClick={open}>
-																		{this.props.attributes.map_marker_list[
-																			index
-																		].customIconUrl == ""
+																		{attributes.map_marker_list[index]
+																			.customIconUrl == ""
 																			? __("Upload Icon", "wp-map-block")
 																			: __("Replace Icon", "wp-map-block")}
 																	</Button>
-																	{this.props.attributes.map_marker_list[index]
+																	{attributes.map_marker_list[index]
 																		.customIconUrl !== "" && (
 																		<button
 																			type="button"
@@ -313,24 +332,24 @@ class edit extends Component {
 				<Map
 					id={"wpmapblock_" + this.props.instanceId}
 					style={{
-						width: this.props.attributes.map_width + "%",
-						height: this.props.attributes.map_height + "px",
+						width: attributes.map_width + "%",
+						height: attributes.map_height + "px",
 					}}
 					center={
-						this.props.attributes.map_marker_list !== undefined &&
-						this.props.attributes.map_marker_list.length > 0
-							? this.props.attributes.map_marker_list[0]
+						attributes.map_marker_list !== undefined &&
+						attributes.map_marker_list.length > 0
+							? attributes.map_marker_list[0]
 							: {
 									lat: 23.7806365,
 									lng: 90.4193257,
 							  }
 					}
-					zoom={this.props.attributes.map_zoom}
+					zoom={attributes.map_zoom}
 				>
-					<TileLayer url={this.props.attributes.map_type == "OSM" ? OSM : GM} />
-					{this.props.attributes.map_marker_list !== undefined &&
-						this.props.attributes.map_marker_list.length > 0 &&
-						this.props.attributes.map_marker_list.map((item, index) => (
+					<TileLayer url={attributes.map_type == "OSM" ? OSM : GM} />
+					{attributes.map_marker_list !== undefined &&
+						attributes.map_marker_list.length > 0 &&
+						attributes.map_marker_list.map((item, index) => (
 							<Marker
 								key={index}
 								position={{
@@ -341,12 +360,15 @@ class edit extends Component {
 								icon={
 									new L.Icon({
 										iconUrl:
-											item.customIconUrl !== ""
+											item.iconType === "custom" && item.customIconUrl !== ""
 												? item.customIconUrl
 												: wpmapblockGlobal.pluginDirUrl +
 												  "assets/images/marker-icon.png",
 										popupAnchor: [0, -15],
-										iconSize: [25, 40],
+										iconSize:
+											item.iconType === "custom"
+												? [item.customIconWidth, item.customIconHeight]
+												: [25, 41],
 									})
 								}
 							>

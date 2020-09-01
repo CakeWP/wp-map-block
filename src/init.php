@@ -115,12 +115,29 @@ if (!function_exists('wpmapblock_map_render_callback')) {
 				if(item.content !== ""){
 					popupHTML += "<p>"+item.content+"</p>";
 				}
-				if(item.title !== "" || item.content !== ""){
-					L.marker([item.lat, item.lng])
-					.bindPopup(popupHTML)
-					.addTo(cities);
-				} else {
-					L.marker([item.lat, item.lng]).addTo(cities);
+				if(item.iconType == "custom"){
+					var LeafIcon = L.Icon.extend({
+						options: {
+							iconSize:     [item.customIconWidth, item.customIconHeight],
+							popupAnchor: [0, -15],
+						}
+					});
+					var icon = new LeafIcon({iconUrl: item.customIconUrl});
+					if(item.title !== "" || item.content !== ""){
+						L.marker([item.lat, item.lng], {icon: icon})
+						.bindPopup(popupHTML)
+						.addTo(cities);
+					} else {
+						L.marker([item.lat, item.lng], {icon: icon}).addTo(cities);
+					}
+				}else{
+					if(item.title !== "" || item.content !== ""){
+						L.marker([item.lat, item.lng])
+						.bindPopup(popupHTML)
+						.addTo(cities);
+					} else {
+						L.marker([item.lat, item.lng]).addTo(cities);
+					}
 				}
 			});
 			var mapType = %4$s;

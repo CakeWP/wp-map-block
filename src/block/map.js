@@ -23,6 +23,8 @@ registerBlockType("wpmapblock/wp-map-block", {
 					content: "A Beautiful Country",
 					iconType: "default",
 					customIconUrl: "",
+					customIconWidth: 25,
+					customIconHeight: 40,
 				},
 			],
 		},
@@ -36,11 +38,11 @@ registerBlockType("wpmapblock/wp-map-block", {
 		},
 		map_width: {
 			type: "number",
-			default: "100",
+			default: 100,
 		},
 		map_height: {
 			type: "number",
-			default: "500",
+			default: 500,
 		},
 	},
 	edit,
