@@ -12,6 +12,7 @@
 		"@wordpress/server-side-render": "^1.16.5",
 		"cgb-scripts": "1.23.1",
 		"leaflet": "^1.6.0",
-		"react-leaflet": "^2.7.0"
+		"react-leaflet": "^2.7.0",
+		"react-leaflet-fullscreen": "^1.0.1"
 	}
 }

@@ -14,6 +14,7 @@ import { MediaUpload, MediaUploadCheck } from "@wordpress/block-editor";
 import { Icon, chevronDown, close } from "@wordpress/icons";
 const { InspectorControls } = wp.editor;
 import { Map, TileLayer, Marker, Popup } from "react-leaflet";
+import FullscreenControl from "react-leaflet-fullscreen";
 import L from "leaflet";
 import "./editor.scss";
 import { imageOverlay } from "leaflet";
@@ -382,6 +383,7 @@ class edit extends Component {
 								)}
 							</Marker>
 						))}
+					<FullscreenControl position="topright" />
 				</Map>
 			</React.Fragment>
 		);

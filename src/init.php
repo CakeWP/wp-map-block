@@ -14,6 +14,7 @@ if (!function_exists('wpmapblock_plugin_core_scripts')) {
 	function wpmapblock_plugin_core_scripts()
 	{
 		wp_enqueue_script('wpmapblock-leaflet', plugins_url('assets/js/leaflet.js', dirname(__FILE__)), array('jquery'), null, true);
+		wp_enqueue_script('wpmapblock-leaflet-fullscreen', plugins_url('assets/js/Control.FullScreen.js', dirname(__FILE__)), array('jquery'), null, true);
 	}
 }
 add_action('wp_enqueue_scripts', 'wpmapblock_plugin_core_scripts');
@@ -151,9 +152,11 @@ if (!function_exists('wpmapblock_map_render_callback')) {
 			center: [markerList[0].lat, markerList[0].lng],
 			zoom: %3$s,
 			layers: [grayscale, cities],
+			fullscreenControl: true,
+			fullscreenControlOptions: {
+				position: "topright"
+			}
 		});
-		var layerGroup = L.layerGroup().addTo(map);
-		L.control.layers(null, layerGroup).addTo(map);
 		});',
 				(isset($attributes['map_id']) ? $attributes['map_id'] : ''),
 				json_encode((isset($attributes['map_marker_list']) ? $attributes['map_marker_list'] : [[
