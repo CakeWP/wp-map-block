@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Plugin Name: Gutenberg Map Block for Google Maps & OpenStreet Maps - WP Map Block
+ * Plugin Name: WP Map Block
  * Plugin URI: http://itushar.me/wp-map-block
  * Description: Gutenberg Map Block for Google Map and OpenStreet Map build with LeafletJS
  * Author: tusharimran
