@@ -18,6 +18,18 @@ if (!defined('ABSPATH')) {
 }
 
 /**
+ * Load textdomain.
+ * @since 1.0
+ */
+add_action('init', 'wpmapblock_load_textdomain');
+if (!function_exists('wpmapblock_load_textdomain')) {
+	function wpmapblock_load_textdomain()
+	{
+		load_plugin_textdomain('wp-map-block', false, dirname(plugin_basename(__FILE__)) . '/languages');
+	}
+}
+
+/**
  * Block Initializer.
  */
 require_once plugin_dir_path(__FILE__) . 'src/init.php';

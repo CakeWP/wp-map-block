@@ -8,11 +8,18 @@
 		"eject": "cgb-scripts eject"
 	},
 	"dependencies": {
-		"@wordpress/compose": "^3.19.3",
-		"@wordpress/server-side-render": "^1.16.5",
+		"@wordpress/compose": "^3.20.0",
+		"@wordpress/server-side-render": "^1.17.0",
 		"cgb-scripts": "1.23.1",
-		"leaflet": "^1.6.0",
+		"leaflet": "^1.7.1",
 		"react-leaflet": "^2.7.0",
 		"react-leaflet-fullscreen": "^1.0.1"
+	},
+	"devDependencies": {
+		"grunt": "~0.4.4",
+		"grunt-exec": "~0.4.5",
+		"grunt-po2mo": "~0.1.0",
+		"grunt-wp-i18n": "~0.4.3",
+		"load-grunt-tasks": "~0.4.0"
 	}
 }

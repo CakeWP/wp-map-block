@@ -1,6 +1,6 @@
 === Gutenberg Map Block For Google Maps & OpenStreet Maps ===
 Contributors: tusharimran
-Tags: wp map block, wp map, google map, openstreet map, blockGoogle, openstreetmap, map, leaflet, free map, openstreetmapblock, blockmap, block
+Tags: block, wp map block, wp map, google map, openstreet map, blockGoogle, openstreetmap, map, leaflet, openstreetmapblock, blockmap
 Requires at least: 5.4
 Tested up to: 5.5
 Requires PHP: 5.4
