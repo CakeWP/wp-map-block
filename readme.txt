@@ -1,19 +1,18 @@
-=== Gutenberg Map Block For Google Maps & OpenStreet Maps ===
+=== Gutenberg Map Block for Google Maps & OpenStreet Maps - WP Map Block ===
 Contributors: tusharimran
-Tags: block, wp map block, wp map, google map, openstreet map, blockGoogle, openstreetmap, map, leaflet, openstreetmapblock, blockmap
+Tags: block, map block, google maps, openstreet map, gutenberg, leaflet, gutenberg block, gutenberg editor, google maps for gutenberg, maps for gutenberg, gutenberg maps
 Requires at least: 5.4
 Tested up to: 5.5
 Requires PHP: 5.4
-Stable tag: 1.1
+Stable tag: 1.1.1
 License: GPLv3
 License URI: https://opensource.org/licenses/GPL-3.0
 
-Gutenberg Map Block for Google Maps & OpenStreet Maps
+Gutenberg Map Block for Google Maps & OpenStreet Maps - WP Map Block
 
 == Description ==
 
-A Simple Gutenberg Map Block For Google Maps & OpenStreet Maps. Don't need an API key to launch Google Maps & OpenStreet Maps.
-WP map block have Zoom control, fullscreen control, custom marker icon as image and much more feature are comming soon.
+A Simple Gutenberg Map Block For Google Maps & OpenStreet Maps. WP Map block build with <a href="https://leafletjs.com/" target="_blank">LeafletJS</a> an open-source JavaScript library for mobile-friendly interactive maps. You can easily use customized Google map or openstreetmap to your WordPress gutenberg supported posts, pages or custom post type.
 
 = Plugin Features =
 * Google Maps
@@ -25,7 +24,34 @@ WP map block have Zoom control, fullscreen control, custom marker icon as image 
 * Map Width & Height
 * Don't need an any api key
 
+<strong>Want To Contribute To The Plugin?</strong>
+
+You may now contribute to the plugin on Github: <a href="https://github.com/imrantushar/wp-map-block" target="_blank" rel="">WP Map Block on Github</a>
+
+
+== Installation ==
+
+Install WP Map Block for Gutenberg either via the WordPress plugin directory or by uploading the files to your server at wp-content/plugins.
+
+
+== Frequently Asked Questions ==
+
+= Is required google map api key or any other api key? =
+
+No, Don't need an API key to launch Google Maps & OpenStreet Maps
+
+== Screenshots ==
+
+1. Google Map
+2. OpenStreet Map
+3. Custom Map Marker With Popup
+
+
 == Changelog ==
+= 1.1.1 - 2020-09-03 =
+- Fixed: Translation Issue
+- Some minor fix
+
 = 1.1 - 2020-09-02 =
 - Added: Custom marker icon
 - Added: Full Screen Map Control
