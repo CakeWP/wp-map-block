@@ -4,7 +4,7 @@ Tags: block, map block, google maps, openstreet map, gutenberg, leaflet, gutenbe
 Requires at least: 5.4
 Tested up to: 5.6
 Requires PHP: 5.4
-Stable tag: 1.1.2
+Stable tag: 1.1.3
 License: GPLv3
 License URI: https://opensource.org/licenses/GPL-3.0
 

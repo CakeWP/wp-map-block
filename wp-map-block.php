@@ -6,7 +6,7 @@
  * Description: Gutenberg Map Block for Google Map and OpenStreet Map build with LeafletJS
  * Author: tusharimran
  * Author URI: http://itushar.me
- * Version: 1.1.2
+ * Version: 1.1.3
  * License: GPL2+
  * License URI: https://www.gnu.org/licenses/gpl-2.0.txt
  *
