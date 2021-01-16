@@ -143,9 +143,7 @@ if (!function_exists('wpmapblock_map_render_callback')) {
 			});
 			var mapType = %4$s;
 			var grayscale = L.tileLayer(mapType, {
-				id: "mapbox/light-v9",
-				tileSize: 512,
-				zoomOffset: -1,
+				id: "mapbox/light-v9"
 			});
 
 			var map = L.map(%1$s, {
