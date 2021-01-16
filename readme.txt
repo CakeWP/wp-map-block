@@ -2,9 +2,9 @@
 Contributors: tusharimran
 Tags: block, map block, google maps, openstreet map, gutenberg, leaflet, gutenberg block, gutenberg editor, google maps for gutenberg, maps for gutenberg, gutenberg maps
 Requires at least: 5.4
-Tested up to: 5.5
+Tested up to: 5.6
 Requires PHP: 5.4
-Stable tag: 1.1.1
+Stable tag: 1.1.2
 License: GPLv3
 License URI: https://opensource.org/licenses/GPL-3.0
 
