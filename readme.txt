@@ -48,6 +48,15 @@ No, Don't need an API key to launch Google Maps & OpenStreet Maps
 
 
 == Changelog ==
+
+= 1.1.3 – 2021-01-16 =
+- Fixed: Map Server Side Render low resolution
+- Fixed: Translation Issue 
+- Some minor Improvement
+
+= 1.1.2 – 2021-01-14 =
+- Some minor fix
+
 = 1.1.1 - 2020-09-03 =
 - Fixed: Translation Issue
 - Some minor fix
