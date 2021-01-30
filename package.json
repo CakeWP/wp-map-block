@@ -11,7 +11,7 @@
 		"@wordpress/compose": "^3.20.0",
 		"@wordpress/i18n": "^3.15.0",
 		"@wordpress/server-side-render": "^1.17.0",
-		"cgb-scripts": "^0.0.1",
+		"cgb-scripts": "^1.23.1",
 		"leaflet": "^1.7.1",
 		"react-leaflet": "^2.7.0",
 		"react-leaflet-fullscreen": "^1.0.1"

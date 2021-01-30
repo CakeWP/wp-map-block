@@ -17,7 +17,6 @@ import { Map, TileLayer, Marker, Popup } from "react-leaflet";
 import FullscreenControl from "react-leaflet-fullscreen";
 import L from "leaflet";
 import "./editor.scss";
-import { imageOverlay } from "leaflet";
 
 class edit extends Component {
 	constructor(props) {
@@ -100,7 +99,6 @@ class edit extends Component {
 					<Panel>
 						<PanelBody
 							title={__("Map Settings", "wp-map-block")}
-							icon={chevronDown}
 							initialOpen={true}
 						>
 							<RangeControl
@@ -138,33 +136,32 @@ class edit extends Component {
 					<Panel>
 						<PanelBody
 							title={__("Map Marker", "wp-map-block")}
-							icon={chevronDown}
 							initialOpen={false}
 						>
 							<div className="ti-repeater-fields-wrapper">
 								{attributes.map_marker_list !== undefined &&
 									attributes.map_marker_list.map((item, index) => (
 										<div className="ti-repeater-fields" key={index}>
-											<div className="ti-repeater-toggle-heading">
-												<h4 className="ti-repeater-heading-title">
-													{__("Marker ", "wp-map-block")} {1 + index}
-												</h4>
-												<div className="ti-repeater-control">
-													<button
-														className="btn-ti-repeater toggle"
-														onClick={() => {
-															this.toggleRepeater(index);
-														}}
-													>
+											<div className="ti-repeater-control">
+												<button
+													className="ti-repeater-control__left btn-ti-repeater"
+													onClick={() => {
+														this.toggleRepeater(index);
+													}}
+												>
+													<div className="text">
+														{__("Marker ", "wp-map-block")} {1 + index}
+													</div>
+													<div className="icon">
 														<Icon icon={chevronDown} />
-													</button>
-													<button
-														className="btn-ti-repeater delete"
-														onClick={() => this.removeRepeater(index)}
-													>
-														<Icon icon={close} />
-													</button>
-												</div>
+													</div>
+												</button>
+												<button
+													className="ti-repeater-control__right btn-ti-repeater"
+													onClick={() => this.removeRepeater(index)}
+												>
+													<Icon width="15" icon={close} />
+												</button>
 											</div>
 											<div
 												className={

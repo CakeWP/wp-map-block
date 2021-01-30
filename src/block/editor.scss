@@ -2,15 +2,20 @@
 	text-align: center;
 	.ti-repeater-fields {
 		margin-bottom: 5px;
-		.ti-repeater-toggle-heading {
+		.ti-repeater-control {
 			display: flex;
-			align-items: center;
-			justify-content: space-between;
 			background: #f0f0f0;
 			border: 1px solid #f0f0f0;
 			padding: 10px;
-			.ti-repeater-heading-title {
-				margin: 0;
+			&__left {
+				flex-basis: 90%;
+				text-align: left;
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+			}
+			&__right {
+
 			}
 			.btn-ti-repeater {
 				font-size: 14px;
