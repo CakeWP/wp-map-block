@@ -2,9 +2,9 @@
 Contributors: tusharimran
 Tags: block, map block, google maps, openstreet map, gutenberg, leaflet, gutenberg block, gutenberg editor, google maps for gutenberg, maps for gutenberg, gutenberg maps
 Requires at least: 5.4
-Tested up to: 5.6
+Tested up to: 5.7
 Requires PHP: 5.4
-Stable tag: 1.1.4
+Stable tag: 1.1.5
 License: GPLv3
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -48,6 +48,10 @@ No, Don't need an API key to launch Google Maps & OpenStreet Maps
 
 
 == Changelog ==
+
+= 1.1.5 – 2021-03-21 =
+- Update: WP 5.7 Compatibility
+- Some minor Improvement
 
 = 1.1.4 – 2021-01-30 =
 - Fixed:  Editor settings page arrow down icon issue
