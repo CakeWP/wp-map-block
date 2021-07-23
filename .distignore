@@ -19,3 +19,6 @@ assets/sass
 *.map
 .prettierignore
 .prettierrc.json
+.editorconfig
+.eslintignore
+.eslintrc.json
