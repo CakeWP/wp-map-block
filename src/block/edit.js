@@ -36,6 +36,7 @@ class edit extends Component {
 							  }
 					}
 					zoom={attributes.map_zoom}
+					scrollWheelZoom={attributes.scroll_wheel_zoom}
 				>
 					<TileLayer url={attributes.map_type == "OSM" ? OSM : GM} />
 					{attributes.map_marker_list !== undefined &&

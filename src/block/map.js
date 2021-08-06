@@ -44,6 +44,10 @@ registerBlockType("wpmapblock/wp-map-block", {
 			type: "number",
 			default: 500,
 		},
+		scroll_wheel_zoom: {
+			type: "boolean",
+			default: false,
+		},
 	},
 	edit,
 	save() {

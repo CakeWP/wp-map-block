@@ -7,6 +7,7 @@ import {
 	Panel,
 	PanelBody,
 	RangeControl,
+	FormToggle,
 } from "@wordpress/components";
 import { __ } from "@wordpress/i18n";
 import { MediaUpload, MediaUploadCheck } from "@wordpress/block-editor";
@@ -108,6 +109,21 @@ export default function EditorSettings({ attributes, setAttributes }) {
 							max={20}
 							onChange={(value) => setAttributes({ map_zoom: value })}
 						/>
+						<div>
+							<FormToggle
+								id="scroll_wheel_zoom"
+								checked={attributes.scroll_wheel_zoom}
+								onChange={() =>
+									setAttributes({
+										scroll_wheel_zoom: !attributes.scroll_wheel_zoom,
+									})
+								}
+							/>
+							{"  "}
+							<label htmlFor="scroll_wheel_zoom">
+								{__("Enable Scroll Wheel Zoom", "wp-map-block")}
+							</label>
+						</div>
 					</PanelBody>
 				</Panel>
 				<Panel>
