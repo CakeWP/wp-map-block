@@ -16,7 +16,6 @@ const { InspectorControls } = wp.editor;
 import { Map, TileLayer, Marker, Popup } from "react-leaflet";
 import FullscreenControl from "react-leaflet-fullscreen";
 import L from "leaflet";
-import "./editor.scss";
 
 class edit extends Component {
 	constructor(props) {
