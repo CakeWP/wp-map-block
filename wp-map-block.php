@@ -17,6 +17,10 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
+if (file_exists(dirname(__FILE__) . '/vendor/autoload.php')) {
+    require_once dirname(__FILE__) . '/vendor/autoload.php';
+}
+
 if (!class_exists('WPMapBlock')) {
     final class WPMapBlock
     {
@@ -24,8 +28,7 @@ if (!class_exists('WPMapBlock')) {
         protected function __construct()
         {
             $this->define_constant();
-            $this->load_dependency();
-            add_action('init', [$this, 'init_plugin']);
+            $this->dispatch_hook();
         }
         public function define_constant()
         {
@@ -41,38 +44,33 @@ if (!class_exists('WPMapBlock')) {
             define('WPMAPBLOCK_ASSETS_DIR_PATH', WPMAPBLOCK_ROOT_DIR_PATH . 'assets/');
             define('WPMAPBLOCK_ASSETS_URI', WPMAPBLOCK_PLUGIN_ROOT_URI . 'assets/');
         }
-
-        public function load_dependency()
-        {
-
-            /**
-             * Block Initializer.
-             */
-            require_once WPMAPBLOCK_ROOT_DIR_PATH . 'includes/Init.php';
-        }
-
     
         public function init_plugin()
         {
             $this->load_textdomain();
         }
 
+        public function dispatch_hook()
+        {
+            add_action('init', [$this, 'init_plugin']);
+            WPMapBlock\Assets::init();
+            WPMapBlock\Block::init();
+        }
 
         public function load_textdomain()
         {
             load_plugin_textdomain('wp-map-block', false, dirname(WPMAPBLOCK_PLUGIN_BASENAME) . '/languages');
         }
 
-
-
-
         protected function __clone()
         {
         }
+
         public function __wakeup()
         {
             throw new \Exception("Cannot unserialize singleton");
         }
+
         public static function getInstance()
         {
             $subclass = static::class;

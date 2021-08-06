@@ -1,80 +1,16 @@
 <?php
+namespace WPMapBlock;
 
-// Exit if accessed directly.
-if (!defined('ABSPATH')) {
-    exit;
-}
-
-/**
- * Plugin Core Scripts
- * @return void
- * @since 1.0
- */
-if (!function_exists('wpmapblock_plugin_core_scripts')) {
-    function wpmapblock_plugin_core_scripts()
+class Block
+{
+    public static function init()
     {
-        wp_enqueue_script('wpmapblock-leaflet', plugins_url('assets/js/leaflet.js', dirname(__FILE__)), array('jquery'), null, true);
-        wp_enqueue_script('wpmapblock-leaflet-fullscreen', plugins_url('assets/js/Control.FullScreen.js', dirname(__FILE__)), array('jquery'), null, true);
+        $self = new self();
+        add_action('init', [$self, 'register_block']);
     }
-}
-add_action('wp_enqueue_scripts', 'wpmapblock_plugin_core_scripts');
-
-
-/**
- * Register wp map block and necessary assets
- * @return void
- * @since 1.0
- */
-if (!function_exists('wpmapblock_block_assets')) {
-    function wpmapblock_block_assets()
+    
+    public function register_block()
     {
-        $dependencies = include_once WPMAPBLOCK_ASSETS_DIR_PATH . 'dist/wpmapblock.core.min.asset.php';
-        
-        wp_register_style(
-            'wp-map-block-stylesheets',
-            WPMAPBLOCK_ASSETS_URI . 'css/wpmapblock-frontend.css',
-            is_admin() ? array('wp-editor') : null,
-            $dependencies['version']
-        );
-
-        // Register block editor script for backend.
-        wp_register_script(
-            'wp-map-block-js', // Handle.
-            WPMAPBLOCK_ASSETS_URI . 'dist/wpmapblock.core.min.js',
-            $dependencies['dependencies'],
-            $dependencies['version'],
-            true
-        );
-
-        // Register block editor styles for backend.
-        wp_register_style(
-            'wp-map-block-editor-css',
-            WPMAPBLOCK_ASSETS_URI . 'css/wpmapblock-editor.css',
-            array('wp-edit-blocks'),
-            $dependencies['version']
-        );
-
-        // WP Localized globals. Use dynamic PHP stuff in JavaScript via `wpmapblockGlobal` object.
-        wp_localize_script(
-            'wp-map-block-js',
-            'wpmapblockGlobal', // Array containing dynamic data for a JS Global.
-            [
-                'pluginDirPath' => plugin_dir_path(__DIR__),
-                'pluginDirUrl'  => plugin_dir_url(__DIR__),
-                // Add more data here that you want to access from `wpmapblockGlobal` object.
-            ]
-        );
-
-        /**
-         * Register Gutenberg block on server-side.
-         *
-         * Register the block on server-side to ensure that the block
-         * scripts and styles for both frontend and backend are
-         * enqueued when the editor loads.
-         *
-         * @link https://wordpress.org/gutenberg/handbook/blocks/writing-your-first-block-type#enqueuing-block-scripts
-         * @since 1.16.0
-         */
         register_block_type(
             'wpmapblock/wp-map-block',
             array(
@@ -84,21 +20,11 @@ if (!function_exists('wpmapblock_block_assets')) {
                 'editor_script' => 'wp-map-block-js',
                 // Enqueue blocks.editor.build.css in the editor only.
                 'editor_style'  => 'wp-map-block-editor-css',
-                'render_callback' => 'wpmapblock_map_render_callback',
+                'render_callback' => [$this, 'render_callback'],
             )
         );
     }
-}
-add_action('init', 'wpmapblock_block_assets');
-
-/**
- * WP Map Block serve side render scripts
- * @param attributes, content
- * @return void
- * @since 1.0
- */
-if (!function_exists('wpmapblock_map_render_callback')) {
-    function wpmapblock_map_render_callback($attributes, $content = '')
+    public function render_callback($attributes, $content = '')
     {
         wp_add_inline_script(
             'wpmapblock-leaflet',

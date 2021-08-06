@@ -1,0 +1,15 @@
+{
+	"name": "tusharimran/wpmapblock",
+	"description": "Google Maps & OpenStreetMap Block For Gutenberg Editor – WP Map Block",
+	"authors": [
+		{
+			"name": "tusharimran"
+		}
+	],
+	"require": {},
+	"autoload": {
+		"psr-4": {
+			"WPMapBlock\\": "./includes"
+		}
+	}
+}
