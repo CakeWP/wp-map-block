@@ -13,9 +13,12 @@ webpack.config.js
 node_modules
 src
 .github/
-assets/sass
+assets/scss
 .babelrc
 *.xml
 *.map
 .prettierignore
 .prettierrc.json
+.editorconfig
+.eslintignore
+.eslintrc.json
