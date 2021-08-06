@@ -11,7 +11,7 @@ import {
 import { __ } from "@wordpress/i18n";
 import { MediaUpload, MediaUploadCheck } from "@wordpress/block-editor";
 import { Icon, chevronDown, close } from "@wordpress/icons";
-const { InspectorControls } = wp.editor;
+const { InspectorControls } = wp.blockEditor;
 import PropTypes from "prop-types";
 
 const propTypes = {};
