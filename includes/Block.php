@@ -48,7 +48,7 @@ class Block
 		";
 
         ob_start(); ?>
-		<div id="<?php echo(isset($attributes['map_id']) ? $attributes['map_id'] : ''); ?>" data-settings='<?php echo json_encode($settings); ?>' class="wpmapblockrender" style="<?php echo $style; ?>"></div>';
+		<div id="<?php echo(isset($attributes['map_id']) ? $attributes['map_id'] : ''); ?>" data-settings='<?php echo json_encode($settings); ?>' class="wpmapblockrender" style="<?php echo $style; ?>"></div>
         <?php
         $output = ob_get_clean();
         return $output;
