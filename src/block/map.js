@@ -1,7 +1,7 @@
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
 import Icon from "./../components/Icon";
-import "./style.scss";
+// import "./style.scss";
 import edit from "./edit";
 
 registerBlockType("wpmapblock/wp-map-block", {
@@ -43,6 +43,10 @@ registerBlockType("wpmapblock/wp-map-block", {
 		map_height: {
 			type: "number",
 			default: 500,
+		},
+		scroll_wheel_zoom: {
+			type: "boolean",
+			default: false,
 		},
 	},
 	edit,

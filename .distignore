@@ -13,7 +13,7 @@ webpack.config.js
 node_modules
 src
 .github/
-assets/sass
+assets/scss
 .babelrc
 *.xml
 *.map
