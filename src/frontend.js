@@ -44,7 +44,7 @@ jQuery(document).ready(function () {
 			zoom: Settings.map_zoom,
 			layers: [grayscale, cities],
 			fullscreenControl: true,
-			scrollWheelZoom: !Settings.scroll_wheel_zoom,
+			scrollWheelZoom: Settings.scroll_wheel_zoom,
 			fullscreenControlOptions: {
 				position: "topright",
 			},
