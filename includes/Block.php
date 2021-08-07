@@ -33,7 +33,7 @@ class Block
                 'lat' 		=> 23.7806365,
                 'lng' 		=> 90.4193257,
                 'title'		=> 'Bangladesh',
-                'content'	=> 'Beautiful Country'
+                'content'	=> 'A Beautiful Country'
             ]],
             'map_zoom' => (isset($attributes['map_zoom']) ? $attributes['map_zoom'] : 10),
             'scroll_wheel_zoom' => (isset($attributes['scroll_wheel_zoom']) ? $attributes['scroll_wheel_zoom'] : false),
