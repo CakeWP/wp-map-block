@@ -16,30 +16,39 @@ class Assets
     }
     public function register_block_assets()
     {
-        $dependencies = include_once WPMAPBLOCK_ASSETS_DIR_PATH . 'dist/wpmapblock.core.min.asset.php';
-        
+        $frontend_dependencies = include_once WPMAPBLOCK_ASSETS_DIR_PATH . 'dist/wpmapblock-frontend.core.min.asset.php';
         wp_register_style(
             'wp-map-block-stylesheets',
             WPMAPBLOCK_ASSETS_URI . 'css/wpmapblock-frontend.css',
             is_admin() ? array('wp-editor') : null,
-            $dependencies['version']
+            $frontend_dependencies['version']
+        );
+
+        // Register block script for frontend.
+        wp_register_script(
+            'wp-map-block-frontend-js', // Handle.
+            WPMAPBLOCK_ASSETS_URI . 'dist/wpmapblock-frontend.core.min.js',
+            $frontend_dependencies['dependencies'],
+            $frontend_dependencies['version'],
+            true
+        );
+
+        $backend_dependencies = include_once WPMAPBLOCK_ASSETS_DIR_PATH . 'dist/wpmapblock.core.min.asset.php';
+        // Register block editor styles for backend.
+        wp_register_style(
+            'wp-map-block-editor-css',
+            WPMAPBLOCK_ASSETS_URI . 'css/wpmapblock-editor.css',
+            array('wp-edit-blocks'),
+            $backend_dependencies['version']
         );
 
         // Register block editor script for backend.
         wp_register_script(
             'wp-map-block-js', // Handle.
             WPMAPBLOCK_ASSETS_URI . 'dist/wpmapblock.core.min.js',
-            $dependencies['dependencies'],
-            $dependencies['version'],
+            $backend_dependencies['dependencies'],
+            $backend_dependencies['version'],
             true
-        );
-
-        // Register block editor styles for backend.
-        wp_register_style(
-            'wp-map-block-editor-css',
-            WPMAPBLOCK_ASSETS_URI . 'css/wpmapblock-editor.css',
-            array('wp-edit-blocks'),
-            $dependencies['version']
         );
 
         // WP Localized globals. Use dynamic PHP stuff in JavaScript via `wpmapblockGlobal` object.

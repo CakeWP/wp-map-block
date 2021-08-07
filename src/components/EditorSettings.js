@@ -121,7 +121,7 @@ export default function EditorSettings({ attributes, setAttributes }) {
 							/>
 							{"  "}
 							<label htmlFor="scroll_wheel_zoom">
-								{__("Enable Scroll Wheel Zoom", "wp-map-block")}
+								{__("Disable Scroll Wheel Zoom", "wp-map-block")}
 							</label>
 						</div>
 					</PanelBody>

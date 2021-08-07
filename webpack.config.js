@@ -6,6 +6,7 @@ const config = {
 	...defaultConfig,
 	entry: {
 		"wpmapblock.core.min": "./src/blocks.js",
+		"wpmapblock-frontend.core.min": "./src/frontend.js",
 	},
 	output: {
 		path: path.resolve(__dirname, "assets/dist"),
