@@ -39,8 +39,7 @@ jQuery(document).ready(function () {
 		var grayscale = L.tileLayer(mapType, {
 			id: "mapbox/light-v9",
 		});
-		L.map(ID, {
-			center: [Settings.map_marker[0].lat, Settings.map_marker[0].lng],
+		let config = {
 			zoom: Settings.map_zoom,
 			layers: [grayscale, cities],
 			fullscreenControl: true,
@@ -48,7 +47,11 @@ jQuery(document).ready(function () {
 			fullscreenControlOptions: {
 				position: "topright",
 			},
-		});
+		};
+		if (Settings.map_marker.length) {
+			config.center = [Settings.map_marker[0].lat, Settings.map_marker[0].lng];
+		}
+		L.map(ID, config);
 	};
 	if (jQuery(".wpmapblockrender").length) {
 		jQuery(".wpmapblockrender").each((index, element) => {
