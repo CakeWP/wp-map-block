@@ -23,12 +23,11 @@ class Assets
             is_admin() ? array('wp-editor') : null,
             $frontend_dependencies['version']
         );
-
         // Register block script for frontend.
         wp_register_script(
             'wp-map-block-frontend-js', // Handle.
             WPMAPBLOCK_ASSETS_URI . 'dist/wpmapblock-frontend.core.min.js',
-            $frontend_dependencies['dependencies'],
+            array_merge(array('jquery'), $frontend_dependencies['dependencies']),
             $frontend_dependencies['version'],
             true
         );
