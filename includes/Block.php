@@ -26,29 +26,40 @@ class Block
             )
         );
     }
+    public static function escaping_array_data($array)
+    {
+        foreach ($array as $key => &$value) {
+            if (is_array($value)) {
+                $value = self::escaping_array_data($value);
+            } else {
+                $value = esc_attr($value);
+            }
+        }
+        return $array;
+    }
     public function render_callback($attributes, $content = '')
     {
         $settings = [
-            'map_marker' => isset($attributes['map_marker_list']) ? $attributes['map_marker_list'] : [[
+            'map_marker' => $this->escaping_array_data(isset($attributes['map_marker_list']) ? $attributes['map_marker_list'] : [[
                 'lat' 		=> 23.7806365,
                 'lng' 		=> 90.4193257,
                 'title'		=> 'Bangladesh',
-                'content'	=> 'Beautiful Country'
-            ]],
-            'map_zoom' => (isset($attributes['map_zoom']) ? $attributes['map_zoom'] : 10),
-            'scroll_wheel_zoom' => (isset($attributes['scroll_wheel_zoom']) ? $attributes['scroll_wheel_zoom'] : false),
-            'map_type' => (isset($attributes['map_type']) ? $attributes['map_type'] : 'GM'),
-        ];
+                'content'	=> 'A Beautiful Country'
+            ]]),
+            'map_zoom' => (isset($attributes['map_zoom']) ? esc_attr($attributes['map_zoom']) : 10),
+            'scroll_wheel_zoom' => (isset($attributes['scroll_wheel_zoom']) ? esc_attr($attributes['scroll_wheel_zoom']) : false),
+            'map_type' => (isset($attributes['map_type']) ? esc_attr($attributes['map_type']) : 'GM'),
+        ] ;
 
-        $map_width = (isset($attributes['map_width']) ? $attributes['map_width'] . '%' : '100%');
-        $map_height = (isset($attributes['map_height']) ? $attributes['map_height'] . 'px' : '500px');
+        $map_width = (isset($attributes['map_width']) ? esc_attr($attributes['map_width']) . '%' : '100%');
+        $map_height = (isset($attributes['map_height']) ? esc_attr($attributes['map_height']) . 'px' : '500px');
         $style = "
 			width: {$map_width};
 			height: {$map_height};
 		";
 
         ob_start(); ?>
-		<div id="<?php echo(isset($attributes['map_id']) ? $attributes['map_id'] : ''); ?>" data-settings='<?php echo json_encode($settings); ?>' class="wpmapblockrender" style="<?php echo $style; ?>"></div>';
+		<div id="<?php echo(isset($attributes['map_id']) ? esc_attr($attributes['map_id']) : ''); ?>" data-settings='<?php echo json_encode($settings); ?>' class="wpmapblockrender" style="<?php echo esc_attr($style); ?>"></div>
         <?php
         $output = ob_get_clean();
         return $output;
