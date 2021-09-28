@@ -22,10 +22,11 @@
 		"@wordpress/i18n": "^3.15.0",
 		"@wordpress/server-side-render": "^1.17.0",
 		"leaflet": "^1.7.1",
+		"leaflet-geosearch": "^3.5.0",
 		"react-leaflet": "^2.7.0",
 		"react-leaflet-fullscreen": "^1.0.1"
 	},
 	"devDependencies": {
-		"@wordpress/scripts": "^17.1.0"
+		"@wordpress/scripts": "^18.0.1"
 	}
 }

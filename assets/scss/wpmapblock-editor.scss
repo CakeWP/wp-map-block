@@ -15,7 +15,6 @@
 				align-items: center;
 			}
 			&__right {
-
 			}
 			.btn-ti-repeater {
 				font-size: 14px;
@@ -51,6 +50,42 @@
 		outline: none;
 		&:focus {
 			outline: none;
+		}
+	}
+	.ti-group-control {
+		display: flex;
+		column-gap: 5px;
+	}
+	.components-radio-control {
+		.components-base-control__label {
+			display: block !important;
+		}
+		&__option {
+			display: inline-block !important;
+			margin: 0 5px;
+		}
+	}
+	.ti-location-search {
+		position: relative;
+		> .components-base-control {
+			margin-bottom: 0 !important;
+		}
+		ul.ti-location-search-results {
+			position: absolute;
+			top: 100%;
+			left: 0;
+			right: 0;
+			border: 1px solid #e0e0e0;
+			background: #fff;
+			li {
+				border-bottom: 1px solid #e0e0e0;
+				padding: 5px 10px;
+				cursor: pointer;
+				margin-bottom: 0 !important;
+				&:last-child {
+					border-bottom: 0;
+				}
+			}
 		}
 	}
 }
