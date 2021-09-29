@@ -4,7 +4,7 @@ Tags: block, map block, google maps, openstreet map, gutenberg, leaflet, gutenbe
 Requires at least: 5.4
 Tested up to: 5.8
 Requires PHP: 5.6
-Stable tag: 1.2.4
+Stable tag: 1.2.5
 License: GPLv3
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -22,6 +22,7 @@ A Simple Gutenberg Map Block For Google Maps & OpenStreet Maps. WP Map block bui
 * Full Screen Map Control
 * Custom Marker Icon
 * Map Width & Height
+* Latitude and Longitude Generator from address
 * Don't need an any api key
 
 <strong>Want To Contribute To The Plugin?</strong>
@@ -48,6 +49,9 @@ No, Don't need an API key to launch Google Maps & OpenStreet Maps
 
 
 == Changelog ==
+
+= 1.2.5 – 2021-09-29 =
+- Added: Latitude and Longitude Generator from address
 
 = 1.2.4 – 2021-08-24 =
 - Some minor Improvement

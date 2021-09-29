@@ -12,6 +12,7 @@ import {
 import { __ } from "@wordpress/i18n";
 import { MediaUpload, MediaUploadCheck } from "@wordpress/block-editor";
 import { Icon, chevronDown, close } from "@wordpress/icons";
+import { OpenStreetMapProvider } from "leaflet-geosearch";
 const { InspectorControls } = wp.blockEditor;
 import PropTypes from "prop-types";
 
@@ -20,6 +21,8 @@ const propTypes = {};
 const defaultProps = {};
 
 export default function EditorSettings({ attributes, setAttributes }) {
+	const [searchText, setSearchText] = useState("");
+	const [locationSearchResults, setLocationSearchResutls] = useState([]);
 	const [mapMarkerToggle, setMapMarkerToggle] = useState({
 		id: null,
 		isOpen: false,
@@ -71,6 +74,27 @@ export default function EditorSettings({ attributes, setAttributes }) {
 			],
 		});
 	};
+	const setLatLngHandler = (index, lat, lng) => {
+		const map_marker_list = attributes.map_marker_list.map((item, key) => {
+			const returnValue = { ...item };
+			if (index === key) {
+				returnValue["lat"] = lat;
+				returnValue["lng"] = lng;
+			}
+			return returnValue;
+		});
+		setAttributes({
+			map_marker_list,
+		});
+		setLocationSearchResutls([]);
+	};
+	// Location Search
+	const provider = new OpenStreetMapProvider();
+	const onChangeSearchLocation = async (value) => {
+		const results = await provider.search({ query: value });
+		setLocationSearchResutls(results.slice(0, 5));
+	};
+
 	return (
 		<React.Fragment>
 			<InspectorControls>
@@ -164,28 +188,64 @@ export default function EditorSettings({ attributes, setAttributes }) {
 													: "ti-repeater-toggle-body"
 											}
 										>
-											<TextControl
-												label={__("Latitude", "wp-map-block")}
-												onChange={(num) =>
-													setMarkerAttributeValue(
-														index,
-														"lat",
-														!isNaN(num) ? num : 0
-													)
-												}
-												value={attributes.map_marker_list[index].lat}
-											/>
-											<TextControl
-												label={__("longitude", "wp-map-block")}
-												onChange={(num) =>
-													setMarkerAttributeValue(
-														index,
-														"lng",
-														!isNaN(num) ? num : 0
-													)
-												}
-												value={attributes.map_marker_list[index].lng}
-											/>
+											<div style={{ marginBottom: "10px" }}>
+												<div className="ti-location-search">
+													<TextControl
+														placeholder={__("Enter address")}
+														onChange={(value) => setSearchText(value)}
+													/>
+													<Button
+														onClick={() => onChangeSearchLocation(searchText)}
+													>
+														<span className="dashicons dashicons-search"></span>
+													</Button>
+													{locationSearchResults.length > 0 && (
+														<ul className="ti-location-search-results">
+															{locationSearchResults.map(
+																(searchItem, searchIndex) => (
+																	<li
+																		key={searchIndex}
+																		onClick={() =>
+																			setLatLngHandler(
+																				index,
+																				searchItem.raw.lat,
+																				searchItem.raw.lon
+																			)
+																		}
+																	>
+																		{searchItem.label}
+																	</li>
+																)
+															)}
+														</ul>
+													)}
+												</div>
+											</div>
+											<div className="ti-group-control">
+												<TextControl
+													label={__("Latitude", "wp-map-block")}
+													onChange={(num) =>
+														setMarkerAttributeValue(
+															index,
+															"lat",
+															!isNaN(num) ? num : 0
+														)
+													}
+													value={attributes.map_marker_list[index].lat}
+												/>
+												<TextControl
+													label={__("longitude", "wp-map-block")}
+													onChange={(num) =>
+														setMarkerAttributeValue(
+															index,
+															"lng",
+															!isNaN(num) ? num : 0
+														)
+													}
+													value={attributes.map_marker_list[index].lng}
+												/>
+											</div>
+
 											<TextControl
 												label={__("Title", "wp-map-block")}
 												onChange={(text) =>
