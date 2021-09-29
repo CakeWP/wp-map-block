@@ -22,6 +22,7 @@ const defaultProps = {};
 
 export default function EditorSettings({ attributes, setAttributes }) {
 	const [searchText, setSearchText] = useState("");
+	const [isRequestSend, setIsRequestSend] = useState(false);
 	const [locationSearchResults, setLocationSearchResutls] = useState([]);
 	const [mapMarkerToggle, setMapMarkerToggle] = useState({
 		id: null,
@@ -73,6 +74,7 @@ export default function EditorSettings({ attributes, setAttributes }) {
 				},
 			],
 		});
+		setSearchText("");
 	};
 	const setLatLngHandler = (index, lat, lng) => {
 		const map_marker_list = attributes.map_marker_list.map((item, key) => {
@@ -91,8 +93,10 @@ export default function EditorSettings({ attributes, setAttributes }) {
 	// Location Search
 	const provider = new OpenStreetMapProvider();
 	const onChangeSearchLocation = async (value) => {
+		setIsRequestSend(true);
 		const results = await provider.search({ query: value });
 		setLocationSearchResutls(results.slice(0, 5));
+		setIsRequestSend(false);
 	};
 
 	return (
@@ -192,12 +196,17 @@ export default function EditorSettings({ attributes, setAttributes }) {
 												<div className="ti-location-search">
 													<TextControl
 														placeholder={__("Enter address")}
+														value={searchText}
 														onChange={(value) => setSearchText(value)}
 													/>
 													<Button
 														onClick={() => onChangeSearchLocation(searchText)}
 													>
-														<span className="dashicons dashicons-search"></span>
+														{isRequestSend ? (
+															<span className="dashicons dashicons-ellipsis"></span>
+														) : (
+															<span className="dashicons dashicons-search"></span>
+														)}
 													</Button>
 													{locationSearchResults.length > 0 && (
 														<ul className="ti-location-search-results">
@@ -205,13 +214,14 @@ export default function EditorSettings({ attributes, setAttributes }) {
 																(searchItem, searchIndex) => (
 																	<li
 																		key={searchIndex}
-																		onClick={() =>
+																		onClick={() => {
+																			setSearchText(searchItem.label);
 																			setLatLngHandler(
 																				index,
 																				searchItem.raw.lat,
 																				searchItem.raw.lon
-																			)
-																		}
+																			);
+																		}}
 																	>
 																		{searchItem.label}
 																	</li>
