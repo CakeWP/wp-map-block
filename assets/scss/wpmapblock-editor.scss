@@ -67,8 +67,17 @@
 	}
 	.ti-location-search {
 		position: relative;
-		> .components-base-control {
+		display: flex;
+		align-items: center;
+		.components-base-control {
 			margin-bottom: 0 !important;
+			flex-grow: 1;
+			&__field {
+				margin-bottom: 0 !important;
+			}
+		}
+		.components-button {
+			height: 30px;
 		}
 		ul.ti-location-search-results {
 			position: absolute;
@@ -77,11 +86,16 @@
 			right: 0;
 			border: 1px solid #e0e0e0;
 			background: #fff;
+			margin: 0;
 			li {
 				border-bottom: 1px solid #e0e0e0;
 				padding: 5px 10px;
 				cursor: pointer;
 				margin-bottom: 0 !important;
+				transition: all 0.3s ease;
+				&:hover {
+					background: #e0e0e0;
+				}
 				&:last-child {
 					border-bottom: 0;
 				}

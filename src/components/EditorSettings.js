@@ -21,6 +21,7 @@ const propTypes = {};
 const defaultProps = {};
 
 export default function EditorSettings({ attributes, setAttributes }) {
+	const [searchText, setSearchText] = useState("");
 	const [locationSearchResults, setLocationSearchResutls] = useState([]);
 	const [mapMarkerToggle, setMapMarkerToggle] = useState({
 		id: null,
@@ -72,6 +73,20 @@ export default function EditorSettings({ attributes, setAttributes }) {
 				},
 			],
 		});
+	};
+	const setLatLngHandler = (index, lat, lng) => {
+		const map_marker_list = attributes.map_marker_list.map((item, key) => {
+			const returnValue = { ...item };
+			if (index === key) {
+				returnValue["lat"] = lat;
+				returnValue["lng"] = lng;
+			}
+			return returnValue;
+		});
+		setAttributes({
+			map_marker_list,
+		});
+		setLocationSearchResutls([]);
 	};
 	// Location Search
 	const provider = new OpenStreetMapProvider();
@@ -173,42 +188,38 @@ export default function EditorSettings({ attributes, setAttributes }) {
 													: "ti-repeater-toggle-body"
 											}
 										>
-											<div className="ti-location-search">
-												<TextControl
-													label={__(
-														"Latitude and Longitude Finder",
-														"wp-map-block"
+											<div style={{ marginBottom: "10px" }}>
+												<div className="ti-location-search">
+													<TextControl
+														placeholder={__("Enter address")}
+														onChange={(value) => setSearchText(value)}
+													/>
+													<Button
+														onClick={() => onChangeSearchLocation(searchText)}
+													>
+														<span className="dashicons dashicons-search"></span>
+													</Button>
+													{locationSearchResults.length > 0 && (
+														<ul className="ti-location-search-results">
+															{locationSearchResults.map(
+																(searchItem, searchIndex) => (
+																	<li
+																		key={searchIndex}
+																		onClick={() =>
+																			setLatLngHandler(
+																				index,
+																				searchItem.raw.lat,
+																				searchItem.raw.lon
+																			)
+																		}
+																	>
+																		{searchItem.label}
+																	</li>
+																)
+															)}
+														</ul>
 													)}
-													placeholder={__("Enter address")}
-													onChange={(value) => {
-														onChangeSearchLocation(value);
-													}}
-												/>
-												{locationSearchResults.length > 0 && (
-													<ul className="ti-location-search-results">
-														{locationSearchResults.map(
-															(searchItem, searchIndex) => (
-																<li
-																	key={searchIndex}
-																	onClick={() => {
-																		setMarkerAttributeValue(
-																			index,
-																			"lat",
-																			searchItem.raw.lat
-																		);
-																		setMarkerAttributeValue(
-																			index,
-																			"lng",
-																			searchItem.raw.lon
-																		);
-																	}}
-																>
-																	{searchItem.label}
-																</li>
-															)
-														)}
-													</ul>
-												)}
+												</div>
 											</div>
 											<div className="ti-group-control">
 												<TextControl
