@@ -49,6 +49,7 @@ class Block
             'map_zoom' => (isset($attributes['map_zoom']) ? esc_attr($attributes['map_zoom']) : 10),
             'scroll_wheel_zoom' => (isset($attributes['scroll_wheel_zoom']) ? esc_attr($attributes['scroll_wheel_zoom']) : false),
             'map_type' => (isset($attributes['map_type']) ? esc_attr($attributes['map_type']) : 'GM'),
+            'center_index' => (isset($attributes['center_index']) ? intval(esc_attr($attributes['center_index'])) : 0),
         ] ;
 
         $map_width = (isset($attributes['map_width']) ? esc_attr($attributes['map_width']) . '%' : '100%');

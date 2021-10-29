@@ -7,6 +7,10 @@
 			background: #f0f0f0;
 			border: 1px solid #f0f0f0;
 			padding: 10px;
+			&--is-center {
+				border-left: 3px solid #007cba;
+				border-radius: 0;
+			}
 			&__left {
 				flex-basis: 90%;
 				text-align: left;

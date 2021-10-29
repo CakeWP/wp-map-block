@@ -61,7 +61,10 @@ jQuery(document).ready(function () {
 			},
 		};
 		if (Settings.map_marker.length) {
-			config.center = [Settings.map_marker[0].lat, Settings.map_marker[0].lng];
+			config.center = [
+				Settings.map_marker[Settings.center_index].lat,
+				Settings.map_marker[Settings.center_index].lng,
+			];
 		}
 		L.map(ID, config);
 	};
