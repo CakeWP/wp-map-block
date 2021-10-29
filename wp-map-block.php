@@ -6,7 +6,7 @@
  * Description: Gutenberg Map Block for Google Map and OpenStreet Map build with LeafletJS
  * Author: tusharimran
  * Author URI: http://itushar.me
- * Version: 1.2.5
+ * Version: 1.3.0
  * License: GPL2+
  * License URI: https://www.gnu.org/licenses/gpl-2.0.txt
  *
@@ -28,6 +28,7 @@ if (!class_exists('WPMapBlock')) {
         protected function __construct()
         {
             $this->define_constant();
+            register_activation_hook(__FILE__, [$this, 'activate']);
             $this->dispatch_hook();
         }
         public function define_constant()
@@ -35,7 +36,7 @@ if (!class_exists('WPMapBlock')) {
             /**
              * Defines CONSTANTS for Whole plugins.
              */
-            define('WPMAPBLOCK_VERSION', '1.2.4');
+            define('WPMAPBLOCK_VERSION', '1.3.0');
             define('WPMAPBLOCK_PLUGIN_FILE', __FILE__);
             define('WPMAPBLOCK_PLUGIN_BASENAME', plugin_basename(__FILE__));
             define('WPMAPBLOCK_PLUGIN_SLUG', 'wp-map-block');
@@ -55,11 +56,17 @@ if (!class_exists('WPMapBlock')) {
             add_action('init', [$this, 'init_plugin']);
             WPMapBlock\Assets::init();
             WPMapBlock\Block::init();
+            WPMapBlock\Migration::init();
         }
 
         public function load_textdomain()
         {
             load_plugin_textdomain('wp-map-block', false, dirname(WPMAPBLOCK_PLUGIN_BASENAME) . '/languages');
+        }
+
+        public function activate()
+        {
+            WPMapBlock\Installer::init();
         }
 
         protected function __clone()

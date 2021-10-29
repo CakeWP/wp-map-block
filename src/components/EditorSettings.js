@@ -8,6 +8,7 @@ import {
 	PanelBody,
 	RangeControl,
 	FormToggle,
+	ToggleControl,
 } from "@wordpress/components";
 import { __ } from "@wordpress/i18n";
 import { MediaUpload, MediaUploadCheck } from "@wordpress/block-editor";
@@ -119,7 +120,7 @@ export default function EditorSettings({ attributes, setAttributes }) {
 							value={parseInt(attributes.map_height)}
 							onChange={(height) => setAttributes({ map_height: height })}
 							min={0}
-							max={1000}
+							max={1500}
 						/>
 						<RadioControl
 							label={__("Choose Map", "wp-map-block")}
@@ -163,7 +164,12 @@ export default function EditorSettings({ attributes, setAttributes }) {
 							{attributes.map_marker_list !== undefined &&
 								attributes.map_marker_list.map((item, index) => (
 									<div className="ti-repeater-fields" key={index}>
-										<div className="ti-repeater-control">
+										<div
+											className={`ti-repeater-control ${
+												attributes.center_index === index &&
+												"ti-repeater-control--is-center"
+											}`}
+										>
 											<button
 												className="ti-repeater-control__left btn-ti-repeater"
 												onClick={() => {
@@ -185,12 +191,12 @@ export default function EditorSettings({ attributes, setAttributes }) {
 											</button>
 										</div>
 										<div
-											className={
+											className={`ti-repeater-toggle-body ${
 												mapMarkerToggle.id === index &&
 												mapMarkerToggle.isOpen === true
-													? "ti-repeater-toggle-body ti-toggle-open"
-													: "ti-repeater-toggle-body"
-											}
+													? "ti-toggle-open"
+													: ""
+											}`}
 										>
 											<div style={{ marginBottom: "10px" }}>
 												<div className="ti-location-search">
@@ -256,6 +262,17 @@ export default function EditorSettings({ attributes, setAttributes }) {
 												/>
 											</div>
 
+											<ToggleControl
+												label={`${
+													attributes.center_index === index
+														? __("Disable Map Center Position", "wp-map-block")
+														: __("Enable Map Center Position", "wp-map-block")
+												}`}
+												checked={attributes.center_index === index}
+												onChange={(option) => {
+													setAttributes({ center_index: option ? index : 0 });
+												}}
+											/>
 											<TextControl
 												label={__("Title", "wp-map-block")}
 												onChange={(text) =>
@@ -265,6 +282,7 @@ export default function EditorSettings({ attributes, setAttributes }) {
 											/>
 											<TextareaControl
 												label={__("Content", "wp-map-block")}
+												help={__("HTML Supported", "wp-map-block")}
 												onChange={(text) =>
 													setMarkerAttributeValue(index, "content", text)
 												}

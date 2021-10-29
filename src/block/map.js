@@ -48,6 +48,10 @@ registerBlockType("wpmapblock/wp-map-block", {
 			type: "boolean",
 			default: false,
 		},
+		center_index: {
+			type: "number",
+			default: 0,
+		},
 	},
 	edit,
 	save() {

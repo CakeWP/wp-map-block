@@ -29,7 +29,7 @@ class edit extends Component {
 					center={
 						attributes.map_marker_list !== undefined &&
 						attributes.map_marker_list.length > 0
-							? attributes.map_marker_list[0]
+							? attributes.map_marker_list[attributes.center_index]
 							: {
 									lat: 23.7806365,
 									lng: 90.4193257,
@@ -67,7 +67,7 @@ class edit extends Component {
 								{item.title !== "" || item.content !== "" ? (
 									<Popup>
 										<h6>{item.title}</h6>
-										<p>{item.content}</p>
+										<p dangerouslySetInnerHTML={{ __html: item.content }}></p>
 									</Popup>
 								) : (
 									""
