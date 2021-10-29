@@ -23,7 +23,7 @@ A Simple Gutenberg Map Block For Google Maps & OpenStreet Maps. WP Map block bui
 * Custom Marker Icon & Popup
 * Map Width & Height
 * Latitude and Longitude Generator from address
-* Set marker as center postion
+* Set any marker as center position
 * Don't need an any api key
 
 <strong>Want To Contribute To The Plugin?</strong>
@@ -52,7 +52,7 @@ No, Don't need an API key to launch Google Maps & OpenStreet Maps
 == Changelog ==
 
 = 1.3.0 – 2021-10-29 =
-- Added: Set marker as center postion
+- Added: Set any marker as center position
 - Fixed: Popup content HTML Support issue
 - Update: Update map height maximum value
 
