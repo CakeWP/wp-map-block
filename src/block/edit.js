@@ -67,7 +67,7 @@ class edit extends Component {
 								{item.title !== "" || item.content !== "" ? (
 									<Popup>
 										<h6>{item.title}</h6>
-										<p>{item.content}</p>
+										<p dangerouslySetInnerHTML={{ __html: item.content }}></p>
 									</Popup>
 								) : (
 									""

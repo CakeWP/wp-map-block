@@ -255,6 +255,7 @@ export default function EditorSettings({ attributes, setAttributes }) {
 											/>
 											<TextareaControl
 												label={__("Content", "wp-map-block")}
+												help={__("HTML Supported", "wp-map-block")}
 												onChange={(text) =>
 													setMarkerAttributeValue(index, "content", text)
 												}

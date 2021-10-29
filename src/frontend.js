@@ -4,13 +4,25 @@ jQuery(document).ready(function () {
 		var GM =
 			"https://maps.googleapis.com/maps/vt?pb=!1m5!1m4!1i{z}!2i{x}!3i{y}!4i256!2m3!1e0!2sm!3i349018013!3m9!2sen-US!3sUS!5e18!12m1!1e47!12m3!1e37!2m1!1ssmartmaps!4e0";
 		var cities = L.layerGroup();
+		const decodeHtml = (str) => {
+			var map = {
+				"&amp;": "&",
+				"&lt;": "<",
+				"&gt;": ">",
+				"&quot;": '"',
+				"&#039;": "'",
+			};
+			return str.replace(/&amp;|&lt;|&gt;|&quot;|&#039;/g, function (m) {
+				return map[m];
+			});
+		};
 		Settings.map_marker.forEach(function (item, index) {
 			var popupHTML = "";
 			if (item.title !== "") {
 				popupHTML += "<h6>" + item.title + "</h6>";
 			}
 			if (item.content !== "") {
-				popupHTML += "<p>" + item.content + "</p>";
+				popupHTML += "<p>" + decodeHtml(item.content) + "</p>";
 			}
 			if (item.iconType == "custom") {
 				var LeafIcon = L.Icon.extend({
