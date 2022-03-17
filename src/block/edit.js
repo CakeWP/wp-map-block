@@ -9,7 +9,10 @@ import EditorSettings from "./../components/EditorSettings";
 class edit extends Component {
 	constructor(props) {
 		super(props);
-		this.props.setAttributes({ map_id: "wpmapblock_" + this.props.instanceId });
+		// Assigning block_id in the attribute.
+		this.props.setAttributes({
+			map_id: "wpmapblock_" + this.props.clientId.substr(0, 8),
+		});
 	}
 	render() {
 		const { setAttributes, attributes } = this.props;
