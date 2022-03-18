@@ -1,19 +1,15 @@
 import React, { useState } from "react";
 import {
 	RadioControl,
-	TextControl,
-	TextareaControl,
 	Button,
 	Panel,
 	PanelBody,
 	RangeControl,
 	FormToggle,
-	ToggleControl,
 } from "@wordpress/components";
 import { __ } from "@wordpress/i18n";
-import { MediaUpload, MediaUploadCheck } from "@wordpress/block-editor";
 import { Icon, chevronDown, close } from "@wordpress/icons";
-import { OpenStreetMapProvider } from "leaflet-geosearch";
+import EditorModalMarker from "./EditorModalMarker";
 const { InspectorControls } = wp.blockEditor;
 import PropTypes from "prop-types";
 
@@ -22,22 +18,8 @@ const propTypes = {};
 const defaultProps = {};
 
 export default function EditorSettings({ attributes, setAttributes }) {
-	const [searchText, setSearchText] = useState("");
-	const [isRequestSend, setIsRequestSend] = useState(false);
-	const [locationSearchResults, setLocationSearchResutls] = useState([]);
-	const [mapMarkerToggle, setMapMarkerToggle] = useState({
-		id: null,
-		isOpen: false,
-	});
-	const toggleRepeater = (key) => {
-		setMapMarkerToggle({
-			id: key,
-			isOpen:
-				mapMarkerToggle.id === key && mapMarkerToggle.isOpen === true
-					? false
-					: true,
-		});
-	};
+	const [index, setIndex] = useState(0);
+
 	const removeRepeater = (key) => {
 		const map_marker_list = attributes.map_marker_list.filter(
 			(item, index) => index != key
@@ -45,21 +27,8 @@ export default function EditorSettings({ attributes, setAttributes }) {
 
 		setAttributes({ map_marker_list: map_marker_list });
 	};
-	const setMarkerAttributeValue = (index, name, value) => {
-		const map_marker_list = attributes.map_marker_list.map((item, key) => {
-			const returnValue = { ...item };
 
-			if (index === key) {
-				returnValue[name] = value;
-			}
-
-			return returnValue;
-		});
-		setAttributes({
-			map_marker_list,
-		});
-	};
-	const addMarkerHandler = () => {
+	const addNewMarker = () => {
 		setAttributes({
 			map_marker_list: [
 				...attributes.map_marker_list,
@@ -75,33 +44,28 @@ export default function EditorSettings({ attributes, setAttributes }) {
 				},
 			],
 		});
-		setSearchText("");
 	};
-	const setLatLngHandler = (index, lat, lng) => {
-		const map_marker_list = attributes.map_marker_list.map((item, key) => {
-			const returnValue = { ...item };
-			if (index === key) {
-				returnValue["lat"] = lat;
-				returnValue["lng"] = lng;
-			}
-			return returnValue;
-		});
-		setAttributes({
-			map_marker_list,
-		});
-		setLocationSearchResutls([]);
+
+	const [isOpenMarkerModal, setOpenMarkerModal] = useState(false);
+	const openMarkerModalModal = (position) => {
+		setIndex(position);
+		setOpenMarkerModal(true);
 	};
-	// Location Search
-	const provider = new OpenStreetMapProvider();
-	const onChangeSearchLocation = async (value) => {
-		setIsRequestSend(true);
-		const results = await provider.search({ query: value });
-		setLocationSearchResutls(results.slice(0, 5));
-		setIsRequestSend(false);
+	const closeMarkerModalModal = () => {
+		setIndex(0);
+		setOpenMarkerModal(false);
 	};
 
 	return (
 		<React.Fragment>
+			<EditorModalMarker
+				index={index}
+				attributes={attributes}
+				setAttributes={setAttributes}
+				isOpen={isOpenMarkerModal}
+				openModal={openMarkerModalModal}
+				closeModal={closeMarkerModalModal}
+			/>
 			<InspectorControls>
 				<Panel>
 					<PanelBody
@@ -172,9 +136,7 @@ export default function EditorSettings({ attributes, setAttributes }) {
 										>
 											<button
 												className="ti-repeater-control__left btn-ti-repeater"
-												onClick={() => {
-													toggleRepeater(index);
-												}}
+												onClick={() => openMarkerModalModal(index)}
 											>
 												<div className="text">
 													{__("Marker ", "wp-map-block")} {1 + index}
@@ -190,213 +152,21 @@ export default function EditorSettings({ attributes, setAttributes }) {
 												<Icon width="15" icon={close} />
 											</button>
 										</div>
-										<div
-											className={`ti-repeater-toggle-body ${
-												mapMarkerToggle.id === index &&
-												mapMarkerToggle.isOpen === true
-													? "ti-toggle-open"
-													: ""
-											}`}
-										>
-											<div style={{ marginBottom: "10px" }}>
-												<div className="ti-location-search">
-													<TextControl
-														placeholder={__("Enter address")}
-														value={searchText}
-														onChange={(value) => setSearchText(value)}
-													/>
-													<Button
-														onClick={() => onChangeSearchLocation(searchText)}
-													>
-														{isRequestSend ? (
-															<span className="dashicons dashicons-ellipsis"></span>
-														) : (
-															<span className="dashicons dashicons-search"></span>
-														)}
-													</Button>
-													{locationSearchResults.length > 0 && (
-														<ul className="ti-location-search-results">
-															{locationSearchResults.map(
-																(searchItem, searchIndex) => (
-																	<li
-																		key={searchIndex}
-																		onClick={() => {
-																			setSearchText(searchItem.label);
-																			setLatLngHandler(
-																				index,
-																				searchItem.raw.lat,
-																				searchItem.raw.lon
-																			);
-																		}}
-																	>
-																		{searchItem.label}
-																	</li>
-																)
-															)}
-														</ul>
-													)}
-												</div>
-											</div>
-											<div className="ti-group-control">
-												<TextControl
-													label={__("Latitude", "wp-map-block")}
-													onChange={(num) =>
-														setMarkerAttributeValue(
-															index,
-															"lat",
-															!isNaN(num) ? num : 0
-														)
-													}
-													value={attributes.map_marker_list[index].lat}
-												/>
-												<TextControl
-													label={__("longitude", "wp-map-block")}
-													onChange={(num) =>
-														setMarkerAttributeValue(
-															index,
-															"lng",
-															!isNaN(num) ? num : 0
-														)
-													}
-													value={attributes.map_marker_list[index].lng}
-												/>
-											</div>
-
-											<ToggleControl
-												label={`${
-													attributes.center_index === index
-														? __("Disable Map Center Position", "wp-map-block")
-														: __("Enable Map Center Position", "wp-map-block")
-												}`}
-												checked={attributes.center_index === index}
-												onChange={(option) => {
-													setAttributes({ center_index: option ? index : 0 });
-												}}
-											/>
-											<TextControl
-												label={__("Title", "wp-map-block")}
-												onChange={(text) =>
-													setMarkerAttributeValue(index, "title", text)
-												}
-												value={attributes.map_marker_list[index].title}
-											/>
-											<TextareaControl
-												label={__("Content", "wp-map-block")}
-												help={__("HTML Supported", "wp-map-block")}
-												onChange={(text) =>
-													setMarkerAttributeValue(index, "content", text)
-												}
-												value={attributes.map_marker_list[index].content}
-											/>
-											<RadioControl
-												label={__("Choose Icon Type", "wp-map-block")}
-												selected={attributes.map_marker_list[index].iconType}
-												options={[
-													{
-														label: __("Default Icon", "wp-map-block"),
-														value: "default",
-													},
-													{ label: "Custom Icon", value: "custom" },
-												]}
-												onChange={(option) => {
-													setMarkerAttributeValue(index, "iconType", option);
-												}}
-											/>
-											{attributes.map_marker_list[index].iconType ==
-												"custom" && (
-												<MediaUploadCheck>
-													<MediaUpload
-														onSelect={(media) =>
-															setMarkerAttributeValue(
-																index,
-																"customIconUrl",
-																media.url
-															)
-														}
-														allowedTypes={["image"]}
-														render={({ open }) => (
-															<div>
-																{attributes.map_marker_list[index]
-																	.customIconUrl !== "" && (
-																	<div>
-																		<RangeControl
-																			label={__("Icon Width", "wp-map-block")}
-																			value={parseInt(
-																				attributes.map_marker_list[index]
-																					.customIconWidth
-																			)}
-																			onChange={(width) =>
-																				setMarkerAttributeValue(
-																					index,
-																					"customIconWidth",
-																					width
-																				)
-																			}
-																			min={0}
-																			max={500}
-																		/>
-																		<RangeControl
-																			label={__("Icon Height", "wp-map-block")}
-																			value={parseInt(
-																				attributes.map_marker_list[index]
-																					.customIconHeight
-																			)}
-																			onChange={(height) =>
-																				setMarkerAttributeValue(
-																					index,
-																					"customIconHeight",
-																					height
-																				)
-																			}
-																			min={0}
-																			max={500}
-																		/>
-																		<img
-																			src={
-																				attributes.map_marker_list[index]
-																					.customIconUrl
-																			}
-																			alt={__("Icon", "wp-map-block")}
-																		/>
-																	</div>
-																)}
-																<Button onClick={open}>
-																	{attributes.map_marker_list[index]
-																		.customIconUrl == ""
-																		? __("Upload Icon", "wp-map-block")
-																		: __("Replace Icon", "wp-map-block")}
-																</Button>
-																{attributes.map_marker_list[index]
-																	.customIconUrl !== "" && (
-																	<button
-																		type="button"
-																		className="components-button"
-																		onClick={() =>
-																			setMarkerAttributeValue(
-																				index,
-																				"customIconUrl",
-																				""
-																			)
-																		}
-																	>
-																		{__("Remove Icon", "wp-map-block")}
-																	</button>
-																)}
-															</div>
-														)}
-													/>
-												</MediaUploadCheck>
-											)}
-										</div>
 									</div>
 								))}
 
-							<button
-								className="ti-repeater-btn-add"
-								onClick={() => addMarkerHandler()}
+							<Button
+								variant="secondary"
+								onClick={() => {
+									addNewMarker();
+									openMarkerModalModal(
+										attributes.map_marker_list &&
+											attributes.map_marker_list.length
+									);
+								}}
 							>
 								{__("+ Add Item", "wp-map-block")}
-							</button>
+							</Button>
 						</div>
 					</PanelBody>
 				</Panel>
