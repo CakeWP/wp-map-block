@@ -1,5 +1,5 @@
 === WP Map Block - Gutenberg Map Block for Google Map and OpenStreet Map ===
-Contributors: tusharimran
+Contributors: tusharimran, academylms
 Tags: block, map block, google maps, openstreet map, gutenberg, leaflet, gutenberg block, gutenberg editor, google maps for gutenberg, maps for gutenberg, gutenberg maps
 Requires at least: 5.4
 Tested up to: 5.9
@@ -34,6 +34,18 @@ You may now contribute to the plugin on Github: <a href="https://github.com/imra
 == Installation ==
 
 Install WP Map Block for Gutenberg either via the WordPress plugin directory or by uploading the files to your server at wp-content/plugins.
+
+## 🔥 WHAT’S NEXT
+If you like wp-map-block, then consider checking out our other WordPress Plugins for FREE:
+
+🔝 [Academy LMS](https://academylms.net) –  WordPress Learning Management System, eLearning Platform, Online Education System & Online Course Builder
+
+
+## 💙 Loved wp-map-block? ##
+
+- Like on our [Facebook Page](https://www.facebook.com/academylmsteam)
+- Join our [Facebook Group](https://www.facebook.com/groups/academylmsteam)
+- Or rate us on [WordPress](https://wordpress.org/support/plugin/wp-map-block/reviews/?rate=5#new-post)
 
 
 == Frequently Asked Questions ==

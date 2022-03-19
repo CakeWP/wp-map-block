@@ -4,7 +4,7 @@ import { __ } from "@wordpress/i18n";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import { FullscreenControl } from "react-leaflet-fullscreen";
 import L from "leaflet";
-import { OSM, GM } from "./../utils/helper";
+import { OSM, GM, getMapPosition } from "./../utils/helper";
 import EditorSettings from "./../components/EditorSettings";
 
 class edit extends Component {
@@ -26,15 +26,9 @@ class edit extends Component {
 						width: attributes.map_width + "%",
 						height: attributes.map_height + "px",
 					}}
-					center={
-						attributes.map_marker_list !== undefined &&
-						attributes.map_marker_list.length > 0
-							? attributes.map_marker_list[attributes.center_index]
-							: {
-									lat: 23.7806365,
-									lng: 90.4193257,
-							  }
-					}
+					center={getMapPosition(
+						attributes?.map_marker_list[attributes?.center_index]
+					)}
 					zoom={attributes.map_zoom}
 					scrollWheelZoom={attributes.scroll_wheel_zoom}
 				>

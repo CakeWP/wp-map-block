@@ -1,25 +1,19 @@
 import { useCallback, useMemo, useRef, useState } from "react";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 
-const center = {
-	lat: 51.505,
-	lng: -0.09,
-};
-
 const propTypes = {};
 
 const defaultProps = {};
 
-export default function DraggableMarker(props) {
-	const [position, setPosition] = useState(center);
+export default function DraggableMarker({ setLatLngHandler, center }) {
 	const markerRef = useRef(null);
 	const eventHandlers = useMemo(
 		() => ({
 			dragend() {
 				const marker = markerRef.current;
 				if (marker != null) {
-					console.log(marker.getLatLng());
-					setPosition(marker.getLatLng());
+					const { lat, lng } = marker.getLatLng();
+					setLatLngHandler(lat, lng);
 				}
 			},
 		}),
@@ -30,7 +24,7 @@ export default function DraggableMarker(props) {
 		<Marker
 			draggable={true}
 			eventHandlers={eventHandlers}
-			position={position}
+			position={center}
 			ref={markerRef}
 		></Marker>
 	);

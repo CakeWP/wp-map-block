@@ -2,10 +2,10 @@
 
 /**
  * Plugin Name: WP Map Block
- * Plugin URI: http://itushar.me/wp-map-block
+ * Plugin URI: https://academylms.net/wp-map-block
  * Description: Gutenberg Map Block for Google Map and OpenStreet Map build with LeafletJS
- * Author: tusharimran
- * Author URI: http://itushar.me
+ * Author: AcademyLMS
+ * Author URI: https://academylms.net/
  * Version: 1.3.1
  * License: GPL2+
  * License URI: https://www.gnu.org/licenses/gpl-2.0.txt

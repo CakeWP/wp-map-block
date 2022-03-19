@@ -1,3 +1,30 @@
+.wp-map-block-modal {
+	&__close {
+		position: absolute;
+		right: 15px;
+		top: 15px;
+	}
+	&__body {
+		display: flex;
+		justify-content: space-between;
+		column-gap: 30px;
+		.entry-left {
+			width: 70%;
+		}
+		.entry-right {
+			width: 30%;
+		}
+	}
+	&-group-control {
+		display: flex;
+		justify-content: space-between;
+		column-gap: 30px;
+		.components-base-control {
+			flex-grow: 1;
+		}
+	}
+}
+
 .ti-repeater-fields-wrapper {
 	text-align: center;
 	.ti-repeater-fields {
