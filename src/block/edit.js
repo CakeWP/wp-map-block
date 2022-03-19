@@ -1,9 +1,10 @@
 import { Component } from "@wordpress/element";
 import { withInstanceId } from "@wordpress/compose";
 import { __ } from "@wordpress/i18n";
-import { Map, TileLayer, Marker, Popup } from "react-leaflet";
-import FullscreenControl from "react-leaflet-fullscreen";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import { FullscreenControl } from "react-leaflet-fullscreen";
 import L from "leaflet";
+import { OSM, GM } from "./../utils/helper";
 import EditorSettings from "./../components/EditorSettings";
 
 class edit extends Component {
@@ -16,14 +17,10 @@ class edit extends Component {
 	}
 	render() {
 		const { setAttributes, attributes } = this.props;
-		const OSM = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
-		const GM =
-			"https://maps.googleapis.com/maps/vt?pb=!1m5!1m4!1i{z}!2i{x}!3i{y}!4i256!2m3!1e0!2sm!3i349018013!3m9!2sen-US!3sUS!5e18!12m1!1e47!12m3!1e37!2m1!1ssmartmaps!4e0";
-
 		return (
 			<React.Fragment>
 				<EditorSettings attributes={attributes} setAttributes={setAttributes} />
-				<Map
+				<MapContainer
 					id={"wpmapblock_" + this.props.instanceId}
 					style={{
 						width: attributes.map_width + "%",
@@ -78,7 +75,7 @@ class edit extends Component {
 							</Marker>
 						))}
 					<FullscreenControl position="topright" />
-				</Map>
+				</MapContainer>
 			</React.Fragment>
 		);
 	}

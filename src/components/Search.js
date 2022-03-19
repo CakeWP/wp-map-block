@@ -2,6 +2,15 @@ import React, { useState } from "react";
 import { __ } from "@wordpress/i18n";
 import { Button, TextControl } from "@wordpress/components";
 import { OpenStreetMapProvider } from "leaflet-geosearch";
+import { MapContainer, TileLayer } from "react-leaflet";
+import DraggableMarker from "./DraggableMarker";
+import { OSM, GM } from "./../utils/helper";
+
+const center = {
+	lat: 51.505,
+	lng: -0.09,
+};
+
 import PropTypes from "prop-types";
 
 const propTypes = {};
@@ -44,6 +53,7 @@ export default function Search({ index, attributes, setAttributes }) {
 						value={searchText}
 						onChange={(value) => setSearchText(value)}
 					/>
+
 					<Button onClick={() => onChangeSearchLocation(searchText)}>
 						{isRequestSend ? (
 							<span className="dashicons dashicons-ellipsis"></span>
@@ -70,6 +80,17 @@ export default function Search({ index, attributes, setAttributes }) {
 							))}
 						</ul>
 					)}
+					<MapContainer
+						style={{
+							width: "100%",
+							height: "300px",
+						}}
+						center={center}
+						zoom={13}
+					>
+						<TileLayer url={attributes.map_type == "OSM" ? OSM : GM} />
+						<DraggableMarker />
+					</MapContainer>
 				</div>
 			</div>
 		</React.Fragment>
