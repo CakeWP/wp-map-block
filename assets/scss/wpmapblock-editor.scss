@@ -15,6 +15,12 @@
 					font-size: 16px;
 					font-weight: 500;
 				}
+				textarea,
+				input {
+					border: 1px solid #ebebeb !important;
+					border-radius: 5px;
+					background: #fafafa;
+				}
 				&__help {
 					font-size: 12px;
 					font-style: italic;
@@ -36,6 +42,7 @@
 
 	&-location-search {
 		.wp-map-block-modal-place-search {
+			position: relative;
 			margin-bottom: 10px;
 			&__input {
 				width: 100%;
@@ -45,9 +52,34 @@
 				box-shadow: 0 0 0 transparent;
 				transition: box-shadow 0.1s linear;
 				border-radius: 2px;
-				border: 1px solid #757575;
+				border: 1px solid #ebebeb !important;
+				border-radius: 5px;
+				background: #fafafa;
 				font-size: 16px;
 				line-height: normal;
+			}
+			&__results {
+				position: absolute;
+				top: 100%;
+				left: 0;
+				right: 0;
+				border: 1px solid #e0e0e0;
+				background: #fff;
+				margin: 0;
+				z-index: 99999;
+				li {
+					border-bottom: 1px solid #e0e0e0;
+					padding: 5px 10px;
+					cursor: pointer;
+					margin-bottom: 0 !important;
+					transition: all 0.3s ease;
+					&:hover {
+						background: #e0e0e0;
+					}
+					&:last-child {
+						border-bottom: 0;
+					}
+				}
 			}
 		}
 		&__map {
@@ -56,6 +88,48 @@
 				font-size: 12px;
 				font-style: italic;
 			}
+		}
+	}
+
+	.wp-map-block-modal-panel {
+		border: 1px solid #ebebeb;
+		background-color: #fafafa;
+		border-radius: 4px;
+		margin-bottom: 20px;
+		&__title {
+			background: #fff;
+			padding: 15px;
+			font-size: 16px;
+			color: #373757;
+			font-weight: 700;
+			margin: 0;
+		}
+		&__body {
+			padding: 15px 10px 15px 20px;
+			border-top: 1px solid #ebebeb;
+			p {
+				margin: 0;
+			}
+		}
+	}
+	&__submit {
+		height: 45px;
+		display: inline-flex;
+		justify-content: center;
+		align-items: center;
+		background: linear-gradient(202deg, #2961ff 0%, #003be2 100%);
+		border: none;
+		outline: none;
+		box-shadow: none;
+		border-radius: 5px;
+		color: #fff;
+		font-size: 16px;
+		font-weight: 500;
+		padding: 0 20px;
+		cursor: pointer;
+		&:hover {
+			color: #fff;
+			box-shadow: 0 22px 42px rgb(0 59 226 / 18%);
 		}
 	}
 }
@@ -144,29 +218,6 @@
 		}
 		.components-button {
 			height: 30px;
-		}
-		ul.ti-location-search-results {
-			position: absolute;
-			top: 100%;
-			left: 0;
-			right: 0;
-			border: 1px solid #e0e0e0;
-			background: #fff;
-			margin: 0;
-			z-index: 999;
-			li {
-				border-bottom: 1px solid #e0e0e0;
-				padding: 5px 10px;
-				cursor: pointer;
-				margin-bottom: 0 !important;
-				transition: all 0.3s ease;
-				&:hover {
-					background: #e0e0e0;
-				}
-				&:last-child {
-					border-bottom: 0;
-				}
-			}
 		}
 	}
 }

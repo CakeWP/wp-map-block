@@ -105,103 +105,141 @@ export default function MarkerModal({
 						/>
 					</div>
 					<div className="entry-right">
-						<ToggleControl
-							label={__("Make it Map Center Position", "wp-map-block")}
-							checked={center_index === index}
-							onChange={(option) => {
-								setAttributes({ center_index: option ? index : 0 });
-							}}
-						/>
-						<RadioControl
-							label={__("Choose Icon Type", "wp-map-block")}
-							selected={map_marker_list[index].iconType}
-							options={[
-								{
-									label: __("Default Icon", "wp-map-block"),
-									value: "default",
-								},
-								{ label: "Custom Icon", value: "custom" },
-							]}
-							onChange={(option) => {
-								setMarkerAttributeValue(index, "iconType", option);
-							}}
-						/>
-						{map_marker_list[index].iconType == "custom" && (
-							<MediaUploadCheck>
-								<MediaUpload
-									onSelect={(media) =>
-										setMarkerAttributeValue(index, "customIconUrl", media.url)
-									}
-									allowedTypes={["image"]}
-									render={({ open }) => (
-										<div>
-											{map_marker_list[index].customIconUrl !== "" && (
+						<div className="wp-map-block-modal-panel">
+							<h2 className="wp-map-block-modal-panel__title">
+								{__("Advanced Settings", "wp-map-block")}
+							</h2>
+							<div className="wp-map-block-modal-panel__body">
+								<ToggleControl
+									label={__("Set As Default Position", "wp-map-block")}
+									checked={center_index === index}
+									onChange={(option) => {
+										setAttributes({ center_index: option ? index : 0 });
+									}}
+								/>
+								<RadioControl
+									label={__("Choose Icon Type", "wp-map-block")}
+									selected={map_marker_list[index].iconType}
+									options={[
+										{
+											label: __("Default Icon", "wp-map-block"),
+											value: "default",
+										},
+										{ label: "Custom Icon", value: "custom" },
+									]}
+									onChange={(option) => {
+										setMarkerAttributeValue(index, "iconType", option);
+									}}
+								/>
+								{map_marker_list[index].iconType == "custom" && (
+									<MediaUploadCheck>
+										<MediaUpload
+											onSelect={(media) =>
+												setMarkerAttributeValue(
+													index,
+													"customIconUrl",
+													media.url
+												)
+											}
+											allowedTypes={["image"]}
+											render={({ open }) => (
 												<div>
-													<RangeControl
-														label={__("Icon Width", "wp-map-block")}
-														value={parseInt(
-															map_marker_list[index].customIconWidth
-														)}
-														onChange={(width) =>
-															setMarkerAttributeValue(
-																index,
-																"customIconWidth",
-																width
-															)
-														}
-														min={0}
-														max={500}
-													/>
-													<RangeControl
-														label={__("Icon Height", "wp-map-block")}
-														value={parseInt(
-															map_marker_list[index].customIconHeight
-														)}
-														onChange={(height) =>
-															setMarkerAttributeValue(
-																index,
-																"customIconHeight",
-																height
-															)
-														}
-														min={0}
-														max={500}
-													/>
-													<img
-														src={map_marker_list[index].customIconUrl}
-														alt={__("Icon", "wp-map-block")}
-														style={{
-															width: map_marker_list[index].customIconWidth,
-															height: map_marker_list[index].customIconHeight,
-														}}
-													/>
+													{map_marker_list[index].customIconUrl !== "" && (
+														<div>
+															<RangeControl
+																label={__("Icon Width", "wp-map-block")}
+																value={parseInt(
+																	map_marker_list[index].customIconWidth
+																)}
+																onChange={(width) =>
+																	setMarkerAttributeValue(
+																		index,
+																		"customIconWidth",
+																		width
+																	)
+																}
+																min={0}
+																max={500}
+															/>
+															<RangeControl
+																label={__("Icon Height", "wp-map-block")}
+																value={parseInt(
+																	map_marker_list[index].customIconHeight
+																)}
+																onChange={(height) =>
+																	setMarkerAttributeValue(
+																		index,
+																		"customIconHeight",
+																		height
+																	)
+																}
+																min={0}
+																max={500}
+															/>
+															<img
+																src={map_marker_list[index].customIconUrl}
+																alt={__("Icon", "wp-map-block")}
+																style={{
+																	width: map_marker_list[index].customIconWidth,
+																	height:
+																		map_marker_list[index].customIconHeight,
+																}}
+															/>
+														</div>
+													)}
+													<Button onClick={open}>
+														{map_marker_list[index].customIconUrl == ""
+															? __("Upload Icon", "wp-map-block")
+															: __("Replace Icon", "wp-map-block")}
+													</Button>
+													{map_marker_list[index].customIconUrl !== "" && (
+														<button
+															type="button"
+															className="components-button"
+															onClick={() =>
+																setMarkerAttributeValue(
+																	index,
+																	"customIconUrl",
+																	""
+																)
+															}
+														>
+															{__("Remove Icon", "wp-map-block")}
+														</button>
+													)}
 												</div>
 											)}
-											<Button onClick={open}>
-												{map_marker_list[index].customIconUrl == ""
-													? __("Upload Icon", "wp-map-block")
-													: __("Replace Icon", "wp-map-block")}
-											</Button>
-											{map_marker_list[index].customIconUrl !== "" && (
-												<button
-													type="button"
-													className="components-button"
-													onClick={() =>
-														setMarkerAttributeValue(index, "customIconUrl", "")
-													}
-												>
-													{__("Remove Icon", "wp-map-block")}
-												</button>
-											)}
-										</div>
-									)}
-								/>
-							</MediaUploadCheck>
-						)}
+										/>
+									</MediaUploadCheck>
+								)}
+							</div>
+						</div>
+						<div className="wp-map-block-modal-panel">
+							<h2 className="wp-map-block-modal-panel__title">
+								{__("Our Latest Product", "wp-map-block")}{" "}
+							</h2>
+							<div className="wp-map-block-modal-panel__body">
+								<p className="note">
+									<strong>
+										<a
+											href="https://wordpress.org/plugins/academy"
+											target="_blank"
+										>
+											Academy LMS
+										</a>
+									</strong>{" "}
+									– eLearning and online course solution for WordPress. More
+									details please{" "}
+									<strong>
+										<a href="https://academylms.net/">Click Here</a>
+									</strong>
+								</p>
+							</div>
+						</div>
 					</div>
 				</div>
 
-				<Button isPrimary={true} onClick={closeModal}>
+				<Button className="wp-map-block-modal__submit" onClick={closeModal}>
 					{__("Save & Close", "wp-map-block")}
 				</Button>
 			</Modal>
