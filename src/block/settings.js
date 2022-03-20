@@ -8,7 +8,7 @@ import {
 	FormToggle,
 } from "@wordpress/components";
 import { __ } from "@wordpress/i18n";
-import { Icon, chevronDown, close } from "@wordpress/icons";
+import { Icon, close } from "@wordpress/icons";
 import MarkerModal from "./../components/modal";
 const { InspectorControls } = wp.blockEditor;
 import PropTypes from "prop-types";
@@ -133,17 +133,15 @@ export default function Settings({ attributes, setAttributes }) {
 												"ti-repeater-control--is-center"
 											}`}
 										>
-											<button
-												className="ti-repeater-control__left btn-ti-repeater"
-												onClick={() => openMarkerModalModal(index)}
-											>
-												<div className="text">
-													{__("Marker ", "wp-map-block")} {1 + index}
-												</div>
-												<div className="icon">
-													<Icon icon={chevronDown} />
-												</div>
-											</button>
+											<div className="ti-repeater-control__left btn-ti-repeater">
+												{__("Marker ", "wp-map-block")} {1 + index}
+												<button
+													className="btn-edit"
+													onClick={() => openMarkerModalModal(index)}
+												>
+													<div className="icon">Edit</div>
+												</button>
+											</div>
 											<button
 												className="ti-repeater-control__right btn-ti-repeater"
 												onClick={() => removeMarker(index)}
@@ -164,7 +162,7 @@ export default function Settings({ attributes, setAttributes }) {
 									);
 								}}
 							>
-								{__("+ Add Item", "wp-map-block")}
+								{__("+ Add Marker", "wp-map-block")}
 							</Button>
 						</div>
 					</PanelBody>

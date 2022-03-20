@@ -5,7 +5,7 @@ import attributes from "./attributes";
 import edit from "./edit";
 
 registerBlockType("wpmapblock/wp-map-block", {
-	title: __("WP Map Block"),
+	title: __("WP Map Block by AcademyLMS"),
 	category: "design",
 	icon: Icon,
 	keywords: [__("map"), __("google map"), __("openstreet map")],

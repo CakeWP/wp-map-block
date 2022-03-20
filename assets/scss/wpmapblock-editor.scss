@@ -154,7 +154,11 @@
 				justify-content: space-between;
 				align-items: center;
 			}
-			&__right {
+			.btn-edit {
+				font-size: 13px;
+				border: 0;
+				padding: 0;
+				margin-right: 10px;
 			}
 			.btn-ti-repeater {
 				font-size: 14px;
