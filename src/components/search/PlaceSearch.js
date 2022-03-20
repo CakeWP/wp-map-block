@@ -38,7 +38,7 @@ export default class PlaceSearch extends React.Component {
 						type="text"
 						value={this.state.q}
 						onChange={this.onSearchChange.bind(this)}
-						placeholder="Search for a place"
+						placeholder="Location Search..."
 					/>
 					{this.state.isOpenResults && (
 						<ul className="wp-map-block-modal-place-search__results">

@@ -106,11 +106,7 @@ export default function MarkerModal({
 					</div>
 					<div className="entry-right">
 						<ToggleControl
-							label={`${
-								center_index === index
-									? __("Disable Map Center Position", "wp-map-block")
-									: __("Enable Map Center Position", "wp-map-block")
-							}`}
+							label={__("Make it Map Center Position", "wp-map-block")}
 							checked={center_index === index}
 							onChange={(option) => {
 								setAttributes({ center_index: option ? index : 0 });
@@ -174,6 +170,10 @@ export default function MarkerModal({
 													<img
 														src={map_marker_list[index].customIconUrl}
 														alt={__("Icon", "wp-map-block")}
+														style={{
+															width: map_marker_list[index].customIconWidth,
+															height: map_marker_list[index].customIconHeight,
+														}}
 													/>
 												</div>
 											)}

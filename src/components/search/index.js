@@ -36,21 +36,27 @@ export default function Search({ index, attributes, setAttributes }) {
 		<React.Fragment>
 			<div className="wp-map-block-modal-location-search">
 				<PlaceSearch setLatLngHandler={setLatLngHandler} />
-				<MapContainer
-					style={{
-						width: "100%",
-						height: "200px",
-					}}
-					center={center}
-					zoom={13}
-					whenCreated={setModalMap}
-				>
-					<TileLayer url={attributes.map_type == "OSM" ? OSM : GM} />
-					<DraggableMarker
+				<div className="wp-map-block-modal-location-search__map">
+					<MapContainer
+						style={{
+							width: "100%",
+							height: "200px",
+						}}
 						center={center}
-						setLatLngHandler={setLatLngHandler}
-					/>
-				</MapContainer>
+						zoom={13}
+						whenCreated={setModalMap}
+					>
+						<TileLayer url={attributes.map_type == "OSM" ? OSM : GM} />
+						<DraggableMarker
+							center={center}
+							setLatLngHandler={setLatLngHandler}
+						/>
+					</MapContainer>
+					<span className="note">
+						Draggable Marker, Your can easily change your marker position by
+						Dragging
+					</span>
+				</div>
 			</div>
 		</React.Fragment>
 	);
