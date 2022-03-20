@@ -9,7 +9,7 @@ import {
 } from "@wordpress/components";
 import { __ } from "@wordpress/i18n";
 import { Icon, chevronDown, close } from "@wordpress/icons";
-import EditorModalMarker from "./EditorModalMarker";
+import MarkerModal from "./../components/modal";
 const { InspectorControls } = wp.blockEditor;
 import PropTypes from "prop-types";
 
@@ -17,7 +17,7 @@ const propTypes = {};
 
 const defaultProps = {};
 
-export default function EditorSettings({ attributes, setAttributes }) {
+export default function Settings({ attributes, setAttributes }) {
 	const [index, setIndex] = useState(0);
 
 	const removeRepeater = (key) => {
@@ -58,7 +58,7 @@ export default function EditorSettings({ attributes, setAttributes }) {
 
 	return (
 		<React.Fragment>
-			<EditorModalMarker
+			<MarkerModal
 				index={index}
 				attributes={attributes}
 				setAttributes={setAttributes}
@@ -175,5 +175,5 @@ export default function EditorSettings({ attributes, setAttributes }) {
 	);
 }
 
-EditorSettings.propTypes = propTypes;
-EditorSettings.defaultProps = defaultProps;
+Settings.propTypes = propTypes;
+Settings.defaultProps = defaultProps;

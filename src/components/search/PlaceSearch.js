@@ -1,6 +1,6 @@
 import React from "react";
 import { OpenStreetMapProvider } from "leaflet-geosearch";
-import { debounce } from "./../utils/helper";
+import { debounce } from "../../utils/helper";
 import PropTypes from "prop-types";
 
 const propTypes = {};
@@ -21,7 +21,7 @@ export default class PlaceSearch extends React.Component {
 	constructor(props) {
 		super(props);
 		this.provider = new OpenStreetMapProvider();
-		this.fetchPlaces = debounce(this.fetchPlaces, 1000);
+		this.fetchPlaces = debounce(this.fetchPlaces, 500);
 	}
 	onSearchChange(ev) {
 		const q = ev.target.value;

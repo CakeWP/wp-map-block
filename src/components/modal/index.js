@@ -10,7 +10,7 @@ import {
 import { __ } from "@wordpress/i18n";
 import { MediaUpload, MediaUploadCheck } from "@wordpress/block-editor";
 import Modal from "react-modal";
-import Search from "./Search";
+import Search from "./../search";
 import PropTypes from "prop-types";
 
 const propTypes = {};
@@ -32,7 +32,7 @@ const customStyles = {
 	},
 };
 
-export default function EditorModalMarker({
+export default function MarkerModal({
 	index,
 	isOpen,
 	attributes,
@@ -60,7 +60,6 @@ export default function EditorModalMarker({
 			<Modal
 				bodyOpenClassName="wp-map-block-modal"
 				isOpen={isOpen}
-				onRequestClose={false}
 				style={customStyles}
 				ariaHideApp={false}
 				contentLabel="Marker Editor"
@@ -215,5 +214,5 @@ export default function EditorModalMarker({
 	);
 }
 
-EditorModalMarker.propTypes = propTypes;
-EditorModalMarker.defaultProps = defaultProps;
+MarkerModal.propTypes = propTypes;
+MarkerModal.defaultProps = defaultProps;
