@@ -20,11 +20,10 @@ const defaultProps = {};
 export default function Settings({ attributes, setAttributes }) {
 	const [index, setIndex] = useState(0);
 
-	const removeRepeater = (key) => {
+	const removeMarker = (key) => {
 		const map_marker_list = attributes.map_marker_list.filter(
 			(item, index) => index != key
 		);
-
 		setAttributes({ map_marker_list: map_marker_list });
 	};
 
@@ -147,7 +146,7 @@ export default function Settings({ attributes, setAttributes }) {
 											</button>
 											<button
 												className="ti-repeater-control__right btn-ti-repeater"
-												onClick={() => removeRepeater(index)}
+												onClick={() => removeMarker(index)}
 											>
 												<Icon width="15" icon={close} />
 											</button>

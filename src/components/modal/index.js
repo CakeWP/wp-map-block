@@ -40,6 +40,8 @@ export default function MarkerModal({
 	openModal,
 	closeModal,
 }) {
+	const { map_marker_list, center_index } = attributes;
+
 	const setMarkerAttributeValue = (index, name, value) => {
 		const map_marker_list = attributes.map_marker_list.map((item, key) => {
 			const returnValue = { ...item };
@@ -81,20 +83,20 @@ export default function MarkerModal({
 								onChange={(num) =>
 									setMarkerAttributeValue(index, "lat", !isNaN(num) ? num : 0)
 								}
-								value={attributes.map_marker_list[index].lat}
+								value={map_marker_list[index].lat}
 							/>
 							<TextControl
 								label={__("longitude", "wp-map-block")}
 								onChange={(num) =>
 									setMarkerAttributeValue(index, "lng", !isNaN(num) ? num : 0)
 								}
-								value={attributes.map_marker_list[index].lng}
+								value={map_marker_list[index].lng}
 							/>
 						</div>
 						<TextControl
 							label={__("Title", "wp-map-block")}
 							onChange={(text) => setMarkerAttributeValue(index, "title", text)}
-							value={attributes.map_marker_list[index].title}
+							value={map_marker_list[index].title}
 						/>
 						<TextareaControl
 							label={__("Content", "wp-map-block")}
@@ -102,24 +104,24 @@ export default function MarkerModal({
 							onChange={(text) =>
 								setMarkerAttributeValue(index, "content", text)
 							}
-							value={attributes.map_marker_list[index].content}
+							value={map_marker_list[index].content}
 						/>
 					</div>
 					<div className="entry-right">
 						<ToggleControl
 							label={`${
-								attributes.center_index === index
+								center_index === index
 									? __("Disable Map Center Position", "wp-map-block")
 									: __("Enable Map Center Position", "wp-map-block")
 							}`}
-							checked={attributes.center_index === index}
+							checked={center_index === index}
 							onChange={(option) => {
 								setAttributes({ center_index: option ? index : 0 });
 							}}
 						/>
 						<RadioControl
 							label={__("Choose Icon Type", "wp-map-block")}
-							selected={attributes.map_marker_list[index].iconType}
+							selected={map_marker_list[index].iconType}
 							options={[
 								{
 									label: __("Default Icon", "wp-map-block"),
@@ -131,7 +133,7 @@ export default function MarkerModal({
 								setMarkerAttributeValue(index, "iconType", option);
 							}}
 						/>
-						{attributes.map_marker_list[index].iconType == "custom" && (
+						{map_marker_list[index].iconType == "custom" && (
 							<MediaUploadCheck>
 								<MediaUpload
 									onSelect={(media) =>
@@ -140,13 +142,12 @@ export default function MarkerModal({
 									allowedTypes={["image"]}
 									render={({ open }) => (
 										<div>
-											{attributes.map_marker_list[index].customIconUrl !==
-												"" && (
+											{map_marker_list[index].customIconUrl !== "" && (
 												<div>
 													<RangeControl
 														label={__("Icon Width", "wp-map-block")}
 														value={parseInt(
-															attributes.map_marker_list[index].customIconWidth
+															map_marker_list[index].customIconWidth
 														)}
 														onChange={(width) =>
 															setMarkerAttributeValue(
@@ -161,7 +162,7 @@ export default function MarkerModal({
 													<RangeControl
 														label={__("Icon Height", "wp-map-block")}
 														value={parseInt(
-															attributes.map_marker_list[index].customIconHeight
+															map_marker_list[index].customIconHeight
 														)}
 														onChange={(height) =>
 															setMarkerAttributeValue(
@@ -174,20 +175,17 @@ export default function MarkerModal({
 														max={500}
 													/>
 													<img
-														src={
-															attributes.map_marker_list[index].customIconUrl
-														}
+														src={map_marker_list[index].customIconUrl}
 														alt={__("Icon", "wp-map-block")}
 													/>
 												</div>
 											)}
 											<Button onClick={open}>
-												{attributes.map_marker_list[index].customIconUrl == ""
+												{map_marker_list[index].customIconUrl == ""
 													? __("Upload Icon", "wp-map-block")
 													: __("Replace Icon", "wp-map-block")}
 											</Button>
-											{attributes.map_marker_list[index].customIconUrl !==
-												"" && (
+											{map_marker_list[index].customIconUrl !== "" && (
 												<button
 													type="button"
 													className="components-button"
