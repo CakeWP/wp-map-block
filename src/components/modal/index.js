@@ -43,17 +43,14 @@ export default function MarkerModal({
 	const { map_marker_list, center_index } = attributes;
 
 	const setMarkerAttributeValue = (index, name, value) => {
-		const map_marker_list = attributes.map_marker_list.map((item, key) => {
-			const returnValue = { ...item };
-
-			if (index === key) {
-				returnValue[name] = value;
-			}
-
-			return returnValue;
-		});
 		setAttributes({
-			map_marker_list,
+			map_marker_list: map_marker_list.reduce((acc, item, key) => {
+				if (index === key) {
+					item[name] = value;
+				}
+				acc.push(item);
+				return acc;
+			}, []),
 		});
 	};
 

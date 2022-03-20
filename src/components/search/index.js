@@ -19,12 +19,17 @@ export default function Search({ index, attributes, setAttributes }) {
 		if (modalMap) {
 			modalMap.setView({ lat, lng });
 		}
-		map_marker_list[index]["lat"] = lat;
-		map_marker_list[index]["lng"] = lng;
-		setAttributes({
-			map_marker_list: [...map_marker_list],
-		});
 		setCenter({ lat, lng });
+		setAttributes({
+			map_marker_list: map_marker_list.reduce((acc, item, key) => {
+				if (index === key) {
+					item["lat"] = lat;
+					item["lng"] = lng;
+				}
+				acc.push(item);
+				return acc;
+			}, []),
+		});
 	};
 
 	return (
