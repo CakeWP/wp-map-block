@@ -1,5 +1,5 @@
-import { useCallback, useMemo, useRef, useState } from "react";
-import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
+import { useMemo, useRef } from "react";
+import { Marker } from "react-leaflet";
 
 const propTypes = {};
 
