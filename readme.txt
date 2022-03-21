@@ -26,6 +26,7 @@ A Simple Gutenberg Map Block For Google Maps & OpenStreet Maps. WP Map block bui
 * Map Width & Height
 * Latitude and Longitude Generator from address
 * Set any marker as center position
+* Marker Builder
 * Draggable Marker
 * Don't need an any api key
 
