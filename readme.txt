@@ -4,7 +4,7 @@ Tags: block, map block, google maps, openstreet map, gutenberg, leaflet, gutenbe
 Requires at least: 5.4
 Tested up to: 5.9
 Requires PHP: 5.6
-Stable tag: 1.3.1
+Stable tag: 1.4.0
 License: GPLv3
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -24,6 +24,7 @@ A Simple Gutenberg Map Block For Google Maps & OpenStreet Maps. WP Map block bui
 * Map Width & Height
 * Latitude and Longitude Generator from address
 * Set any marker as center position
+* Draggable Marker
 * Don't need an any api key
 
 <strong>Want To Contribute To The Plugin?</strong>
@@ -41,7 +42,7 @@ If you like wp-map-block, then consider checking out our other WordPress Plugins
 🔝 [Academy LMS](https://academylms.net) –  WordPress Learning Management System, eLearning Platform, Online Education System & Online Course Builder
 
 
-## 💙 Loved wp-map-block? ##
+## 💙 Loved WP-Map-Block? ##
 
 - Like on our [Facebook Page](https://www.facebook.com/academylmsteam)
 - Join our [Facebook Group](https://www.facebook.com/groups/academylmsteam)
@@ -62,6 +63,11 @@ No, Don't need an API key to launch Google Maps & OpenStreet Maps
 
 
 == Changelog ==
+
+= 1.4.0 – 2021-03-21 =
+- Added: Draggable Marker Editor
+- Updated: React Leaflet NPM Package Update
+- Fixed: Real Time Map Center Position Not Working Issue
 
 = 1.3.1 – 2021-02-16 =
 - Added: 5.9 Compatibility
