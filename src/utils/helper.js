@@ -14,9 +14,14 @@ export const debounce = (fn, delay) => {
 	};
 };
 
-export const getMapPosition = (position) => {
-	if (position?.lat && position?.lng) {
-		return { lat: position.lat, lng: position.lng };
+export const getMapPosition = (markerLists, position) => {
+	if (Array.isArray(markerLists)) {
+		const index = markerLists[position] ? position : 0;
+		const marker = markerLists[index];
+		return {
+			lat: marker?.lat,
+			lng: marker?.lng,
+		};
 	}
 	return {
 		lat: 23.7806365,

@@ -13,7 +13,7 @@ const defaultProps = {};
 export default function Search({ index, attributes, setAttributes }) {
 	const [modalMap, setModalMap] = useState(null);
 	const { map_marker_list } = attributes;
-	const [center, setCenter] = useState(getMapPosition(map_marker_list[index]));
+	const [center, setCenter] = useState(getMapPosition(map_marker_list, index));
 
 	const setLatLngHandler = (lat, lng) => {
 		if (modalMap) {
