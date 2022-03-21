@@ -231,7 +231,9 @@ export default function MarkerModal({
 									– eLearning and online course solution for WordPress. More
 									details please{" "}
 									<strong>
-										<a href="https://academylms.net/">Click Here</a>
+										<a href="https://academylms.net/" target="_blank">
+											Click Here
+										</a>
 									</strong>
 								</p>
 							</div>
