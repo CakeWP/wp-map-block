@@ -14,6 +14,8 @@ No API key is required to launch Google Maps & OpenStreetMap.
 
 A Simple Gutenberg Map Block For Google Maps & OpenStreet Maps. WP Map block build with <a href="https://leafletjs.com/" target="_blank">LeafletJS</a> an open-source JavaScript library for mobile-friendly interactive maps. You can easily use customized Google map or openstreetmap to your WordPress gutenberg supported posts, pages or custom post type.
 
+⭐ [Live Demo](https://academylms.net/wp-map-block/)
+
 = Plugin Features =
 * Google Maps
 * OpenStreet Maps
