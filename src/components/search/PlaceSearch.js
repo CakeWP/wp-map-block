@@ -1,5 +1,6 @@
 import React from "react";
 import { OpenStreetMapProvider } from "leaflet-geosearch";
+import { __ } from "@wordpress/i18n";
 import { debounce } from "../../utils/helper";
 import PropTypes from "prop-types";
 
@@ -38,7 +39,7 @@ export default class PlaceSearch extends React.Component {
 						type="text"
 						value={this.state.q}
 						onChange={this.onSearchChange.bind(this)}
-						placeholder="Location Search..."
+						placeholder={__("Location Search...", "wp-map-block")}
 					/>
 					{this.state.isOpenResults && (
 						<ul className="wp-map-block-modal-place-search__results">

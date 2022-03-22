@@ -9,7 +9,14 @@ registerBlockType("wpmapblock/wp-map-block", {
 	description: __("Map solution by Academy LMS", "wp-map-block"),
 	category: "design",
 	icon: Icon,
-	keywords: [__("map"), __("google map"), __("openstreet map")],
+	keywords: [
+		__("map", "wp-map-block"),
+		__("google map", "wp-map-block"),
+		__("openstreet map", "wp-map-block"),
+		__("map block", "wp-map-block"),
+		__("api", "wp-map-block"),
+		__("maps", "wp-map-block"),
+	],
 	attributes,
 	edit,
 	save() {
