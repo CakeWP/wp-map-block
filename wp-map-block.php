@@ -6,7 +6,7 @@
  * Description: Gutenberg Map Block for Google Map and OpenStreet Map build with LeafletJS
  * Author: Academy LMS
  * Author URI: https://academylms.net/
- * Version: 1.4.0
+ * Version: 1.4.1
  * License: GPL2+
  * License URI: https://www.gnu.org/licenses/gpl-2.0.txt
  *
@@ -36,7 +36,7 @@ if (!class_exists('WPMapBlock')) {
             /**
              * Defines CONSTANTS for Whole plugins.
              */
-            define('WPMAPBLOCK_VERSION', '1.4.0');
+            define('WPMAPBLOCK_VERSION', '1.4.1');
             define('WPMAPBLOCK_PLUGIN_FILE', __FILE__);
             define('WPMAPBLOCK_PLUGIN_BASENAME', plugin_basename(__FILE__));
             define('WPMAPBLOCK_PLUGIN_SLUG', 'wp-map-block');
