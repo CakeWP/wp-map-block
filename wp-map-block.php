@@ -4,7 +4,7 @@
  * Plugin Name: WP Map Block
  * Plugin URI: https://academylms.net/wp-map-block
  * Description: Gutenberg Map Block for Google Map and OpenStreet Map build with LeafletJS
- * Author: AcademyLMS
+ * Author: Academy LMS
  * Author URI: https://academylms.net/
  * Version: 1.4.1
  * License: GPL2+

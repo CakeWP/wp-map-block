@@ -60,5 +60,6 @@ class Assets
                 // Add more data here that you want to access from `wpmapblockGlobal` object.
             ]
         );
+        wp_set_script_translations( 'wp-map-block-js', 'wp-map-block', WPMAPBLOCK_ROOT_DIR_PATH . 'languages/' );
     }
 }

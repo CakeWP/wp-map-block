@@ -125,7 +125,10 @@ export default function MarkerModal({
 											label: __("Default Icon", "wp-map-block"),
 											value: "default",
 										},
-										{ label: "Custom Icon", value: "custom" },
+										{
+											label: __("Custom Icon", "wp-map-block"),
+											value: "custom",
+										},
 									]}
 									onChange={(option) => {
 										setMarkerAttributeValue(index, "iconType", option);
@@ -225,14 +228,16 @@ export default function MarkerModal({
 											href="https://wordpress.org/plugins/academy"
 											target="_blank"
 										>
-											Academy LMS
+											{__("Academy LMS", "wp-map-block")}
 										</a>
 									</strong>{" "}
-									– eLearning and online course solution for WordPress. More
-									details please{" "}
+									{__(
+										"– eLearning and online course solution for WordPress. More details please",
+										"wp-map-block"
+									)}
 									<strong>
 										<a href="https://academylms.net/" target="_blank">
-											Click Here
+											{__("Click Here", "wp-map-block")}
 										</a>
 									</strong>
 								</p>

@@ -4,7 +4,7 @@ Tags: block, map block, google maps, openstreet map, gutenberg, leaflet, gutenbe
 Requires at least: 5.4
 Tested up to: 6.0
 Requires PHP: 5.6
-Stable tag: 1.4.1
+Stable tag: 1.4.2
 License: GPLv3
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -66,7 +66,7 @@ You may now contribute to the plugin on Github: <a href="https://github.com/imra
 Install WP Map Block for Gutenberg either via the WordPress plugin directory or by uploading the files to your server at wp-content/plugins.
 
 ## 🔥 WHAT’S NEXT
-If you like wp-map-block, then consider checking out our other WordPress Plugins for FREE:
+If you like WP-Map-Block, then consider checking out our other WordPress Plugins for FREE:
 
 🔝 [Academy LMS](https://academylms.net) –  WordPress Learning Management System, eLearning Platform, Online Education System & Online Course Builder
 
@@ -114,8 +114,11 @@ Change the way you are writing the address or make it more specific. Make sure t
 
 == Changelog ==
 
-= 1.4.1 – 2022-06-13 =
-- Added: 6.0 Compatibility
+= 1.4.2 – 2022-06-13 =
+- Added: 5.9 Compatibility
+
+= 1.4.1 – 2022-03-22 =
+- Fixed: Translation Issue
 
 = 1.4.0 – 2022-03-21 =
 - Added: Draggable Marker Editor

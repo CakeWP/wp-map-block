@@ -89,8 +89,8 @@ export default function Settings({ attributes, setAttributes }) {
 							label={__("Choose Map", "wp-map-block")}
 							selected={attributes.map_type}
 							options={[
-								{ label: "Google Map", value: "GM" },
-								{ label: "Open Street map", value: "OSM" },
+								{ label: __("Google Map", "wp-map-block"), value: "GM" },
+								{ label: __("Open Street map", "wp-map-block"), value: "OSM" },
 							]}
 							onChange={(value) => setAttributes({ map_type: value })}
 						/>

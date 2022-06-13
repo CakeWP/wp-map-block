@@ -53,8 +53,10 @@ export default function Search({ index, attributes, setAttributes }) {
 						/>
 					</MapContainer>
 					<span className="note">
-						Draggable Marker, Your can easily change your marker position by
-						Dragging
+						{__(
+							"Draggable Marker, Your can easily change your marker position by Dragging",
+							"wp-map-block"
+						)}
 					</span>
 				</div>
 			</div>
