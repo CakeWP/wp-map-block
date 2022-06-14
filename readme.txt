@@ -32,7 +32,7 @@ WP Map Block is the ideal solution for you if you're using the Gutenberg editor 
 * Set any marker as center position
 * Marker Builder
 * Draggable Marker
-* Don't need an any api key
+* Don’t need any API key
 
 **🗺️Google Map:** Set the default Google Map on any page or post of your WordPress site. With a single click, you can select this map anywhere on your site using WP Map Block.
 
@@ -117,7 +117,7 @@ Change the way you are writing the address or make it more specific. Make sure t
 == Changelog ==
 
 = 1.4.2 – 2022-06-13 =
-- Added: 5.9 Compatibility
+- Added: 6.0 Compatibility
 
 = 1.4.1 – 2022-03-22 =
 - Fixed: Translation Issue
