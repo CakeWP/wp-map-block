@@ -22,7 +22,7 @@ jQuery(document).ready(function () {
 				popupHTML += "<h6>" + item.title + "</h6>";
 			}
 			if (item.content !== "") {
-				popupHTML += "<p>" + decodeHtml(item.content) + "</p>";
+				popupHTML += "<pre>" + item.content + "</pre>";
 			}
 			if (item.iconType == "custom") {
 				var LeafIcon = L.Icon.extend({

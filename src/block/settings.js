@@ -35,11 +35,13 @@ export default function Settings({ attributes, setAttributes }) {
 					lat: "",
 					lng: "",
 					title: "",
+					subTitle: "",
 					content: "",
 					iconType: "default",
 					customIconUrl: "",
 					customIconWidth: 25,
 					customIconHeight: 40,
+					images: [],
 				},
 			],
 		});
@@ -111,7 +113,6 @@ export default function Settings({ attributes, setAttributes }) {
 									})
 								}
 							/>
-							{"  "}
 							<label htmlFor="scroll_wheel_zoom">
 								{__("Enable Scroll Wheel Zoom", "wp-map-block")}
 							</label>

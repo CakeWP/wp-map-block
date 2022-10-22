@@ -6,12 +6,17 @@ import {
 	TextareaControl,
 	RangeControl,
 	ToggleControl,
+	ToolbarButton,
+	ToolbarGroup,
 } from "@wordpress/components";
 import { __ } from "@wordpress/i18n";
 import { MediaUpload, MediaUploadCheck } from "@wordpress/block-editor";
 import Modal from "react-modal";
 import Search from "./../search";
+import { edit } from "@wordpress/icons";
+
 import PropTypes from "prop-types";
+import { layerGroup } from "leaflet";
 
 const propTypes = {};
 
@@ -41,6 +46,9 @@ export default function MarkerModal({
 	closeModal,
 }) {
 	const { map_marker_list, center_index } = attributes;
+	let imageIds = map_marker_list.map((item) => {
+		return item.images.map((image) => image.id);
+	});
 
 	const setMarkerAttributeValue = (index, name, value) => {
 		setAttributes({
@@ -95,6 +103,13 @@ export default function MarkerModal({
 							onChange={(text) => setMarkerAttributeValue(index, "title", text)}
 							value={map_marker_list[index].title}
 						/>
+						<TextControl
+							label={__("Sub Title", "wp-map-block")}
+							onChange={(text) =>
+								setMarkerAttributeValue(index, "subtitle", text)
+							}
+							value={map_marker_list[index].title}
+						/>
 						<TextareaControl
 							label={__("Content", "wp-map-block")}
 							help={__("HTML Supported", "wp-map-block")}
@@ -103,6 +118,24 @@ export default function MarkerModal({
 							}
 							value={map_marker_list[index].content}
 						/>
+						<MediaUploadCheck>
+							<MediaUpload
+								multiple
+								gallery
+								addToGallery={true}
+								onSelect={(newImages) => {
+									console.log(index);
+									setAttributes({});
+								}}
+								allowedTypes={["image"]}
+								value={imageIds}
+								render={({ open }) => (
+									<ToolbarButton icon={edit} onClick={open}>
+										{__("Edit", "bs-image-slider")}
+									</ToolbarButton>
+								)}
+							/>
+						</MediaUploadCheck>
 					</div>
 					<div className="entry-right">
 						<div className="wp-map-block-modal-panel">
