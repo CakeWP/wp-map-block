@@ -1,5 +1,7 @@
 const { __ } = wp.i18n;
-const { registerBlockType } = wp.blocks;
+
+import { registerBlockType } from '@wordpress/blocks';
+
 import Icon from "../components/Icon";
 import attributes from "./attributes";
 import edit from "./edit";
