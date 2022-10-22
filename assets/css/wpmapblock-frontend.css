@@ -642,3 +642,34 @@ svg.leaflet-image-layer.leaflet-interactive path {
 	font-size: 16px;
 	margin: 0;
 }
+
+
+.map-popup  {
+	position: absolute;
+	display: none;
+	top: 50px;
+	left: 50px;
+	width: 50%;
+	height: 50%;
+	z-index: 9999999;
+	padding: 30px;
+	background-color: #ffffff;
+}
+
+.map-popup .popup-close-header {
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-end;
+}
+
+.map-popup .popup-close-header .close-toggle {
+	cursor: pointer;
+}
+
+.map-popup.is-visible {
+	display: block;
+}
+
+.map-popup h6 {
+	margin: 0;
+}

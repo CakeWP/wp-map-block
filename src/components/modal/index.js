@@ -6,8 +6,6 @@ import {
 	TextareaControl,
 	RangeControl,
 	ToggleControl,
-	ToolbarButton,
-	ToolbarGroup,
 } from "@wordpress/components";
 import { __ } from "@wordpress/i18n";
 import { MediaUpload, MediaUploadCheck } from "@wordpress/block-editor";
@@ -15,8 +13,7 @@ import Modal from "react-modal";
 import Search from "./../search";
 import { edit } from "@wordpress/icons";
 
-import PropTypes from "prop-types";
-import { layerGroup } from "leaflet";
+import { get } from 'lodash';
 
 const propTypes = {};
 
@@ -46,9 +43,6 @@ export default function MarkerModal({
 	closeModal,
 }) {
 	const { map_marker_list, center_index } = attributes;
-	let imageIds = map_marker_list.map((item) => {
-		return item.images.map((image) => image.id);
-	});
 
 	const setMarkerAttributeValue = (index, name, value) => {
 		setAttributes({
@@ -61,6 +55,26 @@ export default function MarkerModal({
 			}, []),
 		});
 	};
+
+	const getMarkerAttributeValue = (index, name) => {
+		
+		const hasMarker = typeof map_marker_list[index] !== 'undefined';
+		
+		if (hasMarker) {
+			const markerAttribute = map_marker_list[index];
+
+			return get(markerAttribute, name);
+		}
+		
+		return null;
+	};
+
+	const galleryImages = getMarkerAttributeValue(index, 'images');
+	const hasGalleryImages = Array.isArray(galleryImages) && galleryImages.length > 0;
+
+	let imageIds = galleryImages && galleryImages.map((item) => {
+		return item?.id;
+	});
 
 	return (
 		<>
@@ -98,18 +112,21 @@ export default function MarkerModal({
 								value={map_marker_list[index].lng}
 							/>
 						</div>
+						<br />
 						<TextControl
 							label={__("Title", "wp-map-block")}
 							onChange={(text) => setMarkerAttributeValue(index, "title", text)}
 							value={map_marker_list[index].title}
 						/>
+						<br />
 						<TextControl
 							label={__("Sub Title", "wp-map-block")}
 							onChange={(text) =>
 								setMarkerAttributeValue(index, "subtitle", text)
 							}
-							value={map_marker_list[index].title}
+							value={map_marker_list[index].subtitle}
 						/>
+						<br />
 						<TextareaControl
 							label={__("Content", "wp-map-block")}
 							help={__("HTML Supported", "wp-map-block")}
@@ -124,15 +141,25 @@ export default function MarkerModal({
 								gallery
 								addToGallery={true}
 								onSelect={(newImages) => {
-									console.log(index);
-									setAttributes({});
+									setMarkerAttributeValue(index, "images", newImages);
 								}}
 								allowedTypes={["image"]}
 								value={imageIds}
 								render={({ open }) => (
-									<ToolbarButton icon={edit} onClick={open}>
-										{__("Edit", "bs-image-slider")}
-									</ToolbarButton>
+									<div
+										style={{
+											display: "flex",
+											alignItems: "center",
+											justifyContent: "space-between",
+										}}
+									>
+										<span>{__("Gallery", "wp-map-block")}</span>
+										<Button icon={edit} variant="primary" onClick={open}>
+											{
+												hasGalleryImages ? __("Edit", "wp-map-block") : __("Upload", "wp-map-block")
+											}
+										</Button>
+									</div>
 								)}
 							/>
 						</MediaUploadCheck>
@@ -177,6 +204,7 @@ export default function MarkerModal({
 													media.url
 												)
 											}
+											value={getMarkerAttributeValue(index, 'customIconUrl')}
 											allowedTypes={["image"]}
 											render={({ open }) => (
 												<div>

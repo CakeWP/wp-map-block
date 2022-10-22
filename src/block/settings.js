@@ -107,13 +107,14 @@ export default function Settings({ attributes, setAttributes }) {
 							<FormToggle
 								id="scroll_wheel_zoom"
 								checked={attributes.scroll_wheel_zoom}
+								
 								onChange={() =>
 									setAttributes({
 										scroll_wheel_zoom: !attributes.scroll_wheel_zoom,
 									})
 								}
 							/>
-							<label htmlFor="scroll_wheel_zoom">
+							<label htmlFor="scroll_wheel_zoom" style={{  marginLeft: '5px' }}>
 								{__("Enable Scroll Wheel Zoom", "wp-map-block")}
 							</label>
 						</div>

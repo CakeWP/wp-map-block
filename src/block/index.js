@@ -17,6 +17,9 @@ registerBlockType("wpmapblock/wp-map-block", {
 		__("api", "wp-map-block"),
 		__("maps", "wp-map-block"),
 	],
+	supports: {
+		align: [ 'wide', 'full' ]
+	},
 	attributes,
 	edit,
 	save() {
