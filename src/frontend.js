@@ -1091,19 +1091,26 @@ jQuery(document).ready(function () {
 			if (item.images.length > 0) {
 				let imageWrapper = document.createElement("div");
 				imageWrapper.classList.add("popup-image-wrapper");
-				item.images.map((img, index) => {
+
+				// Slicing initial 4 images.
+				const finalImages = item.images.length > 4 ? item.images.slice(0, 4) : item.images;
+				const magnificImages = item.images.map((img) => {
+					return {
+						src: img.url
+					}
+				})
+
+				finalImages.map((img, index) => {
 					let imageInnerWrapper = document.createElement("div");
 					let image = document.createElement("img");
 					imageInnerWrapper.classList.add("popup-image-inner-wrapper");
 
 					image.setAttribute("src", img.sizes.thumbnail.url);
 
-					image.setAttribute("data-mfp-src", img.url);
-
 					image.classList.add("map-popup-image");
 					imageInnerWrapper.appendChild(image);
 
-					if (index + 1 <= 4) {
+					if (index === (finalImages.length - 1) && item.images.length > 4) {
 						let moreImages = document.createElement("div");
 						moreImages.classList.add("popup-more-images");
 						let span = document.createElement("span");
@@ -1111,10 +1118,20 @@ jQuery(document).ready(function () {
 						moreImages.appendChild(span);
 						imageInnerWrapper.appendChild(moreImages);
 					}
+
 					if (index + 1 > 4) {
 						image.style.display = "none";
 					}
 					imageWrapper.appendChild(imageInnerWrapper);
+					image.addEventListener('click', () => {
+						jQuery.magnificPopup.open({
+							items: magnificImages,
+							gallery: {
+								enabled: true
+							},
+							type: 'image' // this is a default type
+						}, index)
+					});
 				});
 				popup.appendChild(imageWrapper);
 			}
@@ -1140,8 +1157,10 @@ jQuery(document).ready(function () {
 				var icon = new LeafIcon({ iconUrl: item.customIconUrl });
 				if (item.title !== "" || item.content !== "") {
 					L.marker([item.lat, item.lng], { icon: icon })
-						.bindPopup(popupHTML)
-						.addTo(cities);
+						.addTo(cities)
+						.on("click", () => {
+							currentPopup.classList.toggle("is-visible");
+						});
 				} else {
 					L.marker([item.lat, item.lng], { icon: icon }).addTo(cities);
 				}
@@ -1177,21 +1196,6 @@ jQuery(document).ready(function () {
 	if (jQuery(".wpmapblockrender").length) {
 		jQuery(".wpmapblockrender").each((index, element) => {
 			const Element = jQuery(element);
-			jQuery(document).ready(function () {
-				jQuery(element).magnificPopup({
-					delegate: ".map-popup-image",
-					type: "image",
-					tLoading: "Loading image ",
-					gallery: {
-						enabled: true,
-						navigateByImgClick: true,
-						preload: [0, 1], // Will preload 0 - before current, and 1 after the current image
-					},
-					image: {
-						tError: '<a href="%url%">The image </a> could not be loaded.',
-					},
-				});
-			});
 			WPMapBlockRender(
 				element,
 				Element.attr("ID"),

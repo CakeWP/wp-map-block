@@ -13,6 +13,7 @@ const attributes = {
 				content: "A Beautiful Country",
 				iconType: "default",
 				customIconUrl: "",
+				customActiveIconUrl: "",
 				customIconWidth: 25,
 				customIconHeight: 40,
 				images: [],

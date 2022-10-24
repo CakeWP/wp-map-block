@@ -60,17 +60,6 @@ export default function MapRender({ attributes, setAttributes }) {
 					whenCreated={setBaseMap}
 				>
 					<TileLayer ref={tileLayerRef} url={map_type == "OSM" ? OSM : GM} />
-					<div
-						style={{
-							position: "absolute",
-							top: "0px",
-							left: "0",
-							zIndex: "999",
-						}}
-					>
-						<h6>{"hello"}</h6>
-						<p dangerouslySetInnerHTML={{ __html: "hello" }}></p>
-					</div>
 					{map_marker_list !== undefined &&
 						map_marker_list.length > 0 &&
 						map_marker_list.map((item, index) => (

@@ -676,6 +676,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
 }
 .map-popup .popup-image-wrapper img {
 	width: 73px;
+	height: 100%;
 }
 .map-popup .popup-more-images {
 	position: absolute;
@@ -700,9 +701,19 @@ svg.leaflet-image-layer.leaflet-interactive path {
 	cursor: pointer;
 }
 
+.map-popup .popup-more-images {
+	pointer-events: none;
+}
+
+.map-popup .popup-image-inner-wrapper {
+	background-color: rgba(0, 0, 0, 0.238);
+	color: #ffffff;
+	font-weight: bold;
+}
+
 .map-popup.is-visible {
 	opacity: 1;
-	z-index: 9999999;
+	z-index: 999;
 	transform: translate(-50%, -50%) scale(1);
 }
 
