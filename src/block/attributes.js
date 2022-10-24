@@ -9,7 +9,7 @@ const attributes = {
 				lat: 23.7806365,
 				lng: 90.4193257,
 				title: "Bangladesh",
-				subTitle: "Dhaka",
+				subtitle: "Dhaka",
 				content: "A Beautiful Country",
 				iconType: "default",
 				customIconUrl: "",

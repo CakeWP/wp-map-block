@@ -1,3 +1,11 @@
+.wp-site-blocks,
+body > .is-root-container,
+.edit-post-visual-editor__post-title-wrapper,
+.wpmapblockrender .alignfull,
+.is-root-container .wp-block[data-align="full"] > .wpmapblockrender {
+	padding-left: var(--wp--custom--spacing--outer);
+	padding-right: var(--wp--custom--spacing--outer);
+}
 .leaflet-image-layer,
 .leaflet-layer,
 .leaflet-marker-icon,
@@ -643,31 +651,46 @@ svg.leaflet-image-layer.leaflet-interactive path {
 	margin: 0;
 }
 
-
-.map-popup  {
+.map-popup {
 	position: absolute;
-	display: none;
-	top: 50px;
-	left: 50px;
-	width: 50%;
-	height: 50%;
-	z-index: 9999999;
-	padding: 30px;
+	opacity: 0;
+	top: 50%;
+	left: 20%;
+	transform: translate(-50%, -50%) scale(0.8);
+	width: 323px;
+	height: auto;
+	z-index: 0;
+	padding: 20px;
+	transition: all 0.5s;
 	background-color: #ffffff;
 }
 
-.map-popup .popup-close-header {
+.map-popup .popup-header {
 	display: flex;
-	flex-direction: row;
-	justify-content: flex-end;
+	justify-content: space-between;
+	align-items: center;
 }
-
-.map-popup .popup-close-header .close-toggle {
+.map-popup .popup-image-wrapper {
+	display: flex;
+	gap: 10px;
+}
+.map-popup .popup-image-wrapper img {
+	width: 73px;
+}
+.map-popup .popup-subtitle {
+	font-size: 0.8rem;
+}
+.map-popup .popup-title {
+	margin: 0;
+}
+.map-popup .popup-header .close-toggle {
 	cursor: pointer;
 }
 
 .map-popup.is-visible {
-	display: block;
+	opacity: 1;
+	z-index: 9999999;
+	transform: translate(-50%, -50%) scale(1);
 }
 
 .map-popup h6 {

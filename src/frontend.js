@@ -4,42 +4,53 @@ jQuery(document).ready(function () {
 		var GM =
 			"https://maps.googleapis.com/maps/vt?pb=!1m5!1m4!1i{z}!2i{x}!3i{y}!4i256!2m3!1e0!2sm!3i349018013!3m9!2sen-US!3sUS!5e18!12m1!1e47!12m3!1e37!2m1!1ssmartmaps!4e0";
 		var cities = L.layerGroup();
-		
-		Settings.map_marker.forEach(function (item, index) {
-			var popup = document.createElement('div');
 
-			popup.className = 'map-popup';
-			popup.setAttribute('data-markerindex', index.toString());
-			
-			
+		Settings.map_marker.forEach(function (item, index) {
+			var popup = document.createElement("div");
+
+			popup.className = "map-popup";
+			popup.setAttribute("data-markerindex", index.toString());
+
 			var popupHtml = "";
 
 			// Close icon.
-			popupHtml += `<div class="popup-close-header">
+			popupHtml += `<div class="popup-header">
+			${item.title !== "" ? "<h3 class='popup-title'>" + item.title + "</h3>" : ""}
 			<div class="close-toggle">
 			<svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
 			width="24" height="24"
 			viewBox="0 0 24 24"
 			style=" fill:#000000;"><path d="M 4.7070312 3.2929688 L 3.2929688 4.7070312 L 10.585938 12 L 3.2929688 19.292969 L 4.7070312 20.707031 L 12 13.414062 L 19.292969 20.707031 L 20.707031 19.292969 L 13.414062 12 L 20.707031 4.7070312 L 19.292969 3.2929688 L 12 10.585938 L 4.7070312 3.2929688 z"></path></svg>
 			</div>
-			</div>`
-
-			if (item.title !== "") {
-				popupHtml += "<h6>" + item.title + "</h6>";
+			</div>`;
+			console.log(item);
+			if (item.subtitle !== "") {
+				popupHtml += "<p class='popup-subtitle'>" + item.subtitle + "</p>";
 			}
 			if (item.content !== "") {
 				popupHtml += "<pre>" + item.content + "</pre>";
 			}
+			popup.innerHTML = popupHtml;
+			if (item.images.length > 0) {
+				let imageWrapper = document.createElement("div");
+				imageWrapper.classList.add("popup-image-wrapper");
+				item.images.map((img) => {
+					let image = document.createElement("img");
 
-			popup.innerHTML = popupHtml
-			
+					image.setAttribute("src", img.sizes.thumbnail.url);
+					imageWrapper.appendChild(image);
+				});
+				popup.appendChild(imageWrapper);
+			}
 			element.appendChild(popup);
-			const currentPopup = element.querySelector(`.map-popup[data-markerindex="${index}"]`);
-			const closeToggle = element.querySelector('.close-toggle');
+			const currentPopup = element.querySelector(
+				`.map-popup[data-markerindex="${index}"]`
+			);
+			const closeToggle = element.querySelector(".close-toggle");
 
-			closeToggle.addEventListener('click', () => {
-				if (currentPopup.classList.contains('is-visible')) {
-					currentPopup.classList.remove('is-visible');
+			closeToggle.addEventListener("click", () => {
+				if (currentPopup.classList.contains("is-visible")) {
+					currentPopup.classList.remove("is-visible");
 				}
 			});
 
@@ -60,9 +71,11 @@ jQuery(document).ready(function () {
 				}
 			} else {
 				if (item.title !== "" || item.content !== "") {
-					L.marker([item.lat, item.lng]).addTo(cities).on('click', () => {
-						currentPopup.classList.toggle('is-visible');
-					});
+					L.marker([item.lat, item.lng])
+						.addTo(cities)
+						.on("click", () => {
+							currentPopup.classList.toggle("is-visible");
+						});
 				} else {
 					L.marker([item.lat, item.lng]).addTo(cities);
 				}
