@@ -1067,7 +1067,7 @@ jQuery(document).ready(function () {
 
 			popup.className = "map-popup";
 			popup.setAttribute("data-markerindex", index.toString());
-
+			let marker;
 			var popupHtml = "";
 
 			// Close icon.
@@ -1093,12 +1093,13 @@ jQuery(document).ready(function () {
 				imageWrapper.classList.add("popup-image-wrapper");
 
 				// Slicing initial 4 images.
-				const finalImages = item.images.length > 4 ? item.images.slice(0, 4) : item.images;
+				const finalImages =
+					item.images.length > 4 ? item.images.slice(0, 4) : item.images;
 				const magnificImages = item.images.map((img) => {
 					return {
-						src: img.url
-					}
-				})
+						src: img.url,
+					};
+				});
 
 				finalImages.map((img, index) => {
 					let imageInnerWrapper = document.createElement("div");
@@ -1110,7 +1111,7 @@ jQuery(document).ready(function () {
 					image.classList.add("map-popup-image");
 					imageInnerWrapper.appendChild(image);
 
-					if (index === (finalImages.length - 1) && item.images.length > 4) {
+					if (index === finalImages.length - 1 && item.images.length > 4) {
 						let moreImages = document.createElement("div");
 						moreImages.classList.add("popup-more-images");
 						let span = document.createElement("span");
@@ -1123,14 +1124,17 @@ jQuery(document).ready(function () {
 						image.style.display = "none";
 					}
 					imageWrapper.appendChild(imageInnerWrapper);
-					image.addEventListener('click', () => {
-						jQuery.magnificPopup.open({
-							items: magnificImages,
-							gallery: {
-								enabled: true
+					image.addEventListener("click", () => {
+						jQuery.magnificPopup.open(
+							{
+								items: magnificImages,
+								gallery: {
+									enabled: true,
+								},
+								type: "image", // this is a default type
 							},
-							type: 'image' // this is a default type
-						}, index)
+							index
+						);
 					});
 				});
 				popup.appendChild(imageWrapper);
@@ -1139,9 +1143,14 @@ jQuery(document).ready(function () {
 			const currentPopup = element.querySelector(
 				`.map-popup[data-markerindex="${index}"]`
 			);
-			const closeToggle = element.querySelector(".close-toggle");
+			const closeToggle = currentPopup.querySelector(".close-toggle");
 
 			closeToggle.addEventListener("click", () => {
+				marker.setIcon(
+					new LeafIcon({
+						iconUrl: item.customIconUrl,
+					})
+				);
 				if (currentPopup.classList.contains("is-visible")) {
 					currentPopup.classList.remove("is-visible");
 				}
@@ -1154,13 +1163,32 @@ jQuery(document).ready(function () {
 						popupAnchor: [0, -15],
 					},
 				});
-				var icon = new LeafIcon({ iconUrl: item.customIconUrl });
+
+				var icon = new LeafIcon({
+					iconUrl: item.customIconUrl,
+				});
 				if (item.title !== "" || item.content !== "") {
-					L.marker([item.lat, item.lng], { icon: icon })
-						.addTo(cities)
-						.on("click", () => {
+					marker = L.marker([item.lat, item.lng], { icon: icon }).addTo(cities);
+
+					if (item.customActiveIconUrl) {
+						marker.on("click", (e) => {
 							currentPopup.classList.toggle("is-visible");
+
+							if (!currentPopup.classList.contains("is-visible")) {
+								marker.setIcon(
+									new LeafIcon({
+										iconUrl: item.customIconUrl,
+									})
+								);
+							} else {
+								marker.setIcon(
+									new LeafIcon({
+										iconUrl: item.customActiveIconUrl,
+									})
+								);
+							}
 						});
+					}
 				} else {
 					L.marker([item.lat, item.lng], { icon: icon }).addTo(cities);
 				}

@@ -20,6 +20,10 @@ const attributes = {
 			},
 		],
 	},
+	heading: {
+		type: "string",
+		default: "",
+	},
 	map_zoom: {
 		type: "number",
 		default: 10,

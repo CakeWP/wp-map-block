@@ -51,6 +51,7 @@ export default function MapRender({ attributes, setAttributes }) {
 					height: map_height + "px",
 				}}
 			>
+				<h2 className="wp-map-block-heading">{attributes.heading}</h2>
 				<MapContainer
 					id={map_id}
 					className="wp-map-block-base-editor__map-container"

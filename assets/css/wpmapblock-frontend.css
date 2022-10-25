@@ -1146,3 +1146,10 @@ img.mfp-img {
 		padding-right: 6px;
 	}
 }
+
+.wp-map-block-heading {
+	position: absolute;
+	z-index: 999;
+	left: 50%;
+	transform: translateX(-50%);
+}

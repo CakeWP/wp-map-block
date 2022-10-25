@@ -3,6 +3,12 @@
 	height: 400px;
 	position: relative;
 }
+.wp-map-block-base-editor .wp-map-block-heading {
+	position: absolute;
+	z-index: 999;
+	left: 50%;
+	transform: translateX(-50%);
+}
 .wp-map-block-base-editor__map-container {
 	position: absolute;
 	top: 0;

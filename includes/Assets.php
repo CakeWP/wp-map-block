@@ -1,21 +1,18 @@
 <?php
+
 namespace WPMapBlock;
 
-class Assets
-{
-    public static function init()
-    {
+class Assets {
+    public static function init() {
         $self = new self();
         add_action('wp_enqueue_scripts', [$self, 'wpmapblock_plugin_core_scripts']);
         add_action('init', [$self, 'register_block_assets']);
     }
-    public function wpmapblock_plugin_core_scripts()
-    {
+    public function wpmapblock_plugin_core_scripts() {
         wp_enqueue_script('wpmapblock-leaflet', plugins_url('assets/js/leaflet.js', dirname(__FILE__)), array('jquery'), null, true);
         wp_enqueue_script('wpmapblock-leaflet-fullscreen', plugins_url('assets/js/Control.FullScreen.js', dirname(__FILE__)), array('jquery'), null, true);
     }
-    public function register_block_assets()
-    {
+    public function register_block_assets() {
         $frontend_dependencies = include_once WPMAPBLOCK_ASSETS_DIR_PATH . 'dist/wpmapblock-frontend.core.min.asset.php';
         wp_register_style(
             'wp-map-block-stylesheets',
@@ -60,6 +57,6 @@ class Assets
                 // Add more data here that you want to access from `wpmapblockGlobal` object.
             ]
         );
-        wp_set_script_translations( 'wp-map-block-js', 'wp-map-block', WPMAPBLOCK_ROOT_DIR_PATH . 'languages/' );
+        wp_set_script_translations('wp-map-block-js', 'wp-map-block', WPMAPBLOCK_ROOT_DIR_PATH . 'languages/');
     }
 }

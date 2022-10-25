@@ -6,6 +6,7 @@ import {
 	PanelBody,
 	RangeControl,
 	FormToggle,
+	TextControl,
 } from "@wordpress/components";
 import { __ } from "@wordpress/i18n";
 import { Icon, close } from "@wordpress/icons";
@@ -73,6 +74,11 @@ export default function Settings({ attributes, setAttributes }) {
 						title={__("Map Settings", "wp-map-block")}
 						initialOpen={true}
 					>
+						<TextControl
+							label="Heading"
+							onChange={(newValue) => setAttributes({ heading: newValue })}
+							value={attributes.heading}
+						/>
 						<RangeControl
 							label={__("Width (%)", "wp-map-block")}
 							value={parseInt(attributes.map_width)}
@@ -107,14 +113,13 @@ export default function Settings({ attributes, setAttributes }) {
 							<FormToggle
 								id="scroll_wheel_zoom"
 								checked={attributes.scroll_wheel_zoom}
-								
 								onChange={() =>
 									setAttributes({
 										scroll_wheel_zoom: !attributes.scroll_wheel_zoom,
 									})
 								}
 							/>
-							<label htmlFor="scroll_wheel_zoom" style={{  marginLeft: '5px' }}>
+							<label htmlFor="scroll_wheel_zoom" style={{ marginLeft: "5px" }}>
 								{__("Enable Scroll Wheel Zoom", "wp-map-block")}
 							</label>
 						</div>
