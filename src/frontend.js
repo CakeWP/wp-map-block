@@ -1055,6 +1055,7 @@
 	}),
 		A();
 });
+
 jQuery(document).ready(function () {
 	const WPMapBlockRender = (element, ID, Settings) => {
 		var OSM = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
@@ -1080,6 +1081,7 @@ jQuery(document).ready(function () {
 			];
 		}
 		let map = L.map(ID, config);
+		let markers = [];
 
 		Settings.map_marker.forEach(function (item, index) {
 			var popup = document.createElement("div");
@@ -1194,6 +1196,12 @@ jQuery(document).ready(function () {
 					marker = L.marker([item.lat, item.lng], {
 						icon: icon,
 					}).addTo(cities);
+					
+					markers.push({
+						m: marker,
+						defaultIconUrl: item.customIconUrl,
+						activeIconUrl: item.customActiveIconUrl
+					});
 
 					if (index + 1 <= 1) {
 						currentPopup.classList.add("is-visible");
@@ -1204,7 +1212,25 @@ jQuery(document).ready(function () {
 						);
 						map.dragging.disable();
 					}
+
 					marker.on("click", (e) => {
+
+						const allPopups = document.querySelectorAll('.map-popup');
+
+						allPopups.forEach((popup) => {
+							if (popup.classList.contains('is-visible')) {
+								popup.classList.remove('is-visible');
+							}
+						});	
+
+						markers.forEach((mar) => {
+							mar.m.setIcon(
+								new LeafIcon({
+									iconUrl: mar.defaultIconUrl
+								})
+							)
+						});
+
 						currentPopup.classList.toggle("is-visible");
 
 						if (!currentPopup.classList.contains("is-visible")) {
@@ -1231,6 +1257,16 @@ jQuery(document).ready(function () {
 					L.marker([item.lat, item.lng])
 						.addTo(cities)
 						.on("click", () => {
+
+							const allPopups = document.querySelectorAll('.map-popup');
+
+							allPopups.forEach((popup) => {
+								if (popup.classList.contains('is-visible')) {
+									popup.classList.remove('is-visible');
+								}
+							})
+	
+
 							currentPopup.classList.toggle("is-visible");
 							if (currentPopup.classList.contains("is-visible")) {
 								map.dragging.disable();
