@@ -1056,6 +1056,32 @@
 		A();
 });
 
+function popupImage(allImages) {
+	const popup = document.querySelectorAll(".leaflet-popup-content");
+	const lastPopup = popup[popup.length - 1];
+	const popupImages = lastPopup.querySelectorAll(
+		" .popup-image-inner-wrapper img"
+	);
+	const magnificImages = allImages.map((image) => {
+		return {
+			src: image.url,
+		};
+	});
+	popupImages.forEach((image, index) => {
+		image.addEventListener("click", () => {
+			jQuery.magnificPopup.open(
+				{
+					items: magnificImages,
+					gallery: {
+						enabled: true,
+					},
+					type: "image", // this is a default type
+				},
+				index
+			);
+		});
+	});
+}
 jQuery(document).ready(function () {
 	const WPMapBlockRender = (element, ID, Settings) => {
 		var OSM = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
@@ -1073,6 +1099,7 @@ jQuery(document).ready(function () {
 			layers: [grayscale, cities],
 			scrollWheelZoom: Settings.scroll_wheel_zoom,
 			doubleClickZoom: false,
+			closePopupOnClick: false,
 		};
 		if (Settings.map_marker.length) {
 			config.center = [
@@ -1081,25 +1108,24 @@ jQuery(document).ready(function () {
 			];
 		}
 		let map = L.map(ID, config);
-		let markers = [];
 
-		Settings.map_marker.forEach(function (item, index) {
-			var popup = document.createElement("div");
+		Settings.map_marker.forEach(function (item) {
+			let imageDiv = document.createElement("div");
+			let latLang = [item.lat, item.lng];
 
-			popup.className = "map-popup";
-			popup.setAttribute("data-markerindex", index.toString());
-			let marker;
-			var popupHtml = "";
+			let popupHtml = "";
 
-			// Close icon.
-			popupHtml += `<div class="popup-header">
+			let customIcon = L.icon({
+				iconUrl: item.customIconUrl,
+				iconSize: [item.customIconWidth, item.customIconHeight],
+			});
+			let customActiveIcon = L.icon({
+				iconUrl: item.customActiveIconUrl,
+				iconSize: [item.customIconWidth, item.customIconHeight],
+			});
+
+			popupHtml += `<div>
 			${item.title !== "" ? "<h3 class='popup-title'>" + item.title + "</h3>" : ""}
-			<div class="close-toggle">
-			<svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
-			width="24" height="24"
-			viewBox="0 0 24 24"
-			style=" fill:#000000;"><path d="M 4.7070312 3.2929688 L 3.2929688 4.7070312 L 10.585938 12 L 3.2929688 19.292969 L 4.7070312 20.707031 L 12 13.414062 L 19.292969 20.707031 L 20.707031 19.292969 L 13.414062 12 L 20.707031 4.7070312 L 19.292969 3.2929688 L 12 10.585938 L 4.7070312 3.2929688 z"></path></svg>
-			</div>
 			</div>`;
 
 			if (item.subtitle !== "") {
@@ -1108,26 +1134,20 @@ jQuery(document).ready(function () {
 			if (item.content !== "") {
 				popupHtml += "<pre>" + item.content + "</pre>";
 			}
-			popup.innerHTML = popupHtml;
-			if (item.images.length > 0) {
+
+			if (item?.images?.length > 0) {
 				let imageWrapper = document.createElement("div");
 				imageWrapper.classList.add("popup-image-wrapper");
-
 				// Slicing initial 4 images.
 				const finalImages =
 					item.images.length > 4 ? item.images.slice(0, 4) : item.images;
-				const magnificImages = item.images.map((img) => {
-					return {
-						src: img.url,
-					};
-				});
 
 				finalImages.map((img, index) => {
 					let imageInnerWrapper = document.createElement("div");
 					let image = document.createElement("img");
 					imageInnerWrapper.classList.add("popup-image-inner-wrapper");
 
-					image.setAttribute("src", img.sizes.thumbnail.url);
+					image.setAttribute("src", img.thumbnail.url);
 
 					image.classList.add("map-popup-image");
 					imageInnerWrapper.appendChild(image);
@@ -1145,143 +1165,43 @@ jQuery(document).ready(function () {
 						image.style.display = "none";
 					}
 					imageWrapper.appendChild(imageInnerWrapper);
-					image.addEventListener("click", () => {
-						jQuery.magnificPopup.open(
-							{
-								items: magnificImages,
-								gallery: {
-									enabled: true,
-								},
-								type: "image", // this is a default type
-							},
-							index
-						);
-					});
 				});
-				popup.appendChild(imageWrapper);
+				imageDiv.appendChild(imageWrapper);
 			}
-			element.appendChild(popup);
-			const currentPopup = element.querySelector(
-				`.map-popup[data-markerindex="${index}"]`
-			);
-			const closeToggle = currentPopup.querySelector(".close-toggle");
+			popupHtml += imageDiv.innerHTML;
 
-			closeToggle.addEventListener("click", () => {
-				if (item.customActiveIconUrl) {
-					marker.setIcon(
-						new LeafIcon({
-							iconUrl: item.customIconUrl,
-						})
-					);
-				}
-				map.dragging.enable();
-				if (currentPopup.classList.contains("is-visible")) {
-					currentPopup.classList.remove("is-visible");
+			const POPUP_WIDTH = 360;
+			const MARKER_WIDTH = Number(item.customIconWidth);
+			const SPACING = 30;
+			let marker = L.marker(latLang)
+				.addTo(map)
+				.bindPopup(popupHtml, {
+					maxWidth: "auto",
+					minWidth: "auto",
+					maxHeight: "auto",
+					offset: L.point(
+						(POPUP_WIDTH + MARKER_WIDTH + SPACING) / 2,
+						POPUP_WIDTH / 2
+					),
+				})
+				.openPopup();
+
+			jQuery(window).on("load", () => {
+				popupImage(item.images);
+				if (marker.isPopupOpen()) {
+					marker.setIcon(customActiveIcon);
+					map.dragging.disable();
 				}
 			});
-
-			if (item.iconType == "custom") {
-				var LeafIcon = L.Icon.extend({
-					options: {
-						iconSize: [item.customIconWidth, item.customIconHeight],
-						popupAnchor: [0, -15],
-					},
-				});
-
-				var icon = new LeafIcon({
-					iconUrl: item.customIconUrl,
-				});
-
-				if (item.title !== "" || item.content !== "") {
-					marker = L.marker([item.lat, item.lng], {
-						icon: icon,
-					}).addTo(cities);
-					
-					markers.push({
-						m: marker,
-						defaultIconUrl: item.customIconUrl,
-						activeIconUrl: item.customActiveIconUrl
-					});
-
-					if (index + 1 <= 1) {
-						currentPopup.classList.add("is-visible");
-						marker.setIcon(
-							new LeafIcon({
-								iconUrl: item.customActiveIconUrl,
-							})
-						);
-						map.dragging.disable();
-					}
-
-					marker.on("click", (e) => {
-
-						const allPopups = document.querySelectorAll('.map-popup');
-
-						allPopups.forEach((popup) => {
-							if (popup.classList.contains('is-visible')) {
-								popup.classList.remove('is-visible');
-							}
-						});	
-
-						markers.forEach((mar) => {
-							mar.m.setIcon(
-								new LeafIcon({
-									iconUrl: mar.defaultIconUrl
-								})
-							)
-						});
-
-						currentPopup.classList.toggle("is-visible");
-
-						if (!currentPopup.classList.contains("is-visible")) {
-							marker.setIcon(
-								new LeafIcon({
-									iconUrl: item.customIconUrl,
-								})
-							);
-							map.dragging.enable();
-						} else {
-							marker.setIcon(
-								new LeafIcon({
-									iconUrl: item.customActiveIconUrl,
-								})
-							);
-							map.dragging.disable();
-						}
-					});
-				} else {
-					L.marker([item.lat, item.lng], { icon: icon }).addTo(cities);
-				}
-			} else {
-				if (item.title !== "" || item.content !== "") {
-					L.marker([item.lat, item.lng])
-						.addTo(cities)
-						.on("click", () => {
-
-							const allPopups = document.querySelectorAll('.map-popup');
-
-							allPopups.forEach((popup) => {
-								if (popup.classList.contains('is-visible')) {
-									popup.classList.remove('is-visible');
-								}
-							})
-	
-
-							currentPopup.classList.toggle("is-visible");
-							if (currentPopup.classList.contains("is-visible")) {
-								map.dragging.disable();
-							} else {
-								map.dragging.enable();
-							}
-						});
-					if (index + 1 <= 1) {
-						currentPopup.classList.add("is-visible");
-						map.dragging.disable();
-					}
-				} else {
-					L.marker([item.lat, item.lng]).addTo(cities);
-				}
-			}
+			marker.on("popupopen", function (e) {
+				popupImage(item.images);
+				marker.setIcon(customActiveIcon);
+				map.dragging.disable();
+			});
+			marker.on("popupclose", function (e) {
+				map.dragging.enable();
+				marker.setIcon(customIcon);
+			});
 		});
 	};
 	if (jQuery(".wpmapblockrender").length) {

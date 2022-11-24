@@ -55,10 +55,10 @@ class Block {
 			height: {$map_height};
 		";
 
-        $block_classname = $attributes['className'];
+        $block_classname = isset($attributes['className']) ? $attributes['className'] : "";
 
         ob_start(); ?>
-        <div id="<?php echo (isset($attributes['map_id']) ? esc_attr($attributes['map_id']) : ''); ?>" data-settings='<?php echo htmlspecialchars(json_encode($settings), ENT_QUOTES, 'UTF-8'); ?>' class="wpmapblockrender <?php echo esc_html($block_classname); ?> align<?php echo esc_html($attributes['align']); ?>" style="<?php echo esc_attr($style); ?>">
+        <div id="<?php echo (isset($attributes['map_id']) ? esc_attr($attributes['map_id']) : ''); ?>" data-settings='<?php echo htmlspecialchars(json_encode($settings), ENT_QUOTES, 'UTF-8'); ?>' class="wpmapblockrender <?php echo esc_html($block_classname); ?> align<?php echo esc_html(isset($attributes['align']) ? $attributes['align'] : ""); ?>" style="<?php echo esc_attr($style); ?>">
             <h2 class="wp-map-block-heading"><?php echo esc_html($attributes['heading']); ?></h2>
         </div>
 <?php

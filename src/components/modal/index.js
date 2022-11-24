@@ -143,7 +143,14 @@ export default function MarkerModal({
 								gallery
 								addToGallery={true}
 								onSelect={(newImages) => {
-									setMarkerAttributeValue(index, "images", newImages);
+									const mappedImages = newImages.map((image) => {
+										return {
+											url: image.url,
+											thumbnail: image.sizes.thumbnail,
+										};
+									});
+
+									setMarkerAttributeValue(index, "images", mappedImages);
 								}}
 								allowedTypes={["image"]}
 								value={imageIds}
@@ -288,7 +295,10 @@ export default function MarkerModal({
 														media.url
 													)
 												}
-												value={getMarkerAttributeValue(index, "customActiveIconUrl")}
+												value={getMarkerAttributeValue(
+													index,
+													"customActiveIconUrl"
+												)}
 												allowedTypes={["image"]}
 												render={({ open }) => (
 													<div>
@@ -297,7 +307,8 @@ export default function MarkerModal({
 																? __("Upload Active Icon", "wp-map-block")
 																: __("Replace Active Icon", "wp-map-block")}
 														</Button>
-														{map_marker_list[index].customActiveIconUrl !== "" && (
+														{map_marker_list[index].customActiveIconUrl !==
+															"" && (
 															<button
 																type="button"
 																className="components-button"
